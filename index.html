@@ -1384,13 +1384,13 @@ const TESTIMONIALS = [
       word.style.opacity = '1';
       word.style.transform = 'translateY(0)';
       wIdx = (wIdx + 1) % words.length;
-    }, 120);
+    }, 200);
   }
   showWord();
-  const wordTimer = setInterval(showWord, 500);
+  const wordTimer = setInterval(showWord, 900);
 
   const start = performance.now();
-  const dur = 1200;
+  const dur = 2700;
   function tick(t){
     const p = Math.min(1, (t - start) / dur);
     const c = Math.round(p * 100);
@@ -1400,11 +1400,11 @@ const TESTIMONIALS = [
     else {
       clearInterval(wordTimer);
       setTimeout(()=>{
-        loader.style.transition = 'opacity .35s ease';
+        loader.style.transition = 'opacity .5s ease';
         loader.style.opacity = '0';
-        setTimeout(()=> loader.remove(), 380);
+        setTimeout(()=> loader.remove(), 550);
         runEntrance();
-      }, 180);
+      }, 400);
     }
   }
   requestAnimationFrame(tick);
