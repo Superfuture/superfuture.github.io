@@ -261,6 +261,129 @@
   /* Hero portrait gentle breathing on idle */
   .hero-name { animation: breath 10s ease-in-out infinite; }
 
+  /* Ask Joey */
+  .ask-shell {
+    position: relative;
+    border-radius: 24px;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface));
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+  .ask-shell::before {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 25px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(137,170,204,0.4), transparent 40%, transparent 60%, rgba(78,133,191,0.3));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events: none;
+  }
+  .ask-titlebar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 20px;
+    border-bottom: 1px solid hsl(var(--stroke));
+    background: rgba(255,255,255,0.02);
+  }
+  .ask-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; animation: pulseDot 2s ease-out infinite; }
+  @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .ask-title { font-size: 12px; color: hsl(var(--muted)); text-transform: uppercase; letter-spacing: 0.25em; }
+  .ask-status { margin-left: auto; font-size: 11px; color: #89AACC; letter-spacing: 0.2em; text-transform: uppercase; }
+  .ask-stream {
+    padding: 22px 22px 4px;
+    min-height: 200px;
+    max-height: 360px;
+    overflow-y: auto;
+    display: flex; flex-direction: column; gap: 12px;
+    scroll-behavior: smooth;
+  }
+  .ask-msg {
+    max-width: 88%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+    word-wrap: break-word;
+    opacity: 0; transform: translateY(8px);
+    animation: askIn .35s ease-out forwards;
+  }
+  @keyframes askIn { to { opacity: 1; transform: translateY(0); } }
+  .ask-msg.bot {
+    align-self: flex-start;
+    background: hsl(var(--bg));
+    border: 1px solid hsl(var(--stroke));
+    color: hsl(var(--text) / 0.92);
+    border-bottom-left-radius: 6px;
+  }
+  .ask-msg.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #4E85BF, #89AACC);
+    color: #0a0a0a;
+    border-bottom-right-radius: 6px;
+    font-weight: 500;
+  }
+  .ask-msg em.font-display { color: inherit; }
+  .ask-msg b { color: hsl(var(--text)); font-weight: 600; }
+  .ask-cursor {
+    display: inline-block; width: 7px; height: 14px;
+    background: #89AACC;
+    margin-left: 2px; vertical-align: text-bottom;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .ask-suggests {
+    padding: 6px 22px 18px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .ask-pill {
+    font-size: 12px;
+    padding: 7px 14px;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--bg) / 0.6);
+    color: hsl(var(--text) / 0.85);
+    cursor: pointer;
+    transition: border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .ask-pill:hover { border-color: rgba(137,170,204,0.55); color: hsl(var(--text)); transform: translateY(-1px); }
+  .ask-input-wrap {
+    display: flex; gap: 8px;
+    padding: 14px 18px;
+    border-top: 1px solid hsl(var(--stroke));
+    background: rgba(0,0,0,0.3);
+  }
+  .ask-input {
+    flex: 1;
+    background: hsl(var(--bg));
+    border: 1px solid hsl(var(--stroke));
+    border-radius: 9999px;
+    padding: 12px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: hsl(var(--text));
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .ask-input::placeholder { color: hsl(var(--muted)); }
+  .ask-input:focus { border-color: rgba(137,170,204,0.6); }
+  .ask-send {
+    background: linear-gradient(135deg, #89AACC, #4E85BF);
+    color: #0a0a0a;
+    border: 0;
+    border-radius: 9999px;
+    padding: 0 18px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: transform .2s ease, filter .2s ease;
+  }
+  .ask-send:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .ask-send:disabled { opacity: .5; cursor: not-allowed; }
+
   /* Disciplines panel */
   .disciplines {
     margin-top: 32px;
@@ -622,6 +745,39 @@
           Speaker: AI UX Summit 2026 · Stanford Guest Lecturer · Anthropic Claude Design contributor
         </p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ASK JOEY ============ -->
+<section id="ask" class="py-16 md:py-24 border-t" style="background:hsl(var(--bg)); border-color:hsl(var(--stroke))">
+  <div class="max-w-[1000px] mx-auto px-6 md:px-10 lg:px-16">
+    <div class="reveal mb-10 md:mb-12 text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
+        <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Try it</span>
+        <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
+      </div>
+      <h2 class="text-4xl md:text-5xl lg:text-6xl mb-3" style="color:hsl(var(--text))">
+        Ask <span class="font-display italic">Joey</span>
+      </h2>
+      <p class="text-sm md:text-base" style="color:hsl(var(--muted))">
+        A working AI artifact, not a claim. Built with Claude in a single sitting.
+      </p>
+    </div>
+
+    <div class="reveal ask-shell">
+      <div class="ask-titlebar">
+        <span class="ask-dot"></span>
+        <span class="ask-title">joey · live</span>
+        <span class="ask-status">Online</span>
+      </div>
+      <div class="ask-stream" id="askStream"></div>
+      <div class="ask-suggests" id="askSuggests"></div>
+      <form class="ask-input-wrap" id="askForm" autocomplete="off">
+        <input class="ask-input" id="askInput" type="text" placeholder="Ask anything — work, AI, the book, hiring..." aria-label="Ask Joey a question"/>
+        <button class="ask-send" id="askSend" type="submit">Send</button>
+      </form>
     </div>
   </div>
 </section>
@@ -1180,6 +1336,155 @@ gsap.to('#marquee', { xPercent: -50, duration: 40, ease: 'none', repeat: -1 });
 
 /* GSAP ScrollTrigger registered (kept for future use) */
 gsap.registerPlugin(ScrollTrigger);
+
+/* ============ ASK JOEY ============ */
+(function askJoey(){
+  const stream = document.getElementById('askStream');
+  const suggests = document.getElementById('askSuggests');
+  const form = document.getElementById('askForm');
+  const input = document.getElementById('askInput');
+  const send = document.getElementById('askSend');
+  if (!stream || !form) return;
+
+  const SUGGESTIONS = [
+    "What's your superpower?",
+    "Tell me about Wing",
+    "Are you open to new roles?",
+    "What's your design philosophy?",
+    "Tell me about the book",
+    "How do you work with Claude?"
+  ];
+
+  const KB = [
+    { keys: ['superpower','strength','best at','great at','known for'],
+      a: "AI-native prototyping. I turn fuzzy model capabilities into clickable, opinionated product surfaces in hours, not weeks. This portfolio itself was vibe-coded with Claude Code in a single sitting." },
+
+    { keys: ['wing','google x','drone','alphabet','faa'],
+      a: "At Google X's Wing I led consumer mobile design for Alphabet's drone delivery moonshot. We designed for a behavior nobody had ever performed before — every assumption I started with was wrong by version three. The work contributed to one of the first FAA-approved drone delivery experiences in the U.S." },
+
+    { keys: ['linkedin','premium','current','currently','what do you do','where do you work'],
+      a: "I'm a Senior Product Designer at LinkedIn, leading design for premium product experiences shipped to hundreds of millions of professionals. Lately I've been pushing AI-native prototyping across the org so teams can pressure-test ideas in hours instead of quarters." },
+
+    { keys: ['linkedin ios','founding','early','founding mobile','2010','2011','2012'],
+      a: "Founding-era LinkedIn iOS, 2010–2012. We re-architected LinkedIn for the touch era as a coherent mobile system: feed, profile, search, messaging. Scaled to 200M+ members. That's where I learned to think in systems rather than screens." },
+
+    { keys: ['hire','available','open','roles','looking','job','position'],
+      a: "Yes — open to Senior through Principal roles at AI-first companies. The shorter the loop between an idea and a working prototype, the better. Reach out at <a href=\"mailto:jprimiani@gmail.com\" style=\"color:#89AACC\">jprimiani@gmail.com</a>." },
+
+    { keys: ['philosophy','principle','approach','process','believe','manifesto'],
+      a: "The prototype is the artifact. The artifact is the argument. I'd rather ship one opinionated working prototype than ten polished mockups. Specs go stale the moment they're written; working code is honest." },
+
+    { keys: ['book','think prompt create','amazon','published','writing','wrote'],
+      a: "<b>Think. Prompt. Create.</b> — out April 2026. The thesis: AI amplifies human creativity rather than replacing it. A playbook for anyone with an idea and the drive to build it, no CS degree required. <a href=\"https://www.amazon.com/dp/B0GWN497PW\" target=\"_blank\" rel=\"noopener\" style=\"color:#89AACC\">Find it on Amazon</a>." },
+
+    { keys: ['claude','vibe','vibe-cod','workflow','prototype','ai tool','tooling'],
+      a: "Claude Code is the canvas I design on. I think out loud in plain language, Claude generates the next iteration as real HTML/CSS/JS, and a PM, engineer, or exec can click, criticize, and steer it in the same meeting. This site is the demo." },
+
+    { keys: ['studio xo','lady gaga','little monsters','cannes','grammy'],
+      a: "Studio XO was the experimental design house where we built work for Lady Gaga and others. Picked up a Cannes Gold Lion, a Webby, and Grammy-adjacent work along the way. Co-creating Little Monsters with Lady Gaga is also what landed me on the Forbes 30 Under 30 list." },
+
+    { keys: ['anthropic','deepmind','frontier','interview','company'],
+      a: "I love working where the technology is genuinely transformative and design plays the role of making it useful, intuitive, and human. Frontier AI is the most interesting place to be a designer in 2026 — and I want to be on the team shaping how people actually use these models." },
+
+    { keys: ['stanford','school','education','degree'],
+      a: "Stanford d.School alum and guest lecturer. Also speak at the AI UX Summit and write about design for AI products." },
+
+    { keys: ['toshi','dog','goldendoodle','pet','live','bay area','location','where','sf','san francisco'],
+      a: "Bay Area, with my mini Goldendoodle Toshi. Bay Area native, frontier-tech lifer." },
+
+    { keys: ['design system','craft','visual','motion','typography','animation'],
+      a: "Craft compounds. Motion, type, color, hierarchy — every detail is the product. My approach: ship the version that feels right, even when there's a cheaper version that fits in the sprint." },
+
+    { keys: ['mobile','ios','android','phone','app'],
+      a: "Fifteen years designing mobile systems at the frontier. LinkedIn iOS, LinkedIn Premium, Wing consumer mobile. I think in flows, gestures, and constraints, and I love the discipline a small screen forces." },
+
+    { keys: ['why','reason','motivation','passion'],
+      a: "Design is the layer where transformative technology either becomes useful for normal humans or doesn't. That's the work I want to do, and that's the bar I hold the AI products I touch to." },
+
+    { keys: ['multi-modal','multimodal','voice','vision','gesture','audio'],
+      a: "Multi-modal product design is the next frontier. Voice, text, vision, and gesture flowing together. The interesting design question is no longer 'where do I put the button' — it's 'what's the right modality for this moment.'" },
+
+    { keys: ['hi','hello','hey','sup','yo'],
+      a: "Hey! I'm Joey, kinda. This is an AI-native version of me running in your browser. Ask me about my work, the book, Claude, hiring, or anything design-adjacent." }
+  ];
+
+  const DEFAULT_REPLY = "I can answer questions about my work at LinkedIn Premium, Wing @ Google X, Studio XO with Lady Gaga, my book <em class=\"font-display italic\">Think. Prompt. Create.</em>, AI-native design with Claude, or my background. Try one of the suggestions above, or ask me something specific.";
+
+  function match(q) {
+    const lower = q.toLowerCase();
+    let best = null, bestHits = 0;
+    for (const item of KB) {
+      const hits = item.keys.reduce((n, k) => n + (lower.includes(k) ? 1 : 0), 0);
+      if (hits > bestHits) { best = item; bestHits = hits; }
+    }
+    return bestHits > 0 ? best.a : DEFAULT_REPLY;
+  }
+
+  function addUser(text) {
+    const el = document.createElement('div');
+    el.className = 'ask-msg user';
+    el.textContent = text;
+    stream.appendChild(el);
+    stream.scrollTop = stream.scrollHeight;
+  }
+
+  function addBotTyped(html) {
+    const el = document.createElement('div');
+    el.className = 'ask-msg bot';
+    stream.appendChild(el);
+    stream.scrollTop = stream.scrollHeight;
+
+    // Typewriter — handle HTML tags by skipping past them as one chunk
+    let i = 0;
+    const cursor = '<span class="ask-cursor"></span>';
+    function tick() {
+      if (i >= html.length) {
+        el.innerHTML = html;
+        send.disabled = false;
+        return;
+      }
+      if (html[i] === '<') {
+        const end = html.indexOf('>', i);
+        i = end + 1;
+      } else {
+        i++;
+      }
+      el.innerHTML = html.slice(0, i) + cursor;
+      stream.scrollTop = stream.scrollHeight;
+      setTimeout(tick, 14 + Math.random() * 10);
+    }
+    send.disabled = true;
+    tick();
+  }
+
+  function renderSuggestions() {
+    suggests.innerHTML = SUGGESTIONS.map(s => `<button class="ask-pill" type="button">${s}</button>`).join('');
+    suggests.querySelectorAll('.ask-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        ask(btn.textContent);
+      });
+    });
+  }
+
+  function ask(q) {
+    if (!q || !q.trim()) return;
+    addUser(q.trim());
+    input.value = '';
+    setTimeout(() => addBotTyped(match(q)), 350);
+  }
+
+  // Initial greeting
+  setTimeout(() => {
+    addBotTyped("Hi, I'm an AI-native version of Joey running in your browser. Ask me about my work at LinkedIn, Wing, Studio XO, the book, or how I design with Claude.");
+  }, 200);
+
+  renderSuggestions();
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    ask(input.value);
+  });
+})();
 
 /* ============ SMOOTH SCROLL FOR ANCHORS ============ */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
