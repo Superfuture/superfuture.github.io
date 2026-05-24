@@ -2157,20 +2157,23 @@ bootAskJoey();
   });
 })();
 
-/* ============ EASTER EGG: KONAMI CODE ============ */
+/* ============ EASTER EGG: UP UP DOWN DOWN SHIFT+ENTER ============ */
 (function konami(){
-  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown'];
   let i = 0;
   document.addEventListener('keydown', (e) => {
-    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    if (k === seq[i]) {
-      i++;
-      if (i === seq.length) {
+    if (i === seq.length) {
+      if (e.key === 'Enter' && e.shiftKey) {
         i = 0;
         fireKonami();
+        return;
       }
+      i = 0;
+    }
+    if (e.key === seq[i]) {
+      i++;
     } else {
-      i = (k === seq[0]) ? 1 : 0;
+      i = (e.key === seq[0]) ? 1 : 0;
     }
   });
   function fireKonami(){
