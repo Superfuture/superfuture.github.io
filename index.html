@@ -162,6 +162,27 @@
     #playground { min-height: 220vh !important; }
   }
 
+  /* Scroll perf: skip rendering off-screen sections until they approach the viewport.
+     Each section reserves a typical height so the scrollbar doesn't jump. */
+  #work, #recognition, #book, #testimonials, #playground, #about, #contact {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1200px;
+  }
+
+  /* Promote the nav pill to its own compositor layer so backdrop-filter
+     doesn't re-rasterize on every scroll frame. */
+  #navPill { will-change: transform; transform: translateZ(0); }
+
+  /* Respect users who don't want motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   .font-display { font-family: 'Instrument Serif', serif; }
 
   /* Signature wordmark — Fraunces with custom variable axes */
@@ -1796,19 +1817,25 @@ function runEntrance(){
   }, 2000);
 })();
 
-/* ============ NAV SHADOW ON SCROLL ============ */
-(function navShadow(){
+/* ============ NAV SHADOW + ACTIVE STATE (rAF-throttled) ============ */
+(function navOnScroll(){
   const pill = document.getElementById('navPill');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) pill.classList.add('shadow-md','shadow-black/40');
-    else pill.classList.remove('shadow-md','shadow-black/40');
-  }, { passive: true });
-})();
+  const links = Array.from(document.querySelectorAll('.nav-link'));
+  const sectionIds = ['top','work','about'];
+  const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  let cachedOffsets = sectionEls.map(el => el.offsetTop);
+  let ticking = false;
+  let lastActive = '';
+  let lastHasShadow = false;
 
-/* ============ NAV ACTIVE STATE ============ */
-(function navActive(){
-  const links = document.querySelectorAll('.nav-link');
+  function recalcOffsets(){ cachedOffsets = sectionEls.map(el => el.offsetTop); }
+  window.addEventListener('resize', recalcOffsets, { passive: true });
+  // Recalc after fonts/images settle
+  window.addEventListener('load', recalcOffsets);
+
   function paint(active){
+    if (active === lastActive) return;
+    lastActive = active;
     links.forEach(l => {
       const isActive = l.dataset.section === active;
       l.style.background = isActive ? 'hsl(var(--stroke) / 0.5)' : 'transparent';
@@ -1816,15 +1843,27 @@ function runEntrance(){
     });
   }
   paint('top');
-  const sections = ['top','work','about'];
-  function onScroll(){
-    const y = window.scrollY + window.innerHeight * 0.4;
-    let current = 'top';
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.offsetTop <= y) current = id;
-    });
+
+  function update(){
+    ticking = false;
+    const y = window.scrollY;
+    const hasShadow = y > 100;
+    if (hasShadow !== lastHasShadow) {
+      lastHasShadow = hasShadow;
+      pill.classList.toggle('shadow-md', hasShadow);
+      pill.classList.toggle('shadow-black/40', hasShadow);
+    }
+    const probe = y + window.innerHeight * 0.4;
+    let current = sectionIds[0];
+    for (let i = 0; i < sectionEls.length; i++) {
+      if (cachedOffsets[i] <= probe) current = sectionIds[i];
+    }
     paint(current);
+  }
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
