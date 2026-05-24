@@ -972,6 +972,65 @@
   .star { width: 16px; height: 16px; }
   .star path { fill: #ffd54f; }
 
+  /* Recognition logo grid */
+  .reco-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 8px;
+  }
+  @media (min-width: 640px) { .reco-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .reco-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+  .reco-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 5 / 3;
+    border-radius: 16px;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface) / 0.5);
+    text-decoration: none;
+    color: hsl(var(--text));
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease, background .35s ease;
+    padding: 18px;
+  }
+  .reco-tile:hover {
+    transform: translateY(-3px);
+    border-color: rgba(137,170,204,0.45);
+    background: hsl(var(--surface));
+  }
+  .reco-tile img {
+    max-height: 38px;
+    max-width: 70%;
+    width: auto;
+    filter: brightness(0) invert(1) saturate(0) opacity(0.88);
+    object-fit: contain;
+    transition: filter .25s ease, opacity .25s ease;
+  }
+  .reco-tile:hover img { opacity: 1; }
+  .reco-tile .reco-name {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1;
+    color: hsl(var(--text));
+  }
+  .reco-tile .reco-meta {
+    margin-top: 10px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: hsl(var(--muted));
+  }
+  @media (max-width: 640px) {
+    .reco-tile img { max-height: 28px; }
+    .reco-tile .reco-name { font-size: 20px; }
+    .reco-tile .reco-meta { font-size: 9px; letter-spacing: 0.18em; }
+  }
+
   /* Worked-with logo strip */
   .logo-mark {
     display: inline-flex;
@@ -1089,25 +1148,15 @@
     <div class="blur-in mt-14 md:mt-20 max-w-5xl">
       <div class="text-xs uppercase tracking-[0.3em] mb-5 text-center" style="color:hsl(var(--muted))">Built products you love at scale</div>
       <div class="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 md:gap-x-12 gap-y-4">
-        <span class="logo-mark" aria-label="LinkedIn" title="LinkedIn">
-          <img src="https://cdn.simpleicons.org/linkedin/d4d4d4" alt="LinkedIn"/>
-        </span>
+        <span class="logo-text">LinkedIn</span>
         <span class="opacity-30">·</span>
-        <span class="logo-mark" aria-label="Google" title="Google">
-          <img src="https://cdn.simpleicons.org/google/d4d4d4" alt="Google"/>
-        </span>
+        <span class="logo-text">Google</span>
         <span class="opacity-30">·</span>
-        <span class="logo-mark" aria-label="Google X / Moonshot Factory" title="Google X">
-          <img class="logo-clearbit" src="https://logo.clearbit.com/x.company" alt="Google X"/>
-        </span>
+        <span class="logo-text">Google&nbsp;X</span>
         <span class="opacity-30">·</span>
-        <span class="logo-mark" aria-label="Wing" title="Wing">
-          <img class="logo-clearbit" src="https://logo.clearbit.com/wing.com" alt="Wing"/>
-        </span>
+        <span class="logo-text">Wing</span>
         <span class="opacity-30">·</span>
-        <span class="logo-mark" aria-label="Intuit" title="Intuit">
-          <img src="https://cdn.simpleicons.org/intuit/d4d4d4" alt="Intuit"/>
-        </span>
+        <span class="logo-text">Intuit</span>
         <span class="opacity-30">·</span>
         <span class="logo-text">Lady&nbsp;Gaga</span>
       </div>
@@ -1624,7 +1673,7 @@ const PROJECTS = [
     img: 'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png'
   },
   {
-    span: 7, slug: 'little-monsters', name: 'Little Monsters', category: 'Co-Founder · Lady Gaga · 2011–2012',
+    span: 7, slug: 'little-monsters', name: 'Lady Gaga', category: 'Co-Founder · Little Monsters · 2011–2012',
     summary: "Co-founded a creative social platform with Lady Gaga before fan platforms were a category. Fan art as fine art.",
     img: 'https://assets.dunked.com/assets/prod/117833/p1bba63p7i1595m541rbs1k441oht8.png'
   }
