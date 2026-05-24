@@ -705,24 +705,24 @@ function render(slug) {
               <form id="caseStudyRequest" class="md:col-span-7 cs-gate-form" novalidate>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                   <label class="cs-gate-field">
-                    <span class="cs-gate-label">First name <em>(required)</em></span>
+                    <span class="cs-gate-label">First name <em>(Required)</em></span>
                     <input required name="firstName" type="text" autocomplete="given-name"/>
                   </label>
                   <label class="cs-gate-field">
-                    <span class="cs-gate-label">Last name <em>(required)</em></span>
+                    <span class="cs-gate-label">Last name <em>(Required)</em></span>
                     <input required name="lastName" type="text" autocomplete="family-name"/>
                   </label>
                 </div>
                 <label class="cs-gate-field mt-4 md:mt-5 block">
-                  <span class="cs-gate-label">Email <em>(required)</em></span>
+                  <span class="cs-gate-label">Email <em>(Required)</em></span>
                   <input required name="email" type="email" autocomplete="email"/>
                 </label>
                 <label class="cs-gate-field mt-4 md:mt-5 block">
-                  <span class="cs-gate-label">Company <span class="text-text-muted">(optional)</span></span>
+                  <span class="cs-gate-label">Company</span>
                   <input name="company" type="text" autocomplete="organization"/>
                 </label>
                 <label class="cs-gate-field mt-4 md:mt-5 block">
-                  <span class="cs-gate-label">Note <span class="text-text-muted">(optional)</span></span>
+                  <span class="cs-gate-label">Note</span>
                   <textarea name="note" rows="3" placeholder="What about the work caught your eye?"></textarea>
                 </label>
                 <button type="submit" class="cs-gate-submit mt-7 md:mt-8">
