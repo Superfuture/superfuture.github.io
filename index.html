@@ -544,6 +544,72 @@
   .ask-send:hover { transform: translateY(-1px); filter: brightness(1.08); }
   .ask-send:disabled { opacity: .5; cursor: not-allowed; }
 
+  /* Playground cards */
+  .play-card {
+    position: relative;
+    display: block;
+    border: 1px solid hsl(var(--stroke));
+    border-radius: 22px;
+    overflow: hidden;
+    background: hsl(var(--surface));
+    transition: transform .45s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .45s ease;
+    aspect-ratio: 4 / 5;
+  }
+  .play-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(137,170,204,0.45);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(137,170,204,0.12);
+  }
+  .play-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform .8s cubic-bezier(.22,1,.36,1), filter .45s ease;
+  }
+  .play-card:hover img {
+    transform: scale(1.06);
+    filter: saturate(1.1);
+  }
+  .play-card .play-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
+    pointer-events: none;
+  }
+  .play-card .play-meta {
+    position: absolute;
+    left: 22px; right: 22px; bottom: 20px;
+    color: hsl(var(--text));
+  }
+  .play-card .play-name {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 1.05;
+    margin-bottom: 4px;
+  }
+  .play-card .play-tag {
+    font-size: 12px;
+    color: hsl(var(--text) / 0.78);
+    line-height: 1.4;
+  }
+  .play-card .play-pill {
+    position: absolute;
+    top: 18px; right: 18px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: rgba(12,12,12,0.55);
+    backdrop-filter: blur(8px);
+    color: hsl(var(--text) / 0.85);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
   /* Disciplines panel */
   .disciplines {
     margin-top: 32px;
@@ -1083,6 +1149,56 @@
   </div>
 </section>
 
+
+<!-- ============ PLAYGROUND ============ -->
+<section id="playground" class="py-16 md:py-24 border-t" style="background:hsl(var(--bg)); border-color:hsl(var(--stroke))">
+  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
+    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
+          <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Playground</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl lg:text-6xl mb-3" style="color:hsl(var(--text))">
+          Vibe-coded <span class="font-display italic">experiments</span>
+        </h2>
+        <p class="text-sm md:text-base md:whitespace-nowrap" style="color:hsl(var(--muted))">
+          Indie sandbox builds. Each one started as a Claude Code session and shipped in a weekend.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
+      <a href="#" class="play-card reveal group">
+        <img src="ditto-final-desktop.png" alt="Ditto" loading="lazy"/>
+        <div class="play-shade"></div>
+        <span class="play-pill">2026</span>
+        <div class="play-meta">
+          <div class="play-name">Ditto</div>
+          <div class="play-tag">AI assist for messaging, built for iMessage.</div>
+        </div>
+      </a>
+      <a href="#" class="play-card reveal group">
+        <img src="aeon-final-hero.png" alt="Aeon" loading="lazy"/>
+        <div class="play-shade"></div>
+        <span class="play-pill">2026</span>
+        <div class="play-meta">
+          <div class="play-name">Aeon</div>
+          <div class="play-tag">A product about time. Branded, built, and shipped in a weekend.</div>
+        </div>
+      </a>
+      <a href="#" class="play-card reveal group">
+        <img src="operator-preview.png" alt="Operator" loading="lazy"/>
+        <div class="play-shade"></div>
+        <span class="play-pill">2026</span>
+        <div class="play-meta">
+          <div class="play-name">Operator</div>
+          <div class="play-tag">A vibe-coded sketch of an AI operator.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- ============ ABOUT ============ -->
 <section id="about" class="py-20 md:py-28" style="background:hsl(var(--bg))">
