@@ -83,11 +83,11 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,200..900,0..100;1,9..144,200..900,0..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
   tailwind.config = {
     theme: {
@@ -1330,12 +1330,10 @@ const TESTIMONIALS = [
   el.innerHTML = Array.from({length:10}, () => `<span class="px-6">${piece}</span>`).join('');
 })();
 
-/* ============ HLS VIDEO ============ */
+/* ============ HLS VIDEO (hero eager, contact lazy) ============ */
 (function bootVideo(){
   const src = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
-  ['bgVideo','bgVideo2'].forEach(id => {
-    const v = document.getElementById(id);
-    if (!v) return;
+  function attach(v) {
     if (window.Hls && Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(src);
@@ -1343,7 +1341,20 @@ const TESTIMONIALS = [
     } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
       v.src = src;
     }
-  });
+  }
+  // Hero video: load immediately
+  const hero = document.getElementById('bgVideo');
+  if (hero) attach(hero);
+  // Contact video: only load when scrolled into view
+  const contact = document.getElementById('bgVideo2');
+  if (contact) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { attach(contact); obs.unobserve(contact); }
+      });
+    }, { rootMargin: '400px' });
+    io.observe(contact);
+  }
 })();
 
 /* ============ LOADING SCREEN ============ */
@@ -1352,6 +1363,16 @@ const TESTIMONIALS = [
   const bar = document.getElementById('loadBar');
   const word = document.getElementById('loadWord');
   const loader = document.getElementById('loader');
+
+  // Skip loader entirely on repeat visits within 8 hours
+  const last = parseInt(sessionStorage.getItem('jp_loader_seen') || '0', 10);
+  const skipLoader = Date.now() - last < 8 * 60 * 60 * 1000;
+  if (skipLoader && loader) {
+    loader.remove();
+    setTimeout(runEntrance, 50);
+    return;
+  }
+  sessionStorage.setItem('jp_loader_seen', String(Date.now()));
 
   const words = ['Design', 'Create', 'Inspire'];
   let wIdx = 0;
@@ -1363,13 +1384,13 @@ const TESTIMONIALS = [
       word.style.opacity = '1';
       word.style.transform = 'translateY(0)';
       wIdx = (wIdx + 1) % words.length;
-    }, 200);
+    }, 120);
   }
   showWord();
-  const wordTimer = setInterval(showWord, 900);
+  const wordTimer = setInterval(showWord, 500);
 
   const start = performance.now();
-  const dur = 2700;
+  const dur = 1200;
   function tick(t){
     const p = Math.min(1, (t - start) / dur);
     const c = Math.round(p * 100);
@@ -1379,11 +1400,11 @@ const TESTIMONIALS = [
     else {
       clearInterval(wordTimer);
       setTimeout(()=>{
-        loader.style.transition = 'opacity .5s ease';
+        loader.style.transition = 'opacity .35s ease';
         loader.style.opacity = '0';
-        setTimeout(()=> loader.remove(), 550);
+        setTimeout(()=> loader.remove(), 380);
         runEntrance();
-      }, 400);
+      }, 180);
     }
   }
   requestAnimationFrame(tick);
