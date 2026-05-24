@@ -1080,13 +1080,36 @@
           </svg>
         </span>
         <span class="opacity-30">·</span>
-        <span class="logo-text">Google&nbsp;X</span>
+        <span class="logo-mark" aria-label="Google X / Moonshot Factory" title="Google X">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3.2 3 L9.2 12 L3.2 21 L6.5 21 L11 14.2 L15.5 21 L20.8 21 L14.8 12 L20.8 3 L17.5 3 L13 9.8 L8.5 3 Z"/>
+          </svg>
+        </span>
         <span class="opacity-30">·</span>
-        <span class="logo-text">Wing</span>
+        <span class="logo-mark" aria-label="Wing" title="Wing">
+          <svg viewBox="0 0 32 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.5 11 C 5 5, 12 3, 19 4.5 C 23 5.2, 27 7, 30.5 10.5 C 25 9.5, 20 9.2, 15 10 C 10 10.8, 6 12, 1.5 11 Z M 16 11.5 L 14 17 L 17 13 L 19 17 L 18 11.5 Z"/>
+          </svg>
+        </span>
         <span class="opacity-30">·</span>
-        <span class="logo-text">Intuit</span>
+        <span class="logo-mark" aria-label="Intuit" title="Intuit">
+          <svg viewBox="0 0 64 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="3.5" cy="6" r="2.4"/>
+            <rect x="2" y="11" width="3" height="11" rx="1.2"/>
+            <path d="M9 11h3v6.4c0 1.5 1 2.4 2.3 2.4 1.3 0 2.3-.9 2.3-2.4V11h3v6.6c0 3-2 4.7-5.3 4.7-3.3 0-5.3-1.7-5.3-4.7V11z"/>
+            <path d="M22 11h3v6.4c0 1.5 1 2.4 2.3 2.4 1.3 0 2.3-.9 2.3-2.4V11h3v6.6c0 3-2 4.7-5.3 4.7-3.3 0-5.3-1.7-5.3-4.7V11z"/>
+            <path d="M37 7h3v4h2.5v2.6H40v5.4c0 1 .4 1.4 1.2 1.4.5 0 1-.1 1.3-.2v2.6c-.6.2-1.4.4-2.4.4-2.4 0-3.1-1.3-3.1-3.4v-6.2h-1.7V11H37V7z"/>
+            <circle cx="46" cy="6" r="2.4"/>
+            <rect x="44.5" y="11" width="3" height="11" rx="1.2"/>
+            <path d="M52 7h3v4h2.5v2.6H55v5.4c0 1 .4 1.4 1.2 1.4.5 0 1-.1 1.3-.2v2.6c-.6.2-1.4.4-2.4.4-2.4 0-3.1-1.3-3.1-3.4v-6.2h-1.7V11H52V7z"/>
+          </svg>
+        </span>
         <span class="opacity-30">·</span>
-        <span class="logo-text">Lady&nbsp;Gaga</span>
+        <span class="logo-mark" aria-label="Lady Gaga" title="Lady Gaga">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M13 2 L4 13 L10.5 13 L9 22 L20 10 L13.5 10 Z"/>
+          </svg>
+        </span>
       </div>
     </div>
   </div>
@@ -1201,8 +1224,8 @@
 <section id="book" class="py-20 md:py-32 border-t border-b" style="background:hsl(var(--bg)); border-color:hsl(var(--stroke))">
   <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
     <div class="reveal grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
-      <!-- Cover with rainbow gradient backdrop -->
-      <div class="md:col-span-6 order-1 relative" id="bookStage" style="perspective: 1400px;">
+      <!-- Cover with rainbow gradient backdrop (desktop only) -->
+      <div class="md:col-span-6 order-1 relative hidden md:block" id="bookStage" style="perspective: 1400px;">
         <div class="book-rainbow" aria-hidden="true"></div>
         <a href="https://www.amazon.com/dp/B0GWN497PW" target="_blank" rel="noopener"
            class="book-tilt block relative w-full mx-auto"
@@ -1235,6 +1258,19 @@
             <svg class="star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </span>
         </div>
+
+        <!-- Mobile-only book cover + gradient, between stars and description -->
+        <div class="md:hidden relative my-8" style="perspective: 1400px;">
+          <div class="book-rainbow" aria-hidden="true"></div>
+          <a href="https://www.amazon.com/dp/B0GWN497PW" target="_blank" rel="noopener"
+             class="block relative w-full max-w-[360px] mx-auto"
+             style="filter: drop-shadow(0 30px 60px rgba(78, 133, 191, 0.3));">
+            <img src="book-cover.png"
+                 alt="Think. Prompt. Create. by Joey Primiani"
+                 class="w-full h-auto relative z-10 float-soft"/>
+          </a>
+        </div>
+
         <p class="text-base md:text-lg leading-relaxed max-w-2xl mb-8" style="color:hsl(var(--text) / 0.75)">
           A playbook for anyone with an idea and the drive to build it, no computer science degree required. The thesis: AI&rsquo;s real power is in amplifying human creativity, not replacing it.
         </p>
