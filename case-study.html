@@ -198,6 +198,74 @@
   .cs-section-gallery.tall .cs-tile { aspect-ratio: 9/16; }
   .cs-section-gallery.square .cs-tile { aspect-ratio: 1/1; }
 
+  /* Gated case study request form */
+  .cs-gate-form { max-width: 100%; }
+  .cs-gate-field { display: block; }
+  .cs-gate-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: hsl(var(--muted));
+    margin-bottom: 10px;
+  }
+  .cs-gate-label em {
+    font-style: normal;
+    color: hsl(var(--muted) / 0.7);
+    margin-left: 4px;
+    text-transform: none;
+    letter-spacing: 0.05em;
+  }
+  .cs-gate-field input,
+  .cs-gate-field textarea {
+    width: 100%;
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--stroke));
+    border-radius: 14px;
+    padding: 14px 16px;
+    color: hsl(var(--text));
+    font: inherit;
+    font-size: 15px;
+    transition: border-color .2s ease, background .2s ease;
+    outline: none;
+  }
+  .cs-gate-field textarea { resize: vertical; min-height: 96px; }
+  .cs-gate-field input:focus,
+  .cs-gate-field textarea:focus {
+    border-color: rgba(137,170,204,0.6);
+    background: hsl(var(--surface) / 1.2);
+  }
+  .cs-gate-field input:invalid:not(:placeholder-shown),
+  .cs-gate-field textarea:invalid:not(:placeholder-shown) {
+    border-color: rgba(220, 90, 90, 0.5);
+  }
+  .cs-gate-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+    color: #0a0a0a;
+    border: 0;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform .25s ease, filter .25s ease;
+  }
+  .cs-gate-submit:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .cs-gate-submit:disabled { opacity: .6; cursor: progress; transform: none; }
+  .cs-gate-success {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(16,185,129,0.4);
+    background: rgba(16,185,129,0.08);
+    color: hsl(var(--text));
+    font-size: 14px;
+  }
+
   /* Full-bleed intermission strip between cases */
   .cs-bleed {
     position: relative;
@@ -395,6 +463,8 @@ const CASES = {
     next: 'wing',
     appUrl: 'https://www.linkedin.com/premium/',
     appLabel: 'Try LinkedIn Premium',
+    gated: true,
+    gatedIntro: `Thanks for your interest. The LinkedIn Premium case study contains pre-shipped concepts and internal work. If you'd like to view it, share your name and email and I'll happily provide access.`,
   },
 
   'wing': {
@@ -605,49 +675,92 @@ function render(slug) {
       <!-- Sections -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div class="md:col-span-12 space-y-20 md:space-y-28">
-          ${c.sections.map((s, i) => `
-            <section class="reveal cs-section">
-              ${s.media ? `
-                <div class="cs-section-media ${s.mediaClass || 'kenburns wide'}">
-                  ${s.media}
-                  ${s.mediaCaption ? `<div class="cs-media-gradient"></div><div class="cs-media-caption"><span>${s.mediaCaption}</span><span aria-hidden="true">↗</span></div>` : ''}
-                </div>
-              ` : ''}
-              ${s.gallery ? `
-                <div class="cs-section-gallery ${s.galleryClass || ''}">
-                  ${s.gallery.map(g => `<div class="cs-tile"><img loading="lazy" src="${g}" alt=""/></div>`).join('')}
-                </div>
-              ` : ''}
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
-                <div class="md:col-span-3">
-                  <div class="text-xs uppercase tracking-[0.3em] mb-2" style="color:hsl(var(--muted))">0${i+1}</div>
-                  <h2 class="text-2xl md:text-3xl" style="color:hsl(var(--text))">
-                    ${s.h.includes(' ')
-                      ? s.h.split(' ').map((w, wi)=> wi === s.h.split(' ').length-1 ? `<span class="font-display italic">${w}</span>` : w).join(' ')
-                      : `<span class="font-display italic">${s.h}</span>`}
-                  </h2>
-                </div>
-                <div class="md:col-span-9">
-                  <p class="text-base md:text-lg leading-relaxed" style="color:hsl(var(--text) / .85)">${s.body}</p>
+          ${c.gated ? `
+            <section class="reveal grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+              <div class="md:col-span-5">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight" style="color:hsl(var(--text))">
+                  Request <span class="font-display italic">Case Study</span>
+                </h2>
+                <p class="text-base md:text-lg mt-6 leading-relaxed" style="color:hsl(var(--text) / .8)">${c.gatedIntro || `Thanks for your interest. Share your name and email and I'll happily provide access.`}</p>
+                <div class="mt-8 flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
+                  <span class="relative inline-block w-2 h-2 rounded-full" style="background:#10b981; box-shadow:0 0 12px #10b981;"></span>
+                  Typically replies within a day
                 </div>
               </div>
+              <form id="caseStudyRequest" class="md:col-span-7 cs-gate-form" novalidate>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+                  <label class="cs-gate-field">
+                    <span class="cs-gate-label">First name <em>(required)</em></span>
+                    <input required name="firstName" type="text" autocomplete="given-name"/>
+                  </label>
+                  <label class="cs-gate-field">
+                    <span class="cs-gate-label">Last name <em>(required)</em></span>
+                    <input required name="lastName" type="text" autocomplete="family-name"/>
+                  </label>
+                </div>
+                <label class="cs-gate-field mt-4 md:mt-5 block">
+                  <span class="cs-gate-label">Email <em>(required)</em></span>
+                  <input required name="email" type="email" autocomplete="email"/>
+                </label>
+                <label class="cs-gate-field mt-4 md:mt-5 block">
+                  <span class="cs-gate-label">Company <span class="text-text-muted">(optional)</span></span>
+                  <input name="company" type="text" autocomplete="organization"/>
+                </label>
+                <label class="cs-gate-field mt-4 md:mt-5 block">
+                  <span class="cs-gate-label">Note <span class="text-text-muted">(optional)</span></span>
+                  <textarea name="note" rows="3" placeholder="What about the work caught your eye?"></textarea>
+                </label>
+                <button type="submit" class="cs-gate-submit mt-7 md:mt-8">
+                  Send request <span aria-hidden="true">↗</span>
+                </button>
+                <p class="cs-gate-success" hidden>Got it. I'll send a link to your inbox shortly. Thanks for reaching out.</p>
+              </form>
             </section>
-          `).join('')}
+          ` : `
+            ${c.sections.map((s, i) => `
+              <section class="reveal cs-section">
+                ${s.media ? `
+                  <div class="cs-section-media ${s.mediaClass || 'kenburns wide'}">
+                    ${s.media}
+                    ${s.mediaCaption ? `<div class="cs-media-gradient"></div><div class="cs-media-caption"><span>${s.mediaCaption}</span><span aria-hidden="true">↗</span></div>` : ''}
+                  </div>
+                ` : ''}
+                ${s.gallery ? `
+                  <div class="cs-section-gallery ${s.galleryClass || ''}">
+                    ${s.gallery.map(g => `<div class="cs-tile"><img loading="lazy" src="${g}" alt=""/></div>`).join('')}
+                  </div>
+                ` : ''}
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
+                  <div class="md:col-span-3">
+                    <div class="text-xs uppercase tracking-[0.3em] mb-2" style="color:hsl(var(--muted))">0${i+1}</div>
+                    <h2 class="text-2xl md:text-3xl" style="color:hsl(var(--text))">
+                      ${s.h.includes(' ')
+                        ? s.h.split(' ').map((w, wi)=> wi === s.h.split(' ').length-1 ? `<span class="font-display italic">${w}</span>` : w).join(' ')
+                        : `<span class="font-display italic">${s.h}</span>`}
+                    </h2>
+                  </div>
+                  <div class="md:col-span-9">
+                    <p class="text-base md:text-lg leading-relaxed" style="color:hsl(var(--text) / .85)">${s.body}</p>
+                  </div>
+                </div>
+              </section>
+            `).join('')}
 
-          ${c.appUrl ? `
-            <section class="reveal cs-app-cta-wrap">
-              <a href="${c.appUrl}" target="_blank" rel="noopener" class="cs-app-cta">
-                ${c.appLabel || 'Open the app'} <span aria-hidden="true">↗</span>
-              </a>
+            ${c.appUrl ? `
+              <section class="reveal cs-app-cta-wrap">
+                <a href="${c.appUrl}" target="_blank" rel="noopener" class="cs-app-cta">
+                  ${c.appLabel || 'Open the app'} <span aria-hidden="true">↗</span>
+                </a>
+              </section>
+            ` : ''}
+
+            <!-- Pull quote -->
+            <section class="reveal py-12 md:py-16 border-y" style="border-color:hsl(var(--stroke))">
+              <p class="pullquote text-3xl md:text-5xl lg:text-6xl font-display italic leading-tight max-w-4xl mx-auto text-center" style="color:hsl(var(--text))">
+                ${c.quote}
+              </p>
             </section>
-          ` : ''}
-
-          <!-- Pull quote -->
-          <section class="reveal py-12 md:py-16 border-y" style="border-color:hsl(var(--stroke))">
-            <p class="pullquote text-3xl md:text-5xl lg:text-6xl font-display italic leading-tight max-w-4xl mx-auto text-center" style="color:hsl(var(--text))">
-              ${c.quote}
-            </p>
-          </section>
+          `}
         </div>
       </div>
     </article>
@@ -658,6 +771,37 @@ function render(slug) {
   document.getElementById('nextLink').href = '#' + c.next;
   document.getElementById('nextName').innerHTML = `<span class="font-display italic">${next.name}</span> →`;
   document.getElementById('nextCat').textContent = next.category;
+
+  // gated request form: submit via mailto
+  const form = document.getElementById('caseStudyRequest');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const firstName = (fd.get('firstName') || '').toString().trim();
+      const lastName  = (fd.get('lastName')  || '').toString().trim();
+      const email     = (fd.get('email')     || '').toString().trim();
+      const company   = (fd.get('company')   || '').toString().trim();
+      const note      = (fd.get('note')      || '').toString().trim();
+      if (!firstName || !lastName || !email) { form.reportValidity(); return; }
+      const subject = encodeURIComponent(`Case study access request — ${c.name}`);
+      const lines = [
+        `Hi Joey,`,
+        ``,
+        `I'd like access to the ${c.name} case study.`,
+        ``,
+        `Name: ${firstName} ${lastName}`,
+        `Email: ${email}`,
+        company ? `Company: ${company}` : null,
+        note ? `\nNote:\n${note}` : null,
+      ].filter(Boolean).join('\n');
+      window.location.href = `mailto:jprimiani@gmail.com?subject=${subject}&body=${encodeURIComponent(lines)}`;
+      const success = form.querySelector('.cs-gate-success');
+      if (success) success.hidden = false;
+      const btn = form.querySelector('.cs-gate-submit');
+      if (btn) { btn.disabled = true; btn.textContent = 'Request sent ✓'; }
+    });
+  }
 
   // reveal animations
   requestAnimationFrame(() => {
