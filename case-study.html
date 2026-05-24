@@ -207,6 +207,41 @@
   .cs-section-gallery.tall .cs-tile { aspect-ratio: 9/16; }
   .cs-section-gallery.square .cs-tile { aspect-ratio: 1/1; }
 
+  /* Uniform CSS iPhone frame — wraps any screenshot in a consistent bezel.
+     Source images can have their own frames; we crop them out with object-position. */
+  .cs-section-gallery.iphone .cs-tile {
+    aspect-ratio: 9/19.5;
+    background: #111;
+    border-radius: 44px;
+    border: 8px solid #111;
+    box-shadow: 0 22px 50px rgba(0,0,0,0.55), inset 0 0 0 1.5px rgba(255,255,255,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+  .cs-section-gallery.iphone .cs-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 36px;
+    background: #fff;
+  }
+  /* Dynamic Island */
+  .cs-section-gallery.iphone .cs-tile::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28%;
+    max-width: 110px;
+    height: 24px;
+    background: #000;
+    border-radius: 999px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
   /* Gated case study request form */
   .cs-gate-form { max-width: 100%; }
   .cs-gate-field { display: block; }
@@ -540,7 +575,13 @@ const CASES = {
       },
       {
         h: 'The headline feature: AI food scanning',
-        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<div class="cs-media-row"><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png" alt="January AI device"/></div><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
+        gallery: [
+          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png',
+          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png',
+          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png'
+        ],
+        galleryClass: 'iphone',
+        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<br/><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
       },
       {
         h: 'Glucose predictions, without a sensor',
