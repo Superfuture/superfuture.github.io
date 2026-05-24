@@ -277,6 +277,15 @@
   .bento-card:hover .img { transform: scale(1.05); }
   .bento-card .overlay { opacity: 0; transition: opacity .4s ease; }
   .bento-card:hover .overlay { opacity: 1; }
+  /* Bottom gradient under category/title text for legibility on light imagery */
+  .bento-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.85) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
 
   /* Pulsing dot */
   .pulse-dot { position: relative; }
@@ -668,12 +677,16 @@
     background: hsl(var(--bg));
     border: 1px solid hsl(var(--stroke));
     border-radius: 9999px;
-    padding: 12px 18px;
+    padding: 11px 16px;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 16px; /* 16px+ prevents iOS Safari zoom-on-focus */
     color: hsl(var(--text));
     outline: none;
     transition: border-color .2s ease;
+    min-width: 0;
+  }
+  @media (min-width: 768px) {
+    .ask-input { font-size: 14px; }
   }
   .ask-input::placeholder { color: hsl(var(--muted)); }
   .ask-input:focus { border-color: rgba(137,170,204,0.6); }
@@ -1006,7 +1019,7 @@
       </span>
     </a>
     <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
-    <a href="#top"  class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="top">Home</a>
+    <a href="#top"  class="nav-link text-xs sm:text-sm rounded-full ml-2 sm:ml-0 px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="top">Home</a>
     <a href="#work" class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="work">Work</a>
     <a href="#about" class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="about">About</a>
     <a href="resume.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">Résumé</a>
@@ -1904,7 +1917,14 @@ function bootAskJoey(){
     const lower = q.toLowerCase();
     let best = null, bestHits = 0;
     for (const item of KB) {
-      const hits = item.keys.reduce((n, k) => n + (lower.includes(k) ? 1 : 0), 0);
+      const hits = item.keys.reduce((n, k) => {
+        // Multi-char keys: substring match. Short keys (<=4 chars): word-boundary to avoid 'hi' inside 'philosophy' etc.
+        if (k.length <= 4) {
+          const re = new RegExp('\\b' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+          return n + (re.test(lower) ? 1 : 0);
+        }
+        return n + (lower.includes(k) ? 1 : 0);
+      }, 0);
       if (hits > bestHits) { best = item; bestHits = hits; }
     }
     return bestHits > 0 ? best.a : DEFAULT_REPLY;
