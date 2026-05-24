@@ -2162,9 +2162,12 @@ bootAskJoey();
   const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown'];
   let i = 0;
   document.addEventListener('keydown', (e) => {
+    // Ignore modifier keydowns alone (they shouldn't break the sequence)
+    if (e.key === 'Shift' || e.key === 'Meta' || e.key === 'Control' || e.key === 'Alt') return;
     if (i === seq.length) {
       if (e.key === 'Enter' && e.shiftKey) {
         i = 0;
+        e.preventDefault();
         fireKonami();
         return;
       }
