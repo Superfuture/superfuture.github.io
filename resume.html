@@ -70,26 +70,24 @@
 
   body { overflow-x: hidden; }
 
-  /* On mobile, iOS Safari ignores #view=FitH and PDFs render at native page width,
-     overflowing horizontally. Hide the iframe and show a tap-to-open card instead. */
+  /* Desktop uses the native browser PDF viewer (with #view=FitH).
+     iOS Safari ignores FitH and overflows, so on mobile we swap in
+     Google Docs Viewer in an iframe — it auto-scales the PDF to fit. */
   .pdf-section { display: block; }
-  .pdf-mobile-card { display: none; }
+  .pdf-mobile-viewer { display: none; }
   @media (max-width: 767px) {
     .pdf-section { display: none; }
-    .pdf-mobile-card { display: flex; }
+    .pdf-mobile-viewer { display: block; }
   }
-
-  .pdf-mobile-card {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    padding: 40px 24px;
-    text-align: center;
-    border-radius: 24px;
+  .pdf-mobile-viewer {
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+    border-radius: 20px;
+    overflow: hidden;
     border: 1px solid hsl(var(--stroke));
-    background: hsl(var(--surface));
+    background: #fff;
   }
+  .pdf-mobile-viewer iframe { width: 100%; height: 100%; border: 0; display: block; }
 </style>
 </head>
 <body>
@@ -164,31 +162,13 @@
               loading="eager"></iframe>
     </section>
 
-    <!-- Mobile fallback: tap to open / download -->
-    <section class="pdf-mobile-card">
-      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:hsl(var(--muted))">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="9" y1="15" x2="15" y2="15"/>
-        <line x1="9" y1="11" x2="15" y2="11"/>
-      </svg>
-      <div>
-        <div class="text-base font-medium" style="color:hsl(var(--text))">Joey-Primiani-Resume.pdf</div>
-        <div class="text-xs mt-1" style="color:hsl(var(--muted))">PDF preview isn&rsquo;t supported on mobile. Open or download below.</div>
-      </div>
-      <div class="flex flex-row gap-3 items-stretch w-full max-w-xs">
-        <a href="primiani-resume.pdf" target="_blank" rel="noopener"
-           class="download-btn flex-1 inline-flex justify-center items-center gap-2 px-5 py-3.5 rounded-full text-sm font-medium whitespace-nowrap">
-          Open PDF <span aria-hidden="true">↗</span>
-        </a>
-        <a href="primiani-resume.pdf" download="Joey-Primiani-Resume.pdf"
-           class="ring-btn flex-1 inline-flex rounded-full text-sm">
-          <span class="relative inline-flex flex-1 justify-center items-center gap-2 px-5 py-3.5 rounded-full whitespace-nowrap"
-                style="background:hsl(var(--surface)); color:hsl(var(--text))">
-            Download
-          </span>
-        </a>
-      </div>
+    <!-- Mobile: Google Docs Viewer scales the PDF to fit the viewport -->
+    <section class="pdf-mobile-viewer">
+      <iframe
+        src="https://docs.google.com/viewer?url=https%3A%2F%2Fofficialjp.com%2Fwork%2Fprimiani-resume.pdf&embedded=true"
+        title="Joey Primiani Résumé"
+        loading="eager"
+        allowfullscreen></iframe>
     </section>
 
     <p class="text-xs text-center mt-5" style="color:hsl(var(--muted))">
