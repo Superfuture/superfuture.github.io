@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Case Study, Joey Primiani</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          body: ['Inter','sans-serif'],
+          display: ['"Instrument Serif"','serif'],
+        },
+        colors: {
+          bg: 'hsl(var(--bg))',
+          surface: 'hsl(var(--surface))',
+          'text-primary': 'hsl(var(--text))',
+          muted: 'hsl(var(--muted))',
+          stroke: 'hsl(var(--stroke))',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --bg: 0 0% 4%;
+    --surface: 0 0% 8%;
+    --text: 0 0% 96%;
+    --muted: 0 0% 53%;
+    --stroke: 0 0% 12%;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: hsl(var(--bg));
+    color: hsl(var(--text));
+    -webkit-font-smoothing: antialiased;
+  }
+  .font-display { font-family: 'Instrument Serif', serif; }
+  .accent-gradient {
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+  }
+  @keyframes gradient-shift {
+    0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
+  }
+  .ring-btn { position: relative; isolation: isolate; }
+  .ring-btn::before {
+    content:''; position:absolute; inset:-2px; border-radius:9999px;
+    padding:2px; background:linear-gradient(90deg,#89AACC,#4E85BF,#89AACC);
+    background-size:200% 200%; animation:gradient-shift 6s ease infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity:0; transition: opacity .3s ease; z-index:-1;
+  }
+  .ring-btn:hover::before { opacity:1; }
+
+  .halftone {
+    background-image: radial-gradient(circle, #000 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  .pulse-dot { position:relative; }
+  .pulse-dot::after {
+    content:''; position:absolute; inset:0; border-radius:9999px;
+    background:#10b981; opacity:.6; animation:pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%{transform:scale(1);opacity:.6}
+    100%{transform:scale(2.5);opacity:0}
+  }
+
+  .reveal { opacity:0; transform: translateY(20px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity:1; transform: translateY(0); }
+
+  /* Stat number gradient */
+  .stat-num {
+    background: linear-gradient(180deg, #ffffff 0%, #89AACC 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+            color: transparent;
+  }
+
+  .accent-rule {
+    background: linear-gradient(90deg, #89AACC 0%, transparent 100%);
+    height: 1px;
+  }
+
+  /* Pull-quote */
+  .pullquote::before { content: '“'; }
+  .pullquote::after { content: '”'; }
+
+  /* Lite YouTube embed */
+  .yt-lite {
+    display: block;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    background: #111;
+    cursor: pointer;
+    transition: transform .4s ease, border-color .4s ease;
+    text-decoration: none;
+    margin-top: 24px;
+  }
+  .yt-lite:hover { transform: scale(1.01); border-color: rgba(137,170,204,0.5); }
+  .yt-lite img.poster {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+  }
+  .yt-lite:hover img.poster { transform: scale(1.04); }
+  .yt-lite .yt-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.45) 100%);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .3s ease;
+  }
+  .yt-play {
+    width: 72px; height: 72px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #89AACC, #4E85BF);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 36px rgba(78,133,191,0.45), 0 0 0 6px rgba(255,255,255,0.05);
+    transition: transform .25s ease;
+  }
+  .yt-lite:hover .yt-play { transform: scale(1.08); }
+  .yt-play svg { width: 28px; height: 28px; fill: #fff; margin-left: 5px; }
+  .yt-meta {
+    position: absolute;
+    bottom: 18px;
+    left: 20px; right: 20px;
+    color: rgba(255,255,255,0.92);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    font-style: normal;
+  }
+</style>
+</head>
+<body class="font-body">
+
+<!-- Sticky back nav -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
+  <div class="inline-flex items-center rounded-full backdrop-blur-md border border-white/10 px-2 py-2"
+       style="background:hsl(var(--surface) / 0.85)">
+    <a href="index.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 inline-flex items-center gap-2"
+       style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">
+      <span aria-hidden="true">←</span> All work
+    </a>
+    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <span id="csChip" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2"
+          style="background:hsl(var(--stroke) / 0.5); color:hsl(var(--text))">Case study</span>
+    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <a href="mailto:jprimiani@gmail.com" class="ring-btn text-xs sm:text-sm rounded-full">
+      <span class="relative inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md"
+            style="background:hsl(var(--surface)); color:hsl(var(--text))">
+        Say hi <span aria-hidden="true">↗</span>
+      </span>
+    </a>
+  </div>
+</nav>
+
+<main id="csRoot" class="pt-32 pb-24"></main>
+
+<!-- Bottom CTA / next -->
+<section class="border-t" style="border-color:hsl(var(--stroke))">
+  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-end">
+    <div>
+      <div class="text-xs uppercase tracking-[0.3em] mb-3" style="color:hsl(var(--muted))">Next</div>
+      <a id="nextLink" href="#" class="block group">
+        <div id="nextName" class="text-3xl md:text-5xl mb-2 group-hover:underline" style="color:hsl(var(--text))"></div>
+        <div id="nextCat" class="text-sm" style="color:hsl(var(--muted))"></div>
+      </a>
+    </div>
+    <div class="md:text-right">
+      <p class="text-sm md:text-base mb-6" style="color:hsl(var(--muted))">Hiring for a Senior Product Design role? I'd love to talk.</p>
+      <a href="mailto:jprimiani@gmail.com" class="ring-btn rounded-full text-sm md:text-base inline-flex">
+        <span class="relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full"
+              style="background:hsl(var(--surface)); color:hsl(var(--text))">
+          jprimiani@gmail.com <span aria-hidden="true">↗</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-4 text-sm" style="color:hsl(var(--muted))">
+      <a href="https://www.linkedin.com/in/jprim" class="hover:text-[color:hsl(var(--text))]">LinkedIn</a>
+      <a href="https://x.com/jp" class="hover:text-[color:hsl(var(--text))]">x.com/jp</a>
+      <a href="https://dribbble.com/jprimiani" class="hover:text-[color:hsl(var(--text))]">Dribbble</a>
+      <a href="https://github.com/superfuture" class="hover:text-[color:hsl(var(--text))]">GitHub</a>
+    </div>
+    <div class="flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
+      <span class="pulse-dot relative inline-block w-2 h-2 rounded-full" style="background:#10b981"></span>
+      Available for select engagements
+    </div>
+    <div class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">© 2026 Joey Primiani</div>
+  </div>
+</section>
+
+<script>
+const CASES = {
+  'linkedin-premium': {
+    name: 'LinkedIn Premium',
+    category: 'Premium Mobile · 2022–Present',
+    role: 'Design Lead, Premium Mobile',
+    team: 'Cross-functional pod: PM, eng, data science, research',
+    location: 'Sunnyvale, CA',
+    headline: 'Reimagining premium mobile at hundreds-of-millions scale in the AI era.',
+    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
+    stats: [
+      { k: 'Members reached', v: '100M+' },
+      { k: 'AI-native concepts shipped to test', v: '20+' },
+      { k: 'Avg. concept-to-prototype', v: '< 24h' },
+    ],
+    sections: [
+      {
+        h: 'Context',
+        body: `LinkedIn Premium is one of the largest subscription products in the world, with hundreds of millions of professionals across the network. By 2023 the question wasn't whether AI would change Premium, but how to design a product where the most valuable feature might be a conversation, a coach, or a forecast, not a feed.<br/><br/>The challenge: deliver tangible career value to professionals while keeping the experience calm, intuitive, and unmistakably human. Every shipped change is felt at planetary scale.`
+      },
+      {
+        h: 'My role',
+        body: `I lead design for premium product experiences, driving product vision, high-fidelity prototyping, and cross-functional alignment in ambiguous spaces. I work closely with PM, eng, data science, and research to take fuzzy AI capabilities and turn them into clear, opinionated product surfaces.<br/><br/>One thing that became a superpower for me was using AI-native workflows to rapidly prototype concepts, pressure-test ideas, and help teams make faster, higher-confidence decisions.`
+      },
+      {
+        h: 'Process',
+        body: `<strong class="text-text-primary">Prototype before brief.</strong> Instead of starting with a doc and ending with a screen, I start with the screen. AI-native tooling lets me ship a clickable, opinionated artifact in hours, something a PM, engineer, or exec can react to, not just read.<br/><br/><strong class="text-text-primary">Pressure-test with the team, not the room.</strong> Concepts get tested in the wild with cross-functional partners, not socialized in slides. The bar is "would you use it" not "would you approve it."<br/><br/><strong class="text-text-primary">Ship and learn.</strong> Premium gets real signal fast. I structure shipped experiments to teach the team something specific, not just to move a metric.`
+      },
+      {
+        h: 'Key decisions',
+        body: `<strong class="text-text-primary">Designing the value, not the wall.</strong> Premium products often optimize for the paywall. I push the team to design what's behind it, the actual moment of help, first.<br/><br/><strong class="text-text-primary">AI as a calm collaborator.</strong> Generative features can feel slot-machine-y; I designed for calm, predictable interactions where the AI's job is clearly scoped and its limits are honest.<br/><br/><strong class="text-text-primary">Mobile-first for premium.</strong> Most professionals touch LinkedIn on phone first. Premium features have to feel native to mobile, not bolted on from a desktop affordance.`
+      },
+      {
+        h: 'Outcomes',
+        body: `Premium concepts I led drove meaningful engagement and monetization lifts in shipped experiments. More importantly, the prototyping rhythm I introduced is now used across the broader Premium design org, faster decisions, higher craft, fewer ambiguous slide reviews.`
+      },
+      {
+        h: 'Reflection',
+        body: `Designing AI products at scale is less about the model and more about the contract you make with the user. Show your work, hold the bar on craft, and remember that "magic" without trust is just confusion.`
+      }
+    ],
+    quote: 'Prototype before brief.',
+    next: 'wing',
+  },
+
+  'wing': {
+    name: 'Wing @ Google X',
+    category: 'Mobile · Moonshot · 2017–2022',
+    role: 'Lead Product Designer, Consumer Mobile Experience',
+    team: 'Wing consumer team, PM, eng, hardware, regulatory, operations',
+    location: 'Mountain View / SF',
+    headline: 'Designing the first FAA-approved drone delivery experience, for a behavior people had never experienced before.',
+    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
+    stats: [
+      { k: 'FAA-approved deployments', v: 'First in the U.S.' },
+      { k: 'New consumer behavior', v: 'From scratch' },
+      { k: 'Disciplines coordinated', v: 'HW × SW × Regulatory' },
+    ],
+    sections: [
+      {
+        h: 'Context',
+        body: `Wing is Alphabet's drone delivery moonshot. By the time I joined, the hardware worked. The harder problem was on the ground: how do you ask a normal human to trust that a small autonomous aircraft is going to fly to their house, lower a package on a tether, and leave?<br/><br/>This wasn't a feature. It was a behavior nobody had ever performed before. And we couldn't ship until the FAA, the operations team, the pilots, and the customer all believed the same thing was happening at the same moment.`
+      },
+      {
+        h: 'My role',
+        body: `I led design for the consumer experience, the actual app and on-the-ground moments that real people would touch when ordering a drone delivery. That meant the ordering flow, the wait state, the handoff at the doorstep, and every recovery state when weather, wind, or wildlife intervened.<br/><br/>The work was equal parts product design, behavioral psychology, and regulatory translation. The hardest decisions were about what to communicate and what to hide, too much information frightened people, too little broke trust.`
+      },
+      {
+        h: 'Process',
+        body: `<strong class="text-text-primary">Map a behavior that doesn't exist.</strong> I spent the early phase doing diary studies and in-field tests just to understand what people expected when "the sky" was the delivery channel. Most people had never looked up.<br/><br/><strong class="text-text-primary">Trust through transparency.</strong> The single biggest design lever was showing the drone's position and intent in real time. We let users see what the drone was doing, in language the FAA could approve.<br/><br/><strong class="text-text-primary">Design the failure first.</strong> A drone delivery has more abort states than a normal order. We designed for weather aborts, wind aborts, late captures, and returns before we polished the happy path.`
+      },
+      {
+        h: 'Key decisions',
+        body: `<strong class="text-text-primary">Show the drone, always.</strong> An anxious user wants to know what's happening overhead. We invested in a real-time live view that became the calming centerpiece of the experience.<br/><br/><strong class="text-text-primary">Motion as trust.</strong> The drone&rsquo;s on-screen movement, the package descent, the arrival cue: every easing curve was tuned to feel calm and predictable, never urgent. Motion was the primary trust-builder on a product where a small autonomous aircraft is overhead.<br/><br/><strong class="text-text-primary">Lean on the food-delivery mental model.</strong> Customers already understood "your courier is on the way", we framed the drone the same way to avoid teaching a new metaphor.<br/><br/><strong class="text-text-primary">Doorstep handoff as a moment.</strong> The drone lowering the package is the headline moment of the product. We designed an audio + on-screen cue to make it unmistakable, calm, and a little magical.`
+      },
+      {
+        h: 'Outcomes',
+        body: `The work contributed to one of the first FAA-approved drone delivery experiences in the United States, a live commercial deployment serving real customers in real neighborhoods. Beyond launch, the consumer trust model we shipped became reference design across the broader Alphabet aerial delivery work.`
+      },
+      {
+        h: 'Reflection',
+        body: `Designing for a behavior nobody has ever performed is the most humbling work I've done. You can't research your way to a confident answer, you have to put a real artifact in someone's hand and watch their body language. Every assumption I started with was wrong by version three.`
+      }
+    ],
+    quote: 'Trust the people you fly over.',
+    next: 'linkedin-ios',
+  },
+
+  'linkedin-ios': {
+    name: 'LinkedIn iOS',
+    category: 'Founding Mobile · 2010–2012',
+    role: 'Product Designer, Founding iOS Team',
+    team: 'Small founding mobile team, PM, iOS eng, backend',
+    location: 'Mountain View, CA',
+    headline: 'Reimagining LinkedIn for the touch era. From a desktop directory to a coherent mobile network in your pocket.',
+    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
+    stats: [
+      { k: 'Members at the time', v: '200M+' },
+      { k: 'Surfaces re-architected', v: 'Feed, profile, search, messaging' },
+      { k: 'Platform shipped', v: 'iOS 1.0 → 6.0' },
+    ],
+    sections: [
+      {
+        h: 'Context',
+        body: `In 2010, LinkedIn was a web product. Mobile was a side surface. The iPhone had just rewritten what professionals did between meetings, in elevators, and at airports, and the LinkedIn experience didn't fit any of those moments yet.<br/><br/>The job was to reimagine LinkedIn for touch. Not port the desktop. Reimagine the network for a 4-inch screen that lives in someone's pocket all day.`
+      },
+      {
+        h: 'My role',
+        body: `I was on the founding iOS team. My work spanned the feed, profile, search, and messaging, designing each surface as part of a single mobile system, not a collection of stand-alone screens.<br/><br/>This was the moment I learned to think in systems: navigation, state, performance, and the invisible plumbing that lets a small team move fast for years. Decisions made here shaped LinkedIn's mobile platform through multiple major releases.`
+      },
+      {
+        h: 'Process',
+        body: `<strong class="text-text-primary">Mobile-first profile.</strong> The web profile was a stacked CV. On mobile, identity needed to be glanceable. We redesigned the profile around a single hero card and progressive disclosure.<br/><br/><strong class="text-text-primary">Feed as the home.</strong> Web LinkedIn put you in a directory. Mobile LinkedIn put you in a feed. That single decision rewired what people did with the app.<br/><br/><strong class="text-text-primary">Push as the engagement loop.</strong> We designed the push notification system as a first-class surface, what fires, when, and why, because that's where mobile lives outside of active use.`
+      },
+      {
+        h: 'Key decisions',
+        body: `<strong class="text-text-primary">Native, not webview.</strong> Pre-React-Native, the choice to invest in fully native iOS shaped craft, performance, and what we could express interaction-wise.<br/><br/><strong class="text-text-primary">One mobile information architecture.</strong> Feed, profile, search, messaging are not features, they're the system. Every flow had to compose against the same nav, state, and identity model.<br/><br/><strong class="text-text-primary">Don't ship the org chart.</strong> The mobile product couldn't reflect LinkedIn's internal team boundaries. The user only sees one app.`
+      },
+      {
+        h: 'Outcomes',
+        body: `LinkedIn iOS scaled to 200M+ members across the years I was on the team. The design system, navigation model, and interaction patterns laid down in this era informed LinkedIn's mobile platform through multiple major product cycles.`
+      },
+      {
+        h: 'Reflection',
+        body: `This is where I learned mobile systems thinking. You're not designing a screen. You're designing the system that produces every future screen, and your job is to make that system both opinionated enough to be coherent and flexible enough to outlive your tenure.`
+      }
+    ],
+    quote: "You're not designing a screen, you're designing the system that produces every future screen.",
+    next: 'ai-native',
+  },
+
+  'ai-native': {
+    name: 'Claude Code Craft',
+    category: 'Studio · 2024–Present',
+    role: 'Designer, prototyper, Claude Code power user',
+    team: 'Solo with Claude as collaborator',
+    location: 'Bay Area',
+    headline: 'Treating Claude Code as the design medium, not a tool. This portfolio is exhibit A.',
+    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
+    stats: [
+      { k: 'Concept-to-prototype', v: '< 1 day' },
+      { k: 'Designed and built with Claude Code', v: 'This site' },
+      { k: 'Talks on the workflow', v: 'AI UX Summit 2026' },
+    ],
+    sections: [
+      {
+        h: 'Context',
+        body: `Most teams still treat AI as a feature you bolt on. I treat Claude Code as the canvas I design on.<br/><br/>Over the last year I have refined a practice where Claude Code is the primary surface for design work. Not Figma. Not a doc. Not a spec. The prototype is the artifact, the artifact is the argument, and the argument lives as real working code from minute one.`
+      },
+      {
+        h: 'The practice',
+        body: `<strong class="text-text-primary">Vibe-coding with Claude Code.</strong> I think out loud in plain language and Claude generates the next iteration of the interface as real HTML, CSS, and JS. The output is something a PM, engineer, or exec can click, criticize, and steer in the same meeting.<br/><br/><strong class="text-text-primary">Prototype as spec.</strong> Specs go stale the moment they are written. Working prototypes are honest. I use Claude Code to produce the artifact other teams would produce a deck for.<br/><br/><strong class="text-text-primary">Model-augmented exploration.</strong> Claude lets me explore a wider option space than I could alone. More variants, more edge cases, more deliberate dead-ends, then I pick with conviction.`
+      },
+      {
+        h: 'Why this matters for an AI-product role',
+        body: `Designing for Claude users means understanding the texture of working with a model. What it does well, where it surprises you, when to push back. The fastest way to internalize that texture is to design with Claude every day.<br/><br/>That is the practice I bring. The case studies on this site are real shipped work, but the site itself is the demo. It was designed and vibe-coded with Claude Code in a single session, no boilerplate, no template.`
+      },
+      {
+        h: 'Talks and writing',
+        body: `I spoke at the AI UX Summit in March 2026 on connecting Claude Code to the Figma MCP for AI-accelerated prototyping workflows. The book <em class="font-display italic">Think. Prompt. Create.</em> is the longer argument behind the practice. The thesis: AI amplifies human creativity rather than replacing it, and the medium you choose to design in shapes everything that comes after.<br/><br/><a href="https://www.youtube.com/watch?v=Uw0RrIoEU5o&amp;t=453s" target="_blank" rel="noopener" class="yt-lite"><img class="poster" src="https://i.ytimg.com/vi/Uw0RrIoEU5o/maxresdefault.jpg" alt="Joey Primiani speaking at AI UX Summit 2026" loading="lazy"/><div class="yt-overlay"><div class="yt-play"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7L8 5z"/></svg></div></div><div class="yt-meta"><span>AI UX Summit · March 2026</span><span>Watch on YouTube ↗</span></div></a>`
+      },
+      {
+        h: 'Reflection',
+        body: `Designing with Claude Code is not a productivity hack. It is a different relationship with the medium, where you can keep tasting the dish while you cook it. Once you have designed this way, going back to static screens feels like designing blind.`
+      }
+    ],
+    quote: 'The prototype is the artifact. The artifact is the argument.',
+    next: 'linkedin-premium',
+  }
+};
+
+function render(slug) {
+  const c = CASES[slug];
+  if (!c) { location.hash = '#linkedin-premium'; return; }
+  document.title = `${c.name}, Joey Primiani`;
+  document.getElementById('csChip').textContent = c.name;
+
+  const root = document.getElementById('csRoot');
+  root.innerHTML = `
+    <article class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
+      <!-- Hero -->
+      <header class="reveal mb-12 md:mb-16">
+        <div class="text-xs uppercase tracking-[0.3em] mb-6" style="color:hsl(var(--muted))">${c.category}</div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl mb-8" style="color:hsl(var(--text))">
+          ${c.headline}
+        </h1>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 pt-8 border-t" style="border-color:hsl(var(--stroke))">
+          <div>
+            <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Project</div>
+            <div class="text-sm md:text-base" style="color:hsl(var(--text))">${c.name}</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Role</div>
+            <div class="text-sm md:text-base" style="color:hsl(var(--text))">${c.role}</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Team</div>
+            <div class="text-sm md:text-base" style="color:hsl(var(--text))">${c.team}</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Location</div>
+            <div class="text-sm md:text-base" style="color:hsl(var(--text))">${c.location}</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero image -->
+      <div class="reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9;">
+        ${c.heroVideo
+          ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full object-cover"></video>`
+          : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full object-cover" loading="eager"/>`}
+        <div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-20 md:mb-28">
+        ${c.stats.map(s => `
+          <div class="border-t pt-6" style="border-color:hsl(var(--stroke))">
+            <div class="stat-num text-5xl md:text-6xl font-display italic leading-none mb-3">${s.v}</div>
+            <div class="text-xs uppercase tracking-[0.25em]" style="color:hsl(var(--muted))">${s.k}</div>
+          </div>`).join('')}
+      </div>
+
+      <!-- Sections -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+        <div class="md:col-span-12 space-y-16 md:space-y-24">
+          ${c.sections.map((s, i) => `
+            <section class="reveal grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
+              <div class="md:col-span-3">
+                <div class="text-xs uppercase tracking-[0.3em] mb-2" style="color:hsl(var(--muted))">0${i+1}</div>
+                <h2 class="text-2xl md:text-3xl" style="color:hsl(var(--text))">
+                  ${s.h.includes(' ')
+                    ? s.h.split(' ').map((w, wi)=> wi === s.h.split(' ').length-1 ? `<span class="font-display italic">${w}</span>` : w).join(' ')
+                    : `<span class="font-display italic">${s.h}</span>`}
+                </h2>
+              </div>
+              <div class="md:col-span-9">
+                <p class="text-base md:text-lg leading-relaxed" style="color:hsl(var(--text) / .85)">${s.body}</p>
+              </div>
+            </section>
+          `).join('')}
+
+          <!-- Pull quote -->
+          <section class="reveal py-12 md:py-16 border-y" style="border-color:hsl(var(--stroke))">
+            <p class="pullquote text-3xl md:text-5xl lg:text-6xl font-display italic leading-tight max-w-4xl mx-auto text-center" style="color:hsl(var(--text))">
+              ${c.quote}
+            </p>
+          </section>
+        </div>
+      </div>
+    </article>
+  `;
+
+  // wire next link
+  const next = CASES[c.next];
+  document.getElementById('nextLink').href = '#' + c.next;
+  document.getElementById('nextName').innerHTML = `<span class="font-display italic">${next.name}</span> →`;
+  document.getElementById('nextCat').textContent = next.category;
+
+  // reveal animations
+  requestAnimationFrame(() => {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '-40px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  });
+
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function route() {
+  const slug = (location.hash || '#linkedin-premium').slice(1);
+  render(slug);
+}
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>

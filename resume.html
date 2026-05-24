@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Résumé, Joey Primiani</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: 0 0% 4%;
+    --surface: 0 0% 8%;
+    --text: 0 0% 96%;
+    --muted: 0 0% 53%;
+    --stroke: 0 0% 12%;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: hsl(var(--bg));
+    color: hsl(var(--text));
+    -webkit-font-smoothing: antialiased;
+  }
+  .font-display { font-family: 'Instrument Serif', serif; }
+
+  @keyframes gradient-shift {
+    0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
+  }
+  .ring-btn { position: relative; isolation: isolate; }
+  .ring-btn::before {
+    content:''; position:absolute; inset:-2px; border-radius:9999px;
+    padding:2px; background:linear-gradient(90deg,#89AACC,#4E85BF,#89AACC);
+    background-size:200% 200%; animation:gradient-shift 6s ease infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity:0; transition: opacity .3s ease; z-index:-1;
+  }
+  .ring-btn:hover::before { opacity:1; }
+
+  .download-btn {
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+    color: #0a0a0a;
+    transition: transform .25s ease, filter .25s ease;
+  }
+  .download-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+  .pulse-dot { position:relative; }
+  .pulse-dot::after {
+    content:''; position:absolute; inset:0; border-radius:9999px;
+    background:#10b981; opacity:.6; animation:pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%{transform:scale(1);opacity:.6}
+    100%{transform:scale(2.5);opacity:0}
+  }
+
+  /* PDF frame */
+  .pdf-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #1a1a1a;
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
+  <div class="inline-flex items-center rounded-full backdrop-blur-md border border-white/10 px-2 py-2"
+       style="background:hsl(var(--surface) / 0.85)">
+    <a href="index.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 inline-flex items-center gap-2"
+       style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">
+      <span aria-hidden="true">←</span> All work
+    </a>
+    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <span class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2"
+          style="background:hsl(var(--stroke) / 0.5); color:hsl(var(--text))">Résumé</span>
+    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <a href="mailto:jprimiani@gmail.com" class="ring-btn text-xs sm:text-sm rounded-full">
+      <span class="relative inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md"
+            style="background:hsl(var(--surface)); color:hsl(var(--text))">
+        Say hi <span aria-hidden="true">↗</span>
+      </span>
+    </a>
+  </div>
+</nav>
+
+<main class="pt-32 pb-20">
+  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
+
+    <!-- Header -->
+    <header class="mb-10 md:mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
+          <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Document</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight" style="color:hsl(var(--text))">
+          <span class="font-display italic">Résumé</span>
+        </h1>
+        <p class="text-base md:text-lg mt-5 max-w-xl" style="color:hsl(var(--muted))">
+          Fifteen years of mobile systems design. LinkedIn Premium, Wing at Google X, founding-era LinkedIn iOS.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+        <a href="primiani-resume.pdf" download="Joey-Primiani-Resume.pdf"
+           class="download-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download PDF
+        </a>
+        <a href="primiani-resume.pdf" target="_blank" rel="noopener"
+           class="ring-btn inline-flex items-center rounded-full text-sm">
+          <span class="relative inline-flex items-center gap-2 px-5 py-3 rounded-full"
+                style="background:hsl(var(--surface)); color:hsl(var(--text))">
+            Open in new tab <span aria-hidden="true">↗</span>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Meta strip -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 pt-8 pb-10 border-t" style="border-color:hsl(var(--stroke))">
+      <div>
+        <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Name</div>
+        <div class="text-sm md:text-base" style="color:hsl(var(--text))">Joey Primiani</div>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Role</div>
+        <div class="text-sm md:text-base" style="color:hsl(var(--text))">Senior Product Designer, LinkedIn</div>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Email</div>
+        <div class="text-sm md:text-base" style="color:hsl(var(--text))">jprimiani@gmail.com</div>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-[0.2em] mb-2" style="color:hsl(var(--muted))">Status</div>
+        <div class="text-sm md:text-base flex items-center gap-2" style="color:hsl(var(--text))">
+          <span class="pulse-dot relative inline-block w-2 h-2 rounded-full" style="background:#10b981"></span>
+          Open to roles
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF embed -->
+    <section class="rounded-3xl overflow-hidden border"
+             style="border-color:hsl(var(--stroke)); background:hsl(var(--surface)); height: 85vh; min-height: 600px;">
+      <iframe id="pdfFrame"
+              class="pdf-frame"
+              src="primiani-resume.pdf#view=FitH&toolbar=1&navpanes=0"
+              title="Joey Primiani Résumé"
+              loading="eager"></iframe>
+    </section>
+
+    <p class="text-xs text-center mt-5" style="color:hsl(var(--muted))">
+      Trouble viewing? <a href="primiani-resume.pdf" download="Joey-Primiani-Resume.pdf" class="underline" style="color:hsl(var(--text))">Download the PDF</a> or <a href="primiani-resume.pdf" target="_blank" rel="noopener" class="underline" style="color:hsl(var(--text))">open it in a new tab</a>.
+    </p>
+  </div>
+</main>
+
+<!-- Footer -->
+<section class="border-t" style="border-color:hsl(var(--stroke))">
+  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-4 text-sm" style="color:hsl(var(--muted))">
+      <a href="https://www.linkedin.com/in/jprim" class="hover:text-[color:hsl(var(--text))]">LinkedIn</a>
+      <a href="https://x.com/jp" class="hover:text-[color:hsl(var(--text))]">x.com/jp</a>
+      <a href="https://dribbble.com/jprimiani" class="hover:text-[color:hsl(var(--text))]">Dribbble</a>
+      <a href="https://github.com/superfuture" class="hover:text-[color:hsl(var(--text))]">GitHub</a>
+    </div>
+    <div class="flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
+      <span class="pulse-dot relative inline-block w-2 h-2 rounded-full" style="background:#10b981"></span>
+      Available for select engagements
+    </div>
+    <div class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">© 2026 Joey Primiani</div>
+  </div>
+</section>
+
+</body>
+</html>
