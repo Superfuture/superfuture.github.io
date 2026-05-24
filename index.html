@@ -4,10 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Joey Primiani</title>
-<meta name="description" content="Joey Primiani, Senior Product Designer at LinkedIn with 15+ years in mobile systems. LinkedIn Premium, Wing at Google X, and AI-native prototyping. Forbes 30 Under 30, Cannes Gold Lion. Author of Think. Prompt. Create.">
+<meta name="description" content="Joey Primiani — Senior AI Product Designer at LinkedIn. 15+ years designing AI-native mobile systems. Hire a top AI designer with experience at LinkedIn Premium, Wing @ Google X, Studio XO, and Lady Gaga's Little Monsters. Forbes 30 Under 30. Cannes Gold Lion. Author of Think. Prompt. Create. Specializes in Claude Code, multi-modal AI, vibe-coding, and AI-native prototyping for frontier-tech companies.">
+<meta name="keywords" content="AI designer, AI product designer, Senior Product Designer, AI-native design, Claude Code designer, Anthropic, LinkedIn Premium designer, Joey Primiani, vibe coding, AI prototyping, multi-modal design, frontier AI designer, top AI designer, Staff Product Designer, Principal Product Designer, mobile AI designer, Bay Area AI designer, Stanford d.School">
 <meta name="author" content="Joey Primiani">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
 <meta name="theme-color" content="#0a0a0a">
+<meta name="subject" content="AI Product Design Portfolio">
+<meta name="classification" content="Product Design, AI Design, Designer Portfolio">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <!-- Open Graph -->
@@ -57,7 +61,17 @@
     "https://dribbble.com/jprimiani",
     "https://github.com/superfuture"
   ],
-  "knowsAbout": ["Product Design", "Mobile Systems", "AI-Native Prototyping", "Multi-Modal Design", "Design Leadership"],
+  "knowsAbout": [
+    "AI Product Design", "AI-Native Design", "AI-Native Prototyping",
+    "Claude Code", "Anthropic", "Multi-Modal Design", "LLM Product Design",
+    "Mobile Product Design", "iOS Design", "Android Design",
+    "Product Design Leadership", "Staff Product Designer", "Principal Product Designer",
+    "Vibe Coding", "Design Systems", "Motion Design",
+    "Generative UI", "Conversational UI", "Agentic Design",
+    "LinkedIn Premium", "Wing", "Google X", "Drone Delivery UX",
+    "Figma", "Figma MCP", "Code Connect", "Design Engineering",
+    "Frontier AI", "AI UX", "Human-AI Collaboration"
+  ],
   "award": [
     "Forbes 30 Under 30 (2016, Consumer Technology)",
     "Cannes Gold Lion (2018)",
@@ -169,17 +183,8 @@
   @keyframes drawUnder { to { opacity: 1; } }
   @keyframes drawStroke { to { stroke-dashoffset: 0; } }
 
-  /* Film grain — material texture */
-  .grain-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 70;
-    opacity: 0.06;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
-    background-size: 200px 200px;
-  }
+  /* Film grain removed for scroll perf */
+  .grain-layer { display: none; }
 
   /* Book cover 3D mouse tilt */
   .book-tilt {
@@ -544,7 +549,59 @@
   .ask-send:hover { transform: translateY(-1px); filter: brightness(1.08); }
   .ask-send:disabled { opacity: .5; cursor: not-allowed; }
 
-  /* Playground cards */
+  /* Playground parallax */
+  #playPin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  .play-tile {
+    display: block;
+    position: relative;
+    width: 100%;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface));
+    transform: rotate(var(--r, 0deg));
+    transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s ease, border-color .35s ease;
+    box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+    aspect-ratio: 4 / 5;
+    text-decoration: none;
+    will-change: transform;
+  }
+  .play-tile:hover {
+    transform: rotate(0deg) scale(1.04);
+    box-shadow: 0 36px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(137,170,204,0.25);
+    border-color: rgba(137,170,204,0.4);
+    z-index: 5;
+  }
+  .play-tile img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .play-tile-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    text-align: center;
+    padding: 30px 12px 14px;
+    font-size: 22px;
+    line-height: 1;
+    color: hsl(var(--text));
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    #playground { min-height: 360vh !important; }
+    .play-tile { max-width: 180px !important; }
+  }
+
+  /* Playground cards (legacy) */
   .play-card {
     position: relative;
     display: block;
@@ -1154,79 +1211,58 @@
 </section>
 
 
-<!-- ============ PLAYGROUND ============ -->
-<section id="playground" class="py-16 md:py-24 border-t" style="background:hsl(var(--bg)); border-color:hsl(var(--stroke))">
-  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
-      <div>
-        <div class="flex items-center gap-3 mb-4">
-          <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
-          <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Playground</span>
-        </div>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl mb-3" style="color:hsl(var(--text))">
-          Vibe-coded <span class="font-display italic">experiments</span>
-        </h2>
-        <p class="text-sm md:text-base md:whitespace-nowrap" style="color:hsl(var(--muted))">
-          Indie sandbox builds. Each one started as a Claude Code session and shipped in a weekend.
-        </p>
-      </div>
+<!-- ============ PLAYGROUND (parallax) ============ -->
+<section id="playground" class="relative border-t" style="background:hsl(var(--bg)); border-color:hsl(var(--stroke)); min-height: 250vh;">
+  <!-- Pinned center -->
+  <div id="playPin" class="h-screen w-full flex flex-col items-center justify-center text-center px-6 relative z-10">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
+      <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Playground</span>
+      <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
     </div>
+    <h2 class="text-5xl md:text-7xl lg:text-8xl mb-5 leading-[0.95]" style="color:hsl(var(--text))">
+      Vibe-coded <span class="font-display italic">experiments</span>
+    </h2>
+    <p class="text-sm md:text-base max-w-md mb-10" style="color:hsl(var(--muted))">
+      Indie sandbox builds. Each one started as a Claude Code session and shipped in a weekend.
+    </p>
+    <a href="https://dribbble.com/jprimiani" target="_blank" rel="noopener" class="ring-btn rounded-full text-sm inline-flex">
+      <span class="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
+            style="background:hsl(var(--surface)); color:hsl(var(--text))">More on Dribbble <span aria-hidden="true">↗</span></span>
+    </a>
+  </div>
 
-    <div class="play-wall grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
-      <a href="ditto.html" target="_blank" rel="noopener" class="play-card reveal" style="--r:-1.5deg;">
-        <img src="ditto-fullpage.png" alt="Ditto" loading="lazy"/>
-        <div class="play-shade"></div>
-        <span class="play-pill">2026</span>
-        <div class="play-meta">
-          <div class="play-name">Ditto</div>
-          <div class="play-tag">AI assist for messaging, built for iMessage.</div>
-        </div>
-      </a>
-      <a href="aeon.html" target="_blank" rel="noopener" class="play-card reveal" style="--r:1deg;">
-        <img src="aeon-v3-vision.png" alt="Aeon" loading="lazy"/>
-        <div class="play-shade"></div>
-        <span class="play-pill">2026</span>
-        <div class="play-meta">
-          <div class="play-name">Aeon</div>
-          <div class="play-tag">A product about time. Branded, built, shipped in a weekend.</div>
-        </div>
-      </a>
-      <a href="operator.html" target="_blank" rel="noopener" class="play-card reveal" style="--r:-1deg;">
-        <img src="operator-preview.png" alt="Operator" loading="lazy"/>
-        <div class="play-shade"></div>
-        <span class="play-pill">2026</span>
-        <div class="play-meta">
-          <div class="play-name">Operator</div>
-          <div class="play-tag">A vibe-coded sketch of an AI operator.</div>
-        </div>
-      </a>
-      <a href="breathe-app.html" target="_blank" rel="noopener" class="play-card reveal" style="--r:1.2deg;">
-        <img src="breathe-preview.png" alt="Breathe" loading="lazy"/>
-        <div class="play-shade"></div>
-        <span class="play-pill">2026</span>
-        <div class="play-meta">
-          <div class="play-name">Breathe</div>
-          <div class="play-tag">A calm minute, on demand. Box-breathing app.</div>
-        </div>
-      </a>
-      <a href="superfuture.html" target="_blank" rel="noopener" class="play-card reveal" style="--r:-0.5deg;">
-        <img src="superfuture-preview.png" alt="Superfuture" loading="lazy"/>
-        <div class="play-shade"></div>
-        <span class="play-pill">Studio</span>
-        <div class="play-meta">
-          <div class="play-name">Superfuture</div>
-          <div class="play-tag">The studio. Where the experiments live.</div>
-        </div>
-      </a>
-      <a href="vibez.html" target="_blank" rel="noopener" class="play-card reveal" style="--r:1deg;">
-        <img src="vibez-preview.png" alt="Vibez" loading="lazy"/>
-        <div class="play-shade"></div>
-        <span class="play-pill">2026</span>
-        <div class="play-meta">
-          <div class="play-name">Vibez</div>
-          <div class="play-tag">A vibe-first product sketch.</div>
-        </div>
-      </a>
+  <!-- Scattered parallax tiles -->
+  <div class="absolute inset-0 z-20 pointer-events-none">
+    <div class="max-w-[1400px] mx-auto h-full grid grid-cols-2 gap-8 md:gap-32 px-6 md:px-10">
+      <div id="playColL" class="flex flex-col gap-16 md:gap-32 items-end pt-[15vh]">
+        <a href="ditto.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:-3deg; max-width:300px;">
+          <img src="ditto-fullpage.png" alt="Ditto" loading="lazy"/>
+          <div class="play-tile-label"><span class="font-display italic">Ditto</span></div>
+        </a>
+        <a href="breathe-app.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:2deg; max-width:260px;">
+          <img src="breathe-preview.png" alt="Breathe" loading="lazy"/>
+          <div class="play-tile-label"><span class="font-display italic">Breathe</span></div>
+        </a>
+        <a href="superfuture.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:-2deg; max-width:280px;">
+          <img src="superfuture-preview.png" alt="Superfuture" loading="lazy"/>
+          <div class="play-tile-label"><span class="font-display italic">Superfuture</span></div>
+        </a>
+      </div>
+      <div id="playColR" class="flex flex-col gap-16 md:gap-32 items-start pt-[45vh]">
+        <a href="aeon.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:3deg; max-width:280px;">
+          <img src="aeon-v3-vision.png" alt="Aeon" loading="lazy"/>
+          <div class="play-tile-label"><span class="font-display italic">Aeon</span></div>
+        </a>
+        <a href="operator.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:-2deg; max-width:300px;">
+          <img src="operator-preview.png" alt="Operator" loading="lazy"/>
+          <div class="play-tile-label"><span class="font-display italic">Operator</span></div>
+        </a>
+        <a href="vibez.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:2deg; max-width:260px;">
+          <img src="vibez-preview.png" alt="Vibez" loading="lazy"/>
+          <div class="play-tile-label"><span class="font-display italic">Vibez</span></div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -1801,6 +1837,30 @@ function bootAskJoey(){
   });
 }
 bootAskJoey();
+
+/* ============ PLAYGROUND PARALLAX ============ */
+(function playParallax(){
+  const section = document.getElementById('playground');
+  const colL = document.getElementById('playColL');
+  const colR = document.getElementById('playColR');
+  if (!section || !colL || !colR) return;
+  let raf = 0, last = 0;
+  function update(){
+    raf = 0;
+    const rect = section.getBoundingClientRect();
+    if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
+    const traveled = -rect.top; // how far we've scrolled into the section
+    colL.style.transform = `translate3d(0, ${-traveled * 0.18}px, 0)`;
+    colR.style.transform = `translate3d(0, ${-traveled * 0.42}px, 0)`;
+  }
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(update);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
 
 /* ============ BOOK 3D MOUSE TILT ============ */
 (function bookTilt(){
