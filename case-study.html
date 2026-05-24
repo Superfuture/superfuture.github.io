@@ -297,49 +297,49 @@ const CASES = {
       }
     ],
     quote: 'Trust the people you fly over.',
-    next: 'linkedin-ios',
+    next: 'january-ai',
   },
 
-  'linkedin-ios': {
-    name: 'LinkedIn iOS',
-    category: 'Founding Mobile · 2010–2012',
-    role: 'Product Designer, Founding iOS Team',
-    team: 'Small founding mobile team, PM, iOS eng, backend',
-    location: 'Mountain View, CA',
-    headline: 'Reimagining LinkedIn for the touch era. From a desktop directory to a coherent mobile network in your pocket.',
-    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
+  'january-ai': {
+    name: 'January AI',
+    category: 'Senior Mobile · AI Health · 2024–Present',
+    role: 'Senior Product Designer, iOS',
+    team: 'Mobile pod: PM, iOS engineering, AI/ML, clinical',
+    location: 'Remote · SF Bay Area',
+    headline: 'iOS for clinical-grade AI nutrition. See a food&rsquo;s impact before you eat it.',
+    hero: 'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png',
     stats: [
-      { k: 'Members at the time', v: '200M+' },
-      { k: 'Surfaces re-architected', v: 'Feed, profile, search, messaging' },
-      { k: 'Platform shipped', v: 'iOS 1.0 → 6.0' },
+      { k: 'Foods in database', v: '54M+' },
+      { k: 'App Store rating', v: '4.5★' },
+      { k: 'Glucose prediction', v: 'Sensor-free' },
     ],
     sections: [
       {
         h: 'Context',
-        body: `In 2010, LinkedIn was a web product. Mobile was a side surface. The iPhone had just rewritten what professionals did between meetings, in elevators, and at airports, and the LinkedIn experience didn't fit any of those moments yet.<br/><br/>The job was to reimagine LinkedIn for touch. Not port the desktop. Reimagine the network for a 4-inch screen that lives in someone's pocket all day.`
+        body: `January AI is a clinical-grade AI nutrition platform. The thesis: most people change their eating only when they can <em>see</em> a food&rsquo;s impact before they take a bite, and most can&rsquo;t afford a continuous glucose monitor to find out. So January built an AI that predicts the spike from a photo, then shipped it as an iOS app accessible to anyone with a phone.<br/><br/>My job: design the consumer surface where AI, behavior change, and clinical rigor have to feel like one calm app.`
       },
       {
-        h: 'My role',
-        body: `I was on the founding iOS team. My work spanned the feed, profile, search, and messaging, designing each surface as part of a single mobile system, not a collection of stand-alone screens.<br/><br/>This was the moment I learned to think in systems: navigation, state, performance, and the invisible plumbing that lets a small team move fast for years. Decisions made here shaped LinkedIn's mobile platform through multiple major releases.`
+        h: 'The headline feature: AI food scanning',
+        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<br/><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
       },
       {
-        h: 'Process',
-        body: `<strong class="text-text-primary">Mobile-first profile.</strong> The web profile was a stacked CV. On mobile, identity needed to be glanceable. We redesigned the profile around a single hero card and progressive disclosure.<br/><br/><strong class="text-text-primary">Feed as the home.</strong> Web LinkedIn put you in a directory. Mobile LinkedIn put you in a feed. That single decision rewired what people did with the app.<br/><br/><strong class="text-text-primary">Push as the engagement loop.</strong> We designed the push notification system as a first-class surface, what fires, when, and why, because that's where mobile lives outside of active use.`
+        h: 'Glucose predictions, without a sensor',
+        body: `January&rsquo;s breakthrough is predicting glycemic response from a photo, no CGM required. Designing for this is unusual: we&rsquo;re showing a clinically meaningful chart to a consumer who likely doesn&rsquo;t know what an AUC is.<br/><br/>The decisions: a single readable spike curve, no medical jargon at first surface, color encoded so a glance tells you "yes" or "swap." The full clinical detail is one tap away for the curious. Calm at default, deep on demand.`
       },
       {
-        h: 'Key decisions',
-        body: `<strong class="text-text-primary">Native, not webview.</strong> Pre-React-Native, the choice to invest in fully native iOS shaped craft, performance, and what we could express interaction-wise.<br/><br/><strong class="text-text-primary">One mobile information architecture.</strong> Feed, profile, search, messaging are not features, they're the system. Every flow had to compose against the same nav, state, and identity model.<br/><br/><strong class="text-text-primary">Don't ship the org chart.</strong> The mobile product couldn't reflect LinkedIn's internal team boundaries. The user only sees one app.`
+        h: 'Jan, the AI coach',
+        body: `Jan is the in-app AI coach. Conversational, personalized to your goals, present without being noisy. Designing for an AI coach meant designing for trust: when does Jan speak, when does Jan stay quiet, and how does the app make clear that this is an assistant, not a doctor.<br/><br/>The interaction model treats Jan as a layer that <em>understands</em> the rest of the app, not a separate chat island. You can ask Jan from anywhere. The answer lands in context, right where the question came from.`
       },
       {
-        h: 'Outcomes',
-        body: `LinkedIn iOS scaled to 200M+ members across the years I was on the team. The design system, navigation model, and interaction patterns laid down in this era informed LinkedIn's mobile platform through multiple major product cycles.`
+        h: 'Mobile craft',
+        body: `Senior mobile design at this product means owning the texture: scanning motion, haptics on a confirmed log, the easing on a spike chart, the gesture for swapping a food, the empty states, the accessibility pass. Every detail is the product when the product is asking people to change a habit.<br/><br/>Built native iOS, with a design system tuned for clinical readability in dark + light, and motion designed to feel like the app is paying attention to you, not the other way around.`
       },
       {
         h: 'Reflection',
-        body: `This is where I learned mobile systems thinking. You're not designing a screen. You're designing the system that produces every future screen, and your job is to make that system both opinionated enough to be coherent and flexible enough to outlive your tenure.`
+        body: `Designing clinical-grade AI for everyday humans is a different bar than designing for power users. The audience is anyone with a phone and a reason to change. The product has to feel calm, trustworthy, and a little bit magical at the moment of truth, then get out of the way.`
       }
     ],
-    quote: "You're not designing a screen, you're designing the system that produces every future screen.",
+    quote: "See a food's impact before you eat it.",
     next: 'little-monsters',
   },
 
