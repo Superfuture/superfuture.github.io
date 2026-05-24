@@ -83,7 +83,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,200..900,0..100;1,9..144,200..900,0..100&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -132,6 +132,62 @@
   }
 
   .font-display { font-family: 'Instrument Serif', serif; }
+
+  /* Signature wordmark — Fraunces with custom variable axes */
+  .signature-name {
+    font-family: 'Fraunces', 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "wght" 700;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    position: relative;
+  }
+  .signature-name .last {
+    font-weight: 400;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "wght" 400;
+    opacity: 0.85;
+  }
+  .signature-underline {
+    display: block;
+    margin: 14px auto 0;
+    width: clamp(180px, 28vw, 320px);
+    height: 18px;
+    opacity: 0;
+    animation: drawUnder 1.6s 1.4s cubic-bezier(.7,0,.3,1) forwards;
+  }
+  .signature-underline path {
+    fill: none;
+    stroke: #89AACC;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawStroke 1.4s 1.4s cubic-bezier(.7,0,.3,1) forwards;
+  }
+  @keyframes drawUnder { to { opacity: 1; } }
+  @keyframes drawStroke { to { stroke-dashoffset: 0; } }
+
+  /* Film grain — material texture */
+  .grain-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 70;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    background-size: 200px 200px;
+  }
+
+  /* Book cover 3D mouse tilt */
+  .book-tilt {
+    transform-style: preserve-3d;
+    transition: transform .25s cubic-bezier(.22,1,.36,1);
+    will-change: transform;
+  }
+  .book-tilt img { backface-visibility: hidden; }
 
   .accent-gradient {
     background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
@@ -645,6 +701,7 @@
 </style>
 </head>
 <body class="font-body">
+<div class="grain-layer" aria-hidden="true"></div>
 
 <!-- ============ LOADING SCREEN ============ -->
 <div id="loader" class="fixed inset-0 z-[9999]" style="background:hsl(var(--bg))">
@@ -698,7 +755,12 @@
 
   <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
     <div class="blur-in text-xs uppercase tracking-[0.3em] mb-8" style="color:hsl(var(--muted))">Portfolio '26</div>
-    <h1 class="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight mb-6" style="color:hsl(var(--text))">Joey Primiani</h1>
+    <div class="name-reveal mb-6">
+      <h1 class="signature-name text-6xl md:text-8xl lg:text-9xl tracking-tight" style="color:hsl(var(--text))">Joey <span class="last">Primiani</span></h1>
+      <svg class="signature-underline" viewBox="0 0 320 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4,11 C 38,6 78,14 120,8 C 162,3 204,15 246,10 C 280,7 304,11 316,9"/>
+      </svg>
+    </div>
     <p class="blur-in text-base md:text-lg mb-4" style="color:hsl(var(--text) / .9)">
       A <span id="roleWord" class="font-display italic animate-role-fade-in inline-block" style="color:hsl(var(--text))">Designer</span> based in the Bay Area.
     </p>
@@ -858,10 +920,11 @@
   <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
     <div class="reveal grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
       <!-- Cover with rainbow gradient backdrop -->
-      <div class="md:col-span-6 order-1 relative">
+      <div class="md:col-span-6 order-1 relative" id="bookStage" style="perspective: 1400px;">
         <div class="book-rainbow" aria-hidden="true"></div>
         <a href="https://www.amazon.com/dp/B0GWN497PW" target="_blank" rel="noopener"
-           class="block relative w-full mx-auto transition-transform duration-500 hover:scale-[1.03]"
+           class="book-tilt block relative w-full mx-auto"
+           id="bookTilt"
            style="filter: drop-shadow(0 40px 80px rgba(78, 133, 191, 0.35));">
           <img src="book-cover.png"
                alt="Think. Prompt. Create. by Joey Primiani"
@@ -1560,6 +1623,27 @@ document.addEventListener('DOMContentLoaded', function askJoey(){
     ask(input.value);
   });
 });
+
+/* ============ BOOK 3D MOUSE TILT ============ */
+(function bookTilt(){
+  const stage = document.getElementById('bookStage');
+  const tilt = document.getElementById('bookTilt');
+  if (!stage || !tilt) return;
+  let raf;
+  stage.addEventListener('mousemove', (e) => {
+    const r = stage.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      tilt.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg) translateZ(0)`;
+    });
+  });
+  stage.addEventListener('mouseleave', () => {
+    cancelAnimationFrame(raf);
+    tilt.style.transform = 'rotateY(0deg) rotateX(0deg)';
+  });
+})();
 
 /* ============ SMOOTH SCROLL FOR ANCHORS ============ */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
