@@ -405,6 +405,12 @@
     right: 20px;
     z-index: 80;
     font-family: 'Inter', sans-serif;
+    transition: opacity .35s ease, transform .35s ease;
+  }
+  .joey-agent.agent-hide {
+    opacity: 0;
+    transform: translateY(24px);
+    pointer-events: none;
   }
   .joey-pill {
     display: inline-flex;
@@ -2069,6 +2075,20 @@ bootAskJoey();
 <script>
 // Belt-and-suspenders: re-trigger Joey Agent init now that widget HTML is parsed
 if (typeof bootAskJoey === 'function') { try { bootAskJoey(); } catch(e) { console.error('Agent init', e); } }
+
+// Hide the Joey Agent pill when the contact section is in view so it doesn't overlap the footer
+(function joeyHideOnContact(){
+  const agent = document.getElementById('joeyAgent');
+  const contact = document.getElementById('contact');
+  if (!agent || !contact) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) agent.classList.add('agent-hide');
+      else agent.classList.remove('agent-hide');
+    });
+  }, { rootMargin: '-30% 0px 0px 0px' });
+  io.observe(contact);
+})();
 
 (function joeyAgentToggle(){
   const agent = document.getElementById('joeyAgent');
