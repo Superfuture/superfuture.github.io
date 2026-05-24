@@ -261,26 +261,81 @@
   /* Hero portrait gentle breathing on idle */
   .hero-name { animation: breath 10s ease-in-out infinite; }
 
-  /* Ask Joey */
-  .ask-shell {
-    position: relative;
-    border-radius: 24px;
-    border: 1px solid hsl(var(--stroke));
+  /* Joey Agent — floating widget */
+  .joey-agent {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 80;
+    font-family: 'Inter', sans-serif;
+  }
+  .joey-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     background: hsl(var(--surface));
+    border: 1px solid rgba(137,170,204,0.35);
+    border-radius: 9999px;
+    padding: 10px 18px 10px 14px;
+    color: hsl(var(--text));
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5), 0 0 0 6px rgba(137,170,204,0.06);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    position: relative;
+  }
+  .joey-pill:hover { transform: translateY(-2px); border-color: rgba(137,170,204,0.6); box-shadow: 0 18px 50px rgba(0,0,0,0.55), 0 0 0 8px rgba(137,170,204,0.1); }
+  .joey-pill::before {
+    content: ''; position: absolute; inset: -10px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(137,170,204,0.25), transparent 70%);
+    z-index: -1;
+    animation: pillGlow 3s ease-in-out infinite;
+  }
+  @keyframes pillGlow { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  .joey-avatar {
+    width: 26px; height: 26px;
+    border-radius: 9999px;
+    background-image: url('joey-headshot.png');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid hsl(var(--stroke));
+    flex: none;
+    position: relative;
+  }
+  .joey-avatar::after {
+    content: ''; position: absolute;
+    right: -2px; bottom: -2px;
+    width: 9px; height: 9px;
+    background: #10b981;
+    border: 2px solid hsl(var(--surface));
+    border-radius: 9999px;
+    box-shadow: 0 0 6px #10b981;
+  }
+  .joey-pill-label { font-weight: 500; letter-spacing: 0.02em; }
+  .joey-pill-sub { color: hsl(var(--muted)); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-left: 4px; }
+
+  .joey-panel {
+    position: absolute;
+    bottom: 60px; right: 0;
+    width: min(380px, calc(100vw - 40px));
+    height: min(540px, calc(100vh - 120px));
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--stroke));
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-  }
-  .ask-shell::before {
-    content: '';
-    position: absolute; inset: -1px;
-    border-radius: 25px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(137,170,204,0.4), transparent 40%, transparent 60%, rgba(78,133,191,0.3));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(137,170,204,0.1);
+    transform-origin: bottom right;
+    transform: scale(.85) translateY(20px);
+    opacity: 0;
     pointer-events: none;
+    transition: transform .35s cubic-bezier(.22,1,.36,1), opacity .25s ease;
   }
+  .joey-agent.open .joey-panel { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+  .joey-agent.open .joey-pill { transform: scale(.92); opacity: .8; }
+
   .ask-titlebar {
     display: flex; align-items: center; gap: 10px;
     padding: 14px 20px;
@@ -292,13 +347,14 @@
   .ask-title { font-size: 12px; color: hsl(var(--muted)); text-transform: uppercase; letter-spacing: 0.25em; }
   .ask-status { margin-left: auto; font-size: 11px; color: #89AACC; letter-spacing: 0.2em; text-transform: uppercase; }
   .ask-stream {
-    padding: 22px 22px 4px;
-    min-height: 200px;
-    max-height: 360px;
+    padding: 18px 18px 4px;
+    flex: 1;
     overflow-y: auto;
     display: flex; flex-direction: column; gap: 12px;
     scroll-behavior: smooth;
   }
+  .ask-stream::-webkit-scrollbar { width: 6px; }
+  .ask-stream::-webkit-scrollbar-thumb { background: hsl(var(--stroke)); border-radius: 6px; }
   .ask-msg {
     max-width: 88%;
     padding: 12px 16px;
@@ -334,8 +390,8 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
   .ask-suggests {
-    padding: 6px 22px 18px;
-    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 6px 18px 14px;
+    display: flex; flex-wrap: wrap; gap: 6px;
   }
   .ask-pill {
     font-size: 12px;
@@ -350,10 +406,18 @@
   .ask-pill:hover { border-color: rgba(137,170,204,0.55); color: hsl(var(--text)); transform: translateY(-1px); }
   .ask-input-wrap {
     display: flex; gap: 8px;
-    padding: 14px 18px;
+    padding: 12px 14px;
     border-top: 1px solid hsl(var(--stroke));
     background: rgba(0,0,0,0.3);
   }
+  .ask-close {
+    background: none; border: 0;
+    color: hsl(var(--muted));
+    font-size: 18px; line-height: 1;
+    cursor: pointer; padding: 0 6px;
+    transition: color .2s ease;
+  }
+  .ask-close:hover { color: hsl(var(--text)); }
   .ask-input {
     flex: 1;
     background: hsl(var(--bg));
@@ -745,39 +809,6 @@
           Speaker: AI UX Summit 2026 · Stanford Guest Lecturer · Anthropic Claude Design contributor
         </p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ASK JOEY ============ -->
-<section id="ask" class="py-16 md:py-24 border-t" style="background:hsl(var(--bg)); border-color:hsl(var(--stroke))">
-  <div class="max-w-[1000px] mx-auto px-6 md:px-10 lg:px-16">
-    <div class="reveal mb-10 md:mb-12 text-center">
-      <div class="flex items-center justify-center gap-3 mb-4">
-        <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
-        <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Try it</span>
-        <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
-      </div>
-      <h2 class="text-4xl md:text-5xl lg:text-6xl mb-3" style="color:hsl(var(--text))">
-        Ask <span class="font-display italic">Joey</span>
-      </h2>
-      <p class="text-sm md:text-base" style="color:hsl(var(--muted))">
-        A working AI artifact, not a claim. Built with Claude in a single sitting.
-      </p>
-    </div>
-
-    <div class="reveal ask-shell">
-      <div class="ask-titlebar">
-        <span class="ask-dot"></span>
-        <span class="ask-title">joey · live</span>
-        <span class="ask-status">Online</span>
-      </div>
-      <div class="ask-stream" id="askStream"></div>
-      <div class="ask-suggests" id="askSuggests"></div>
-      <form class="ask-input-wrap" id="askForm" autocomplete="off">
-        <input class="ask-input" id="askInput" type="text" placeholder="Ask anything — work, AI, the book, hiring..." aria-label="Ask Joey a question"/>
-        <button class="ask-send" id="askSend" type="submit">Send</button>
-      </form>
     </div>
   </div>
 </section>
@@ -1497,6 +1528,51 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+</script>
+
+<!-- ============ JOEY AGENT WIDGET ============ -->
+<div class="joey-agent" id="joeyAgent">
+  <button class="joey-pill" id="joeyPill" type="button" aria-label="Open Joey Agent">
+    <span class="joey-avatar"></span>
+    <span class="joey-pill-label">Joey Agent</span>
+    <span class="joey-pill-sub">Online</span>
+  </button>
+  <div class="joey-panel" role="dialog" aria-label="Joey Agent">
+    <div class="ask-titlebar">
+      <span class="joey-avatar" style="width:20px; height:20px;"></span>
+      <span class="ask-title">Joey Agent</span>
+      <span class="ask-status">Live</span>
+      <button class="ask-close" id="joeyClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="ask-stream" id="askStream"></div>
+    <div class="ask-suggests" id="askSuggests"></div>
+    <form class="ask-input-wrap" id="askForm" autocomplete="off">
+      <input class="ask-input" id="askInput" type="text" placeholder="Ask anything..." aria-label="Ask Joey a question"/>
+      <button class="ask-send" id="askSend" type="submit">Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function joeyAgentToggle(){
+  const agent = document.getElementById('joeyAgent');
+  const pill = document.getElementById('joeyPill');
+  const close = document.getElementById('joeyClose');
+  if (!agent || !pill) return;
+  pill.addEventListener('click', () => {
+    agent.classList.toggle('open');
+    if (agent.classList.contains('open')) {
+      setTimeout(() => { document.getElementById('askInput')?.focus(); }, 350);
+    }
+  });
+  close.addEventListener('click', (e) => {
+    e.stopPropagation();
+    agent.classList.remove('open');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && agent.classList.contains('open')) agent.classList.remove('open');
+  });
+})();
 </script>
 
 </body>
