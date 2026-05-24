@@ -157,7 +157,7 @@
 <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
   <div class="inline-flex items-center rounded-full backdrop-blur-md border border-white/10 px-2 py-2"
        style="background:hsl(var(--surface) / 0.85)">
-    <a href="index.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 inline-flex items-center gap-2"
+    <a href="joey-portfolio.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 inline-flex items-center gap-2"
        style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">
       <span aria-hidden="true">←</span> All work
     </a>
@@ -187,7 +187,7 @@
       </a>
     </div>
     <div class="md:text-right">
-      <p class="text-sm md:text-base mb-6" style="color:hsl(var(--muted))">Hiring for a Senior Product Design role? I'd love to talk.</p>
+      <p class="text-sm md:text-base mb-6 hidden" style="color:hsl(var(--muted))">Hiring for a Senior Product Design role? I'd love to talk.</p>
       <a href="mailto:jprimiani@gmail.com" class="ring-btn rounded-full text-sm md:text-base inline-flex">
         <span class="relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full"
               style="background:hsl(var(--surface)); color:hsl(var(--text))">
@@ -340,45 +340,49 @@ const CASES = {
       }
     ],
     quote: "You're not designing a screen, you're designing the system that produces every future screen.",
-    next: 'ai-native',
+    next: 'little-monsters',
   },
 
-  'ai-native': {
-    name: 'Claude Code Craft',
-    category: 'Studio · 2024–Present',
-    role: 'Designer, prototyper, Claude Code power user',
-    team: 'Solo with Claude as collaborator',
-    location: 'Bay Area',
-    headline: 'Treating Claude Code as the design medium, not a tool. This portfolio is exhibit A.',
-    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
+  'little-monsters': {
+    name: 'Little Monsters',
+    category: 'Co-Founder · Lady Gaga · 2011–2012',
+    role: 'Co-Founder · Product Designer',
+    team: 'Co-founded with Lady Gaga (Backplane)',
+    location: 'Los Angeles · New York',
+    headline: 'Co-founded a creative social platform with Lady Gaga before fan platforms were a category.',
+    hero: 'https://assets.dunked.com/assets/prod/117833/p1bba63p7i1595m541rbs1k441oht8.png',
     stats: [
-      { k: 'Concept-to-prototype', v: '< 1 day' },
-      { k: 'Designed and built with Claude Code', v: 'This site' },
-      { k: 'Talks on the workflow', v: 'AI UX Summit 2026' },
+      { k: 'Concert merch lift', v: '+30%' },
+      { k: 'Built before fan platforms existed', v: '2011' },
+      { k: 'A creative home for', v: 'Millions' },
     ],
     sections: [
       {
-        h: 'Context',
-        body: `Most teams still treat AI as a feature you bolt on. I treat Claude Code as the canvas I design on.<br/><br/>Over the last year I have refined a practice where Claude Code is the primary surface for design work. Not Figma. Not a doc. Not a spec. The prototype is the artifact, the artifact is the argument, and the argument lives as real working code from minute one.`
+        h: 'The brief',
+        body: `In 2011 I co-founded Little Monsters with Lady Gaga, a purpose-built creative community for her global superfan base. Inspired by what DeviantArt did for my own creative development, I designed a platform that treated fans as artists, not audience. A place to share, create, and inspire, where fan art was fine art and belonging was the product.`
       },
       {
-        h: 'The practice',
-        body: `<strong class="text-text-primary">Vibe-coding with Claude Code.</strong> I think out loud in plain language and Claude generates the next iteration of the interface as real HTML, CSS, and JS. The output is something a PM, engineer, or exec can click, criticize, and steer in the same meeting.<br/><br/><strong class="text-text-primary">Prototype as spec.</strong> Specs go stale the moment they are written. Working prototypes are honest. I use Claude Code to produce the artifact other teams would produce a deck for.<br/><br/><strong class="text-text-primary">Model-augmented exploration.</strong> Claude lets me explore a wider option space than I could alone. More variants, more edge cases, more deliberate dead-ends, then I pick with conviction.`
+        h: 'The problem',
+        body: `<strong class="text-text-primary">Fans had no real home.</strong> In 2011, fan communities lived in comment sections, Facebook groups, and scattered forums. They had no dedicated creative infrastructure: no tools, no identity, no sense of permanence. Little Monsters was built to change that. Not just a social network, but a creative platform purpose-built for one of the world&rsquo;s most passionate fan communities, with tools, culture, and a philosophy to match their energy.`
       },
       {
-        h: 'Why this matters for an AI-product role',
-        body: `Designing for Claude users means understanding the texture of working with a model. What it does well, where it surprises you, when to push back. The fastest way to internalize that texture is to design with Claude every day.<br/><br/>That is the practice I bring. The case studies on this site are real shipped work, but the site itself is the demo. It was designed and vibe-coded with Claude Code in a single session, no boilerplate, no template.`
+        h: 'What we built',
+        body: `<strong class="text-text-primary">Six tools. One culture.</strong><br/><br/><strong class="text-text-primary">01 Creative Studio.</strong> &ldquo;Inspired by&rdquo; remixing, where fans built on each other&rsquo;s art and created collaborative chains of creativity that spanned the globe.<br/><br/><strong class="text-text-primary">02 Live Translation.</strong> Real-time community chat via Google Translate, so a fan in Tokyo and one in São Paulo could connect without friction.<br/><br/><strong class="text-text-primary">03 One-Click Merch.</strong> Fan artwork on apparel in minutes. Your creation could ship to the world the same day.<br/><br/><strong class="text-text-primary">04 Monster Map.</strong> Location-based fan discovery for concert meetups, turning strangers in a venue into community before the first song.<br/><br/><strong class="text-text-primary">05 Monstervisions.</strong> Exclusive behind-the-scenes from Gaga that felt personal, not broadcast. The real Gaga, for her real fans.<br/><br/><strong class="text-text-primary">06 Webcam Drops.</strong> Instant content from webcam to community. Zero friction between creative impulse and published post.`
       },
       {
-        h: 'Talks and writing',
-        body: `I spoke at the AI UX Summit in March 2026 on connecting Claude Code to the Figma MCP for AI-accelerated prototyping workflows. The book <em class="font-display italic">Think. Prompt. Create.</em> is the longer argument behind the practice. The thesis: AI amplifies human creativity rather than replacing it, and the medium you choose to design in shapes everything that comes after.<br/><br/><a href="https://www.youtube.com/watch?v=Uw0RrIoEU5o&amp;t=453s" target="_blank" rel="noopener" class="yt-lite"><img class="poster" src="https://i.ytimg.com/vi/Uw0RrIoEU5o/maxresdefault.jpg" alt="Joey Primiani speaking at AI UX Summit 2026" loading="lazy"/><div class="yt-overlay"><div class="yt-play"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7L8 5z"/></svg></div></div><div class="yt-meta"><span>AI UX Summit · March 2026</span><span>Watch on YouTube ↗</span></div></a>`
+        h: 'Cultural impact',
+        body: `<strong class="text-text-primary">An inclusive safe space.</strong> The platform became a lifeline for LGBTQ+ youth, bullied teenagers, and young people battling anxiety and depression. A space built around love and acceptance that existed nowhere else for its community.<br/><br/><strong class="text-text-primary">Launching creative careers.</strong> Artists like Helen Green gained global recognition through the platform. Her fan art caught Gaga&rsquo;s eye and opened doors to Haus of Gaga collaboration. Little Monsters turned fans into professionals.<br/><br/><strong class="text-text-primary">Artist–fan reinvented.</strong> Gaga participated in chatrooms, shared Monstervisions, and responded directly to fan art. Not broadcasting to an audience: being present with a community.<br/><br/><strong class="text-text-primary">No borders, one community.</strong> Real-time translation meant language was no longer a wall. Creativity was the common language.`
       },
       {
-        h: 'Reflection',
-        body: `Designing with Claude Code is not a productivity hack. It is a different relationship with the medium, where you can keep tasting the dish while you cook it. Once you have designed this way, going back to static screens feels like designing blind.`
+        h: 'Press',
+        body: `WIRED, TechCrunch, Rolling Stone, Fast Company, CNN, ABC News, NME, and TIME covered the launch. Little Monsters was named one of the first true fan platforms and a model for artist–community relationships that the rest of the industry would later try to copy.`
+      },
+      {
+        h: 'Design philosophy',
+        body: `<strong class="text-text-primary">Fan art = fine art.</strong> DeviantArt shaped who I am as a designer. I wanted to build for the next generation of young creatives what DeviantArt did for mine: a special place that takes their work seriously, that builds infrastructure for passion, and that proves creativity is a legitimate path. Little Monsters was that platform. And it worked.<br/><br/><a href="https://superfuture.github.io/Claude_Code/little-monsters.html" target="_blank" rel="noopener" class="yt-lite" style="aspect-ratio: 16/10;"><img class="poster" src="https://assets.dunked.com/assets/prod/117833/p1bba63p7j1ff91daq1qqbc7s13ng.png" alt="Little Monsters platform" loading="lazy"/><div class="yt-overlay"><div class="yt-play"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L17 7M7 7h10v10" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="yt-meta"><span>Full case study</span><span>View on Claude Code ↗</span></div></a>`
       }
     ],
-    quote: 'The prototype is the artifact. The artifact is the argument.',
+    quote: "This isn't a social network. It's a place of love and acceptance where every fan is also a creator, and every creation matters.",
     next: 'linkedin-premium',
   }
 };
