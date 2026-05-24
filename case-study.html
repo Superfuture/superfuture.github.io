@@ -460,32 +460,27 @@ const CASES = {
     sections: [
       {
         h: 'Context',
-        body: `January AI is a clinical-grade AI nutrition platform. The thesis: most people change their eating only when they can <em>see</em> a food's impact before they take a bite, and most can't afford a continuous glucose monitor to find out. January built an AI that predicts the spike from a photo, then shipped it as an iOS app for anyone with a phone.`
+        body: `January AI is a clinical-grade AI nutrition platform. The thesis: most people change their eating only when they can <em>see</em> a food&rsquo;s impact before they take a bite, and most can&rsquo;t afford a continuous glucose monitor to find out. So January built an AI that predicts the spike from a photo, then shipped it as an iOS app accessible to anyone with a phone.<br/><br/>My job: design the consumer surface where AI, behavior change, and clinical rigor have to feel like one calm app.`
       },
       {
-        h: 'AI food scanning',
-        gallery: [
-          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png',
-          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png',
-          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png'
-        ],
-        galleryClass: 'tall',
-        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> Open the camera, capture your plate, and in a couple of seconds the app returns an identified meal, macros, calories, and a predicted glucose spike.<br/><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. The scanning animation is a calm sequence with three beats, capture, recognize, predict, each with its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.`
+        h: 'The headline feature: AI food scanning',
+        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<div class="cs-media-row"><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png" alt="January AI device"/></div><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
       },
       {
-        h: 'Glucose without a sensor',
-        media: `<img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI glucose chart"/>`,
-        mediaClass: 'tall',
-        mediaCaption: 'January AI · iOS',
-        body: `January's breakthrough: predicting glycemic response from a photo, no CGM required. A single readable spike curve, color-encoded so a glance tells you "yes" or "swap." Full clinical detail is one tap away. Calm at default, deep on demand.`
+        h: 'Glucose predictions, without a sensor',
+        body: `January&rsquo;s breakthrough is predicting glycemic response from a photo, no CGM required. Designing for this is unusual: we&rsquo;re showing a clinically meaningful chart to a consumer who likely doesn&rsquo;t know what an AUC is.<br/><br/>The decisions: a single readable spike curve, no medical jargon at first surface, color encoded so a glance tells you "yes" or "swap." The full clinical detail is one tap away for the curious. Calm at default, deep on demand.`
       },
       {
         h: 'Jan, the AI coach',
-        body: `Jan is the in-app AI coach. Conversational, personalized, present without being noisy. The interaction model treats Jan as a layer that <em>understands</em> the rest of the app, not a separate chat island. Ask Jan from anywhere; the answer lands in context, right where the question came from.`
+        body: `Jan is the in-app AI coach. Conversational, personalized to your goals, present without being noisy. Designing for an AI coach meant designing for trust: when does Jan speak, when does Jan stay quiet, and how does the app make clear that this is an assistant, not a doctor.<br/><br/>The interaction model treats Jan as a layer that <em>understands</em> the rest of the app, not a separate chat island. You can ask Jan from anywhere. The answer lands in context, right where the question came from.`
       },
       {
         h: 'Mobile craft',
-        body: `Senior mobile design at this product means owning the texture: scanning motion, haptics on a confirmed log, the easing on a spike chart, the empty states, the accessibility pass. Every detail is the product when the product is asking people to change a habit. Built native iOS with a design system tuned for clinical readability and motion that feels like the app is paying attention to you.`
+        body: `Senior mobile design at this product means owning the texture: scanning motion, haptics on a confirmed log, the easing on a spike chart, the gesture for swapping a food, the empty states, the accessibility pass. Every detail is the product when the product is asking people to change a habit.<br/><br/>Built native iOS, with a design system tuned for clinical readability in dark + light, and motion designed to feel like the app is paying attention to you, not the other way around.`
+      },
+      {
+        h: 'Reflection',
+        body: `Designing clinical-grade AI for everyday humans is a different bar than designing for power users. The audience is anyone with a phone and a reason to change. The product has to feel calm, trustworthy, and a little bit magical at the moment of truth, then get out of the way.`
       }
     ],
     quote: "See a food's impact before you eat it.",
