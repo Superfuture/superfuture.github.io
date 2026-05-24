@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breathe · Meditation App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #04071a;
+  --bg2:          #070d2a;
+  --text:         #e8eaf6;
+  --dim:          rgba(232,234,246,.5);
+  --dimmer:       rgba(232,234,246,.25);
+  --inhale:       #818cf8;
+  --hold1:        #fbbf24;
+  --exhale:       #22d3ee;
+  --hold2:        #c084fc;
+  --glass:        rgba(255,255,255,.06);
+  --glass-border: rgba(255,255,255,.1);
+  --serif:        'DM Serif Display', Georgia, serif;
+  --sans:         'DM Sans', system-ui, sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* ── AURORA ─────────────────────────────────────────── */
+#aurora {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.aurora-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); opacity: .15;
+  animation: auroraFloat linear infinite;
+}
+.orb1 { width: 700px; height: 700px; background: #4f46e5; top: -150px; left: -150px; animation-duration: 20s; }
+.orb2 { width: 600px; height: 600px; background: #7c3aed; bottom: -120px; right: -80px; animation-duration: 25s; animation-delay: -10s; }
+.orb3 { width: 450px; height: 450px; background: #0e7490; top: 25%; left: 35%; animation-duration: 17s; animation-delay: -5s; }
+@keyframes auroraFloat {
+  0%   { transform: translate(0,0) scale(1); }
+  33%  { transform: translate(50px,-35px) scale(1.08); }
+  66%  { transform: translate(-35px,50px) scale(.94); }
+  100% { transform: translate(0,0) scale(1); }
+}
+
+/* ── HOME SCREEN ────────────────────────────────────── */
+.home {
+  position: fixed; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+
+.home-inner {
+  display: flex; flex-direction: column;
+  align-items: center;
+  padding: 0 32px;
+  width: 100%; max-width: 420px;
+}
+
+/* Header */
+.home-header {
+  width: 100%; display: flex;
+  align-items: center; justify-content: space-between;
+  margin-bottom: 56px;
+}
+.streak-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  border-radius: 24px; padding: 8px 18px;
+  font-size: 13px; font-weight: 400; color: var(--dim);
+  letter-spacing: .01em;
+}
+.streak-count { color: var(--text); font-weight: 600; }
+.settings-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--dim); font-size: 17px;
+  transition: background .2s, transform .3s;
+}
+.settings-btn:hover { background: rgba(255,255,255,.1); transform: rotate(45deg); }
+
+/* Title area */
+.home-title-area { text-align: center; margin-bottom: 56px; }
+.home-eyebrow {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--inhale); font-weight: 500; margin-bottom: 18px; opacity: .85;
+}
+.home-title {
+  font-family: var(--serif);
+  font-size: clamp(58px, 16vw, 88px);
+  line-height: .95; letter-spacing: -.03em;
+  background: linear-gradient(145deg, #e8eaf6 20%, #818cf8 60%, #c084fc 90%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 18px;
+}
+.home-subtitle {
+  font-size: 16px; color: var(--dim);
+  font-weight: 300; letter-spacing: .01em; line-height: 1.65;
+}
+
+/* Phase pills */
+.breathing-badge {
+  display: flex; gap: 6px; justify-content: center;
+  margin-top: 22px; flex-wrap: wrap;
+}
+.phase-pill {
+  font-size: 10px; letter-spacing: .07em;
+  padding: 4px 12px; border-radius: 20px;
+  font-weight: 500; opacity: .8;
+}
+.pill-inhale { background: rgba(129,140,248,.14); color: var(--inhale); border: 1px solid rgba(129,140,248,.28); }
+.pill-hold1  { background: rgba(251,191,36,.1);   color: var(--hold1);  border: 1px solid rgba(251,191,36,.22); }
+.pill-exhale { background: rgba(34,211,238,.1);   color: var(--exhale); border: 1px solid rgba(34,211,238,.22); }
+.pill-hold2  { background: rgba(192,132,252,.14); color: var(--hold2);  border: 1px solid rgba(192,132,252,.28); }
+
+/* BEGIN orb */
+.begin-btn {
+  width: 188px; height: 188px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.begin-btn:hover { transform: scale(1.07); }
+.begin-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid rgba(129,140,248,.3);
+  animation: ringPulse 3s ease-in-out infinite;
+}
+.begin-ring:nth-child(2) { inset: -14px; border-color: rgba(129,140,248,.16); animation-delay: .6s; }
+.begin-ring:nth-child(3) { inset: -30px; border-color: rgba(129,140,248,.07); animation-delay: 1.2s; }
+@keyframes ringPulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(1.05); opacity: .55; }
+}
+.begin-inner {
+  width: 148px; height: 148px; border-radius: 50%;
+  background: linear-gradient(145deg, rgba(79,70,229,.55) 0%, rgba(124,58,237,.55) 100%);
+  border: 1px solid rgba(129,140,248,.35);
+  backdrop-filter: blur(24px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  box-shadow: 0 0 70px rgba(79,70,229,.35), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.begin-label { font-size: 12px; letter-spacing: .22em; font-weight: 500; color: var(--text); }
+.begin-sub   { font-size: 10px; color: var(--dimmer); letter-spacing: .12em; }
+</style>
+</head>
+<body>
+
+<div id="aurora">
+  <div class="aurora-orb orb1"></div>
+  <div class="aurora-orb orb2"></div>
+  <div class="aurora-orb orb3"></div>
+</div>
+
+<div class="home">
+  <div class="home-inner">
+
+    <div class="home-header">
+      <div class="streak-chip">
+        🔥&nbsp;<span class="streak-count">7</span>&nbsp;day streak
+      </div>
+      <div class="settings-btn">⚙</div>
+    </div>
+
+    <div class="home-title-area">
+      <div class="home-eyebrow">Box Breathing · 4·4·4·4</div>
+      <div class="home-title">Breathe</div>
+      <div class="home-subtitle">Calm your nervous system<br>with rhythmic breath work</div>
+      <div class="breathing-badge">
+        <span class="phase-pill pill-inhale">Inhale 4s</span>
+        <span class="phase-pill pill-hold1">Hold 4s</span>
+        <span class="phase-pill pill-exhale">Exhale 4s</span>
+        <span class="phase-pill pill-hold2">Hold 4s</span>
+      </div>
+    </div>
+
+    <button class="begin-btn">
+      <div class="begin-ring"></div>
+      <div class="begin-ring"></div>
+      <div class="begin-ring"></div>
+      <div class="begin-inner">
+        <span class="begin-label">BEGIN</span>
+        <span class="begin-sub">4 · 4 · 4 · 4</span>
+      </div>
+    </button>
+
+  </div>
+</div>
+
+</body>
+</html>
