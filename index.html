@@ -1107,13 +1107,9 @@
           <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
           <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">About</span>
         </div>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight mb-5" style="color:hsl(var(--text))">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight mb-6" style="color:hsl(var(--text))">
           Hi, I&rsquo;m <span class="font-display italic">Joey</span>
         </h2>
-
-        <p class="text-lg md:text-xl font-display italic mb-6 max-w-xl" style="color:hsl(var(--text) / 0.9)">
-          Design is the layer where transformative technology becomes useful for normal humans. That&rsquo;s the work.
-        </p>
 
         <div class="space-y-4 text-base md:text-lg leading-relaxed max-w-2xl" style="color:hsl(var(--text) / 0.85)">
           <p>
@@ -1147,7 +1143,7 @@
         <div class="disciplines reveal">
           <div class="disc-header">Disciplines</div>
           <div class="disc-row">
-            <span class="disc-label">Mobile Systems</span>
+            <span class="disc-label">Mobile Design</span>
             <div class="disc-bar"><div class="disc-fill" style="--w:98%"></div></div>
           </div>
           <div class="disc-row">
@@ -1716,6 +1712,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </div>
 
 <script>
+// Belt-and-suspenders: re-trigger Joey Agent init now that widget HTML is parsed
+if (typeof bootAskJoey === 'function') { try { bootAskJoey(); } catch(e) { console.error('Agent init', e); } }
+
 (function joeyAgentToggle(){
   const agent = document.getElementById('joeyAgent');
   const pill = document.getElementById('joeyPill');
