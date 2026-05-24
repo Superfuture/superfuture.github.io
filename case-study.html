@@ -207,51 +207,33 @@
   .cs-section-gallery.tall .cs-tile { aspect-ratio: 9/16; }
   .cs-section-gallery.square .cs-tile { aspect-ratio: 1/1; }
 
-  /* iPhone gallery: zoom images past the source device frames to show only screen content,
-     then wrap in a uniform CSS iPhone bezel + Dynamic Island. */
+  /* iPhone gallery: let source images keep their own frames; just normalize spacing/shadow. */
   .cs-section-gallery.iphone {
     grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    gap: 24px;
+    background: transparent;
   }
   @media (max-width: 640px) {
-    .cs-section-gallery.iphone { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .cs-section-gallery.iphone { grid-template-columns: repeat(3, 1fr); gap: 12px; }
   }
   .cs-section-gallery.iphone .cs-tile {
     aspect-ratio: 9/19.5;
-    background: #111;
-    border: 7px solid #111;
-    border-radius: 38px;
-    overflow: hidden;
-    box-shadow: 0 22px 50px rgba(0,0,0,0.55), inset 0 0 0 1.5px rgba(255,255,255,0.07);
-    position: relative;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
   }
   .cs-section-gallery.iphone .cs-tile img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
-    border-radius: 30px;
-    background: #fff;
-    transform: scale(1.1);
-    transform-origin: center;
-    transition: transform .8s ease;
+    border-radius: 0;
+    background: transparent;
+    filter: drop-shadow(0 22px 40px rgba(0,0,0,0.55));
   }
-  .cs-section-gallery.iphone .cs-tile:hover img { transform: scale(1.12); }
-  /* Dynamic Island */
-  .cs-section-gallery.iphone .cs-tile::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 32%;
-    max-width: 90px;
-    height: 22px;
-    background: #000;
-    border-radius: 999px;
-    z-index: 2;
-    pointer-events: none;
-  }
+  .cs-section-gallery.iphone .cs-tile:hover img { transform: none; }
 
   /* Gated case study request form */
   .cs-gate-form { max-width: 100%; }
