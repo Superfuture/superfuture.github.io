@@ -910,6 +910,21 @@
   }
   .testi-mark path { fill: currentColor; }
 
+  /* Rainbow manifesto text */
+  .rainbow-text {
+    background: linear-gradient(120deg, #ff6b9d 0%, #c779ff 18%, #6b9dff 36%, #6bd9c5 54%, #ffd966 72%, #ff8c6b 88%, #ff6b9d 100%);
+    background-size: 220% 220%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+            color: transparent;
+    animation: rainbowShift 14s ease-in-out infinite;
+  }
+  @keyframes rainbowShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
   /* Book rainbow backdrop */
   .book-rainbow {
     position: absolute;
@@ -1174,6 +1189,15 @@
             <div class="col-span-3 md:col-span-2 text-xs uppercase tracking-[0.25em] pt-1.5" style="color:hsl(var(--muted))">2026</div>
             <div class="col-span-9 md:col-span-7 text-base md:text-lg" style="color:hsl(var(--text))"><span class="font-display italic">AI UX Summit</span> Speaker</div>
             <div class="hidden md:block md:col-span-3 text-sm pt-1" style="color:hsl(var(--muted))">AI-native prototyping workflows</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 py-5 border-t" style="border-color:hsl(var(--stroke))">
+            <div class="col-span-3 md:col-span-2 text-xs uppercase tracking-[0.25em] pt-1.5" style="color:hsl(var(--muted))">2014</div>
+            <div class="col-span-9 md:col-span-7 text-base md:text-lg" style="color:hsl(var(--text))">
+              <a href="https://patents.google.com/patent/US8869068B2" target="_blank" rel="noopener" class="hover:underline">
+                <span class="font-display italic">US Patent</span> 8,869,068
+              </a>
+            </div>
+            <div class="hidden md:block md:col-span-3 text-sm pt-1" style="color:hsl(var(--muted))">Radial menus invention</div>
           </div>
           <div class="grid grid-cols-12 gap-4 py-5 border-t" style="border-color:hsl(var(--stroke))">
             <div class="col-span-3 md:col-span-2 text-xs uppercase tracking-[0.25em] pt-1.5" style="color:hsl(var(--muted))">2016</div>
@@ -1566,6 +1590,10 @@
 
   <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
     <div class="text-center mb-20 md:mb-28">
+      <p class="text-xs uppercase tracking-[0.3em] mb-6" style="color:hsl(var(--muted))">Manifesto</p>
+      <p class="rainbow-text text-2xl md:text-3xl lg:text-4xl font-display italic leading-tight max-w-3xl mx-auto mb-14 md:mb-20">
+        Create the future you want to live in.
+      </p>
       <p class="text-xs uppercase tracking-[0.3em] mb-4" style="color:hsl(var(--muted))">Let's build something</p>
       <h2 class="text-5xl md:text-7xl lg:text-8xl font-display italic mb-10" style="color:hsl(var(--text))">Get in touch</h2>
       <a href="mailto:jprimiani@gmail.com" class="ring-btn rounded-full text-sm md:text-base inline-flex">
