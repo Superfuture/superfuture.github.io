@@ -2003,41 +2003,42 @@ bootAskJoey();
   });
 })();
 
-/* ============ SMOOTH SCROLL FOR ANCHORS (custom easing + land flash) ============ */
+/* ============ SMOOTH SCROLL FOR ANCHORS (delegated, custom easing + land flash) ============ */
 (function smoothNav(){
   function easeInOutCubic(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
-  function scrollTo(targetY, duration){
+  let activeRaf = 0;
+  function smoothScroll(targetY, duration){
+    cancelAnimationFrame(activeRaf);
     const startY = window.scrollY;
     const diff = targetY - startY;
-    if (Math.abs(diff) < 4) return;
-    const dur = duration || Math.min(1500, Math.max(700, Math.abs(diff) * 0.6));
+    const dur = duration || Math.min(1600, Math.max(700, Math.abs(diff) * 0.65));
+    if (Math.abs(diff) < 2) { window.scrollTo(0, targetY); return; }
     const start = performance.now();
     function step(now){
       const p = Math.min(1, (now - start) / dur);
-      window.scrollTo(0, Math.round(startY + diff * easeInOutCubic(p)));
-      if (p < 1) requestAnimationFrame(step);
+      window.scrollTo(0, startY + diff * easeInOutCubic(p));
+      if (p < 1) activeRaf = requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
+    activeRaf = requestAnimationFrame(step);
   }
   function flashLand(el){
     el.classList.add('section-landed');
     setTimeout(() => el.classList.remove('section-landed'), 1100);
   }
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href');
-      if (id.length > 1) {
-        const el = document.querySelector(id);
-        if (el) {
-          e.preventDefault();
-          const target = el.getBoundingClientRect().top + window.scrollY;
-          scrollTo(target);
-          setTimeout(() => flashLand(el), 250);
-          history.pushState && history.pushState(null, '', id);
-        }
-      }
-    });
-  });
+  // Delegation: catches clicks on any descendant of a hash anchor (SVG, span, etc.)
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href');
+    if (!id || id.length <= 1) return;
+    const el = document.querySelector(id);
+    if (!el) return;
+    e.preventDefault();
+    const target = el.getBoundingClientRect().top + window.scrollY;
+    smoothScroll(target);
+    setTimeout(() => flashLand(el), 250);
+    if (history.pushState) history.pushState(null, '', id);
+  }, true); // capture phase to win against any inner stopPropagation
 })();
 
 </script>
