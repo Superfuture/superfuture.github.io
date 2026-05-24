@@ -100,7 +100,7 @@
   .pullquote::before { content: '“'; }
   .pullquote::after { content: '”'; }
 
-  /* Inline case-study media */
+  /* Inline case-study media (legacy) */
   .cs-media {
     display: block;
     margin: 28px 0 0;
@@ -124,6 +124,95 @@
     border: 1px solid hsl(var(--stroke));
     box-shadow: 0 14px 30px rgba(0,0,0,0.35);
   }
+
+  /* Section-level media (new: leads each section) */
+  .cs-section { display: grid; gap: 28px md:gap-36px; }
+  .cs-section-media {
+    position: relative;
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface));
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+  }
+  .cs-section-media > img,
+  .cs-section-media > video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .cs-section-media.wide { aspect-ratio: 16/9; }
+  .cs-section-media.cinema { aspect-ratio: 21/9; }
+  .cs-section-media.square { aspect-ratio: 1/1; }
+  .cs-section-media.tall { aspect-ratio: 4/5; }
+  .cs-section-media.kenburns > img { animation: kenburns 22s ease-in-out infinite alternate; }
+  @keyframes kenburns {
+    0%   { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.08) translate(-2%, 1%); }
+  }
+  .cs-section-media .cs-media-caption {
+    position: absolute;
+    left: 22px; bottom: 18px; right: 22px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    z-index: 2;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    pointer-events: none;
+  }
+  .cs-section-media .cs-media-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Section-level gallery grid (multi-image, autoplays via hover scale) */
+  .cs-section-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 640px) {
+    .cs-section-gallery { grid-template-columns: repeat(2, 1fr); }
+  }
+  .cs-section-gallery .cs-tile {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface));
+    aspect-ratio: 3/4;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+  }
+  .cs-section-gallery .cs-tile img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .8s ease;
+  }
+  .cs-section-gallery .cs-tile:hover img { transform: scale(1.06); }
+  .cs-section-gallery.tall .cs-tile { aspect-ratio: 9/16; }
+  .cs-section-gallery.square .cs-tile { aspect-ratio: 1/1; }
+
+  /* Full-bleed intermission strip between cases */
+  .cs-bleed {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    border-top: 1px solid hsl(var(--stroke));
+    border-bottom: 1px solid hsl(var(--stroke));
+    overflow: hidden;
+    background: hsl(var(--surface));
+  }
+  .cs-bleed.wide-aspect { aspect-ratio: 21/9; }
+  .cs-bleed > img,
+  .cs-bleed > video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .cs-bleed > img { animation: kenburns 28s ease-in-out infinite alternate; }
 
   /* App CTA button */
   .cs-app-cta {
@@ -276,31 +365,29 @@ const CASES = {
     sections: [
       {
         h: 'Context',
-        body: `LinkedIn Premium is one of the largest subscription products in the world, with hundreds of millions of professionals across the network. By 2023 the question wasn't whether AI would change Premium, but how to design a product where the most valuable feature might be a conversation, a coach, or a forecast, not a feed.<br/><br/>The challenge: deliver tangible career value to professionals while keeping the experience calm, intuitive, and unmistakably human. Every shipped change is felt at planetary scale.`
-      },
-      {
-        h: 'My role',
-        body: `I lead design for premium product experiences, driving product vision, high-fidelity prototyping, and cross-functional alignment in ambiguous spaces. I work closely with PM, eng, data science, and research to take fuzzy AI capabilities and turn them into clear, opinionated product surfaces.<br/><br/>One thing that became a superpower for me was using AI-native workflows to rapidly prototype concepts, pressure-test ideas, and help teams make faster, higher-confidence decisions.`
+        media: `<img loading="lazy" src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1600&q=85" alt="LinkedIn Premium"/>`,
+        mediaClass: 'kenburns cinema',
+        mediaCaption: 'LinkedIn Premium · Mobile',
+        body: `Premium is one of the largest subscription products in the world, with hundreds of millions of professionals. By 2023 the question wasn't whether AI would change Premium, but how to design a product where the most valuable feature might be a conversation, a coach, or a forecast, not a feed.`
       },
       {
         h: 'LinkedIn × Calendly',
-        body: `<strong class="text-text-primary">Book an appointment, directly from a LinkedIn Premium profile.</strong> I partnered with Calendly on a shipped integration that turns a Premium professional&rsquo;s profile into a real conversion surface. Premium subscribers can add a custom &ldquo;Book an appointment&rdquo; button to their profile, and a browser extension lets them drop scheduling links straight into LinkedIn Messaging, Sales Navigator, and Recruiter without switching tabs.<br/><br/>The design problem: make a third-party scheduling action feel native to a LinkedIn profile, not bolted on. Calendly is the second most-recognized blue logo in the SaaS world; the trick was honoring both brands without creating a Frankenstein. The button reads as LinkedIn surface, the booking flow reads as Calendly trust.<br/><div class="cs-media-row"><img loading="lazy" src="https://images.ctfassets.net/k0lk9kiuza3o/7heMHsZRy4PYeWnwwgTVev/6b7c2595a59e93b9d7bb3c40db67310e/LinkedIn-Blue-128_2x_1.svg" alt="LinkedIn × Calendly integration" style="background:#fff; padding:24px;"/></div><br/><strong class="text-text-primary">Why it matters.</strong> &ldquo;Messages into meetings&rdquo; is the highest-value loop on Premium. Closing the gap between a warm connection and a booked call is what subscribers actually pay for. <a href="https://calendly.com/integration/linkedin" target="_blank" rel="noopener" style="color:#89AACC; text-decoration:underline;">View the integration ↗</a>`
+        media: `<img loading="lazy" src="https://images.ctfassets.net/k0lk9kiuza3o/7heMHsZRy4PYeWnwwgTVev/6b7c2595a59e93b9d7bb3c40db67310e/LinkedIn-Blue-128_2x_1.svg" alt="LinkedIn × Calendly integration" style="background:#fff; padding:120px; object-fit:contain;"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Calendly × LinkedIn · Shipped integration',
+        body: `<strong class="text-text-primary">Book an appointment, directly from a Premium profile.</strong> I partnered with Calendly on a shipped integration that turns a Premium profile into a real conversion surface, a "Book an appointment" button plus a browser extension that drops scheduling links into Messaging, Sales Navigator, and Recruiter without switching tabs.<br/><br/>The design problem: make a third-party action feel native to LinkedIn. Button reads as LinkedIn surface, booking flow reads as Calendly trust. <a href="https://calendly.com/integration/linkedin" target="_blank" rel="noopener" style="color:#89AACC; text-decoration:underline;">View the integration ↗</a>`
       },
       {
         h: 'Process',
-        body: `<strong class="text-text-primary">Prototype before brief.</strong> Instead of starting with a doc and ending with a screen, I start with the screen. AI-native tooling lets me ship a clickable, opinionated artifact in hours, something a PM, engineer, or exec can react to, not just read.<br/><br/><strong class="text-text-primary">Pressure-test with the team, not the room.</strong> Concepts get tested in the wild with cross-functional partners, not socialized in slides. The bar is "would you use it" not "would you approve it."<br/><br/><strong class="text-text-primary">Ship and learn.</strong> Premium gets real signal fast. I structure shipped experiments to teach the team something specific, not just to move a metric.`
+        body: `<strong class="text-text-primary">Prototype before brief.</strong> Instead of starting with a doc and ending with a screen, I start with the screen. AI-native tooling lets me ship a clickable, opinionated artifact in hours, something the team can react to, not just read.<br/><br/><strong class="text-text-primary">Pressure-test in the wild.</strong> Concepts get tested with cross-functional partners, not socialized in slides. The bar is "would you use it" not "would you approve it."`
       },
       {
         h: 'Key decisions',
-        body: `<strong class="text-text-primary">Designing the value, not the wall.</strong> Premium products often optimize for the paywall. I push the team to design what's behind it, the actual moment of help, first.<br/><br/><strong class="text-text-primary">AI as a calm collaborator.</strong> Generative features can feel slot-machine-y; I designed for calm, predictable interactions where the AI's job is clearly scoped and its limits are honest.<br/><br/><strong class="text-text-primary">Mobile-first for premium.</strong> Most professionals touch LinkedIn on phone first. Premium features have to feel native to mobile, not bolted on from a desktop affordance.`
+        body: `<strong class="text-text-primary">Design the value, not the wall.</strong> Premium products often optimize the paywall. I push the team to design what's behind it, the moment of help, first.<br/><br/><strong class="text-text-primary">AI as calm collaborator.</strong> Generative features can feel slot-machine-y. I design for predictable interactions where the AI's job is clearly scoped and its limits are honest.`
       },
       {
         h: 'Outcomes',
-        body: `Premium concepts I led drove meaningful engagement and monetization lifts in shipped experiments. More importantly, the prototyping rhythm I introduced is now used across the broader Premium design org, faster decisions, higher craft, fewer ambiguous slide reviews.`
-      },
-      {
-        h: 'Reflection',
-        body: `Designing AI products at scale is less about the model and more about the contract you make with the user. Show your work, hold the bar on craft, and remember that "magic" without trust is just confusion.`
+        body: `Premium concepts I led drove meaningful engagement and monetization lifts in shipped experiments. The prototyping rhythm I introduced is now used across the broader Premium design org. Faster decisions, higher craft, fewer slide reviews.`
       }
     ],
     quote: 'Prototype before brief.',
@@ -326,27 +413,29 @@ const CASES = {
     sections: [
       {
         h: 'Context',
-        body: `Wing is Alphabet's drone delivery moonshot. By the time I joined, the hardware worked. The harder problem was on the ground: how do you ask a normal human to trust that a small autonomous aircraft is going to fly to their house, lower a package on a tether, and leave?<br/><br/>This wasn't a feature. It was a behavior nobody had ever performed before. And we couldn't ship until the FAA, the operations team, the pilots, and the customer all believed the same thing was happening at the same moment.`
+        body: `Wing is Alphabet's drone delivery moonshot. By the time I joined, the hardware worked. The harder problem was on the ground: how do you ask a normal human to trust that a small autonomous aircraft is going to fly to their house, lower a package on a tether, and leave?<br/><br/>This wasn't a feature. It was a behavior nobody had ever performed before.`
       },
       {
-        h: 'My role',
-        body: `I led design for the consumer experience, the actual app and on-the-ground moments that real people would touch when ordering a drone delivery. That meant the ordering flow, the wait state, the handoff at the doorstep, and every recovery state when weather, wind, or wildlife intervened.<br/><br/>The work was equal parts product design, behavioral psychology, and regulatory translation. The hardest decisions were about what to communicate and what to hide, too much information frightened people, too little broke trust.`
+        h: 'Show the drone, always',
+        media: `<video src="opensky.mp4" autoplay muted loop playsinline preload="auto" poster="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1600&q=85"></video>`,
+        mediaClass: 'cinema',
+        mediaCaption: 'OpenSky · Real-time drone view',
+        body: `<strong class="text-text-primary">A real-time live view became the calming centerpiece.</strong> An anxious user wants to know what's happening overhead. Showing the drone's position and intent in real time was the single biggest trust lever, and the FAA could read it too.<br/><br/><strong class="text-text-primary">Motion as trust.</strong> Every easing curve was tuned to feel calm and predictable, never urgent. Motion was the primary trust-builder on a product where a small autonomous aircraft is over your house.`
       },
       {
         h: 'Process',
-        body: `<strong class="text-text-primary">Map a behavior that doesn't exist.</strong> I spent the early phase doing diary studies and in-field tests just to understand what people expected when "the sky" was the delivery channel. Most people had never looked up.<br/><br/><strong class="text-text-primary">Trust through transparency.</strong> The single biggest design lever was showing the drone's position and intent in real time. We let users see what the drone was doing, in language the FAA could approve.<br/><br/><strong class="text-text-primary">Design the failure first.</strong> A drone delivery has more abort states than a normal order. We designed for weather aborts, wind aborts, late captures, and returns before we polished the happy path.`
+        media: `<img loading="lazy" src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1600&q=85" alt="Wing concept"/>`,
+        mediaClass: 'kenburns wide',
+        mediaCaption: 'Wing × Alphabet · Consumer concept',
+        body: `<strong class="text-text-primary">Map a behavior that doesn't exist.</strong> The early phase was diary studies and in-field tests to understand what people expected when "the sky" was the delivery channel. Most people had never looked up.<br/><br/><strong class="text-text-primary">Design the failure first.</strong> A drone delivery has more abort states than a normal order. We designed weather aborts, wind aborts, late captures, and returns before we polished the happy path.`
       },
       {
-        h: 'Key decisions',
-        body: `<strong class="text-text-primary">Show the drone, always.</strong> An anxious user wants to know what's happening overhead. We invested in a real-time live view that became the calming centerpiece of the experience.<div class="cs-media"><video src="opensky.mp4" autoplay muted loop playsinline preload="auto"></video></div><br/><strong class="text-text-primary">Motion as trust.</strong> The drone&rsquo;s on-screen movement, the package descent, the arrival cue: every easing curve was tuned to feel calm and predictable, never urgent. Motion was the primary trust-builder on a product where a small autonomous aircraft is overhead.<br/><br/><strong class="text-text-primary">Lean on the food-delivery mental model.</strong> Customers already understood "your courier is on the way", we framed the drone the same way to avoid teaching a new metaphor.<br/><br/><strong class="text-text-primary">Doorstep handoff as a moment.</strong> The drone lowering the package is the headline moment of the product. We designed an audio + on-screen cue to make it unmistakable, calm, and a little magical.`
+        h: 'Doorstep handoff',
+        body: `<strong class="text-text-primary">Lean on the food-delivery mental model.</strong> Customers already understood "your courier is on the way", we framed the drone the same way to avoid teaching a new metaphor.<br/><br/><strong class="text-text-primary">The headline moment.</strong> The drone lowering the package is the moment of truth. We designed an audio + on-screen cue to make it unmistakable, calm, and a little magical.`
       },
       {
         h: 'Outcomes',
-        body: `The work contributed to one of the first FAA-approved drone delivery experiences in the United States, a live commercial deployment serving real customers in real neighborhoods. Beyond launch, the consumer trust model we shipped became reference design across the broader Alphabet aerial delivery work.`
-      },
-      {
-        h: 'Reflection',
-        body: `Designing for a behavior nobody has ever performed is the most humbling work I've done. You can't research your way to a confident answer, you have to put a real artifact in someone's hand and watch their body language. Every assumption I started with was wrong by version three.`
+        body: `One of the first FAA-approved drone delivery experiences in the United States, a live commercial deployment serving real customers in real neighborhoods. The consumer trust model we shipped became reference design across the broader Alphabet aerial delivery work.`
       }
     ],
     quote: 'Trust the people you fly over.',
@@ -371,27 +460,32 @@ const CASES = {
     sections: [
       {
         h: 'Context',
-        body: `January AI is a clinical-grade AI nutrition platform. The thesis: most people change their eating only when they can <em>see</em> a food&rsquo;s impact before they take a bite, and most can&rsquo;t afford a continuous glucose monitor to find out. So January built an AI that predicts the spike from a photo, then shipped it as an iOS app accessible to anyone with a phone.<br/><br/>My job: design the consumer surface where AI, behavior change, and clinical rigor have to feel like one calm app.`
+        body: `January AI is a clinical-grade AI nutrition platform. The thesis: most people change their eating only when they can <em>see</em> a food's impact before they take a bite, and most can't afford a continuous glucose monitor to find out. January built an AI that predicts the spike from a photo, then shipped it as an iOS app for anyone with a phone.`
       },
       {
-        h: 'The headline feature: AI food scanning',
-        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<div class="cs-media-row"><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png" alt="January AI device"/></div><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
+        h: 'AI food scanning',
+        gallery: [
+          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png',
+          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png',
+          'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png'
+        ],
+        galleryClass: 'tall',
+        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> Open the camera, capture your plate, and in a couple of seconds the app returns an identified meal, macros, calories, and a predicted glucose spike.<br/><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. The scanning animation is a calm sequence with three beats, capture, recognize, predict, each with its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.`
       },
       {
-        h: 'Glucose predictions, without a sensor',
-        body: `January&rsquo;s breakthrough is predicting glycemic response from a photo, no CGM required. Designing for this is unusual: we&rsquo;re showing a clinically meaningful chart to a consumer who likely doesn&rsquo;t know what an AUC is.<br/><br/>The decisions: a single readable spike curve, no medical jargon at first surface, color encoded so a glance tells you "yes" or "swap." The full clinical detail is one tap away for the curious. Calm at default, deep on demand.`
+        h: 'Glucose without a sensor',
+        media: `<img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI glucose chart"/>`,
+        mediaClass: 'tall',
+        mediaCaption: 'January AI · iOS',
+        body: `January's breakthrough: predicting glycemic response from a photo, no CGM required. A single readable spike curve, color-encoded so a glance tells you "yes" or "swap." Full clinical detail is one tap away. Calm at default, deep on demand.`
       },
       {
         h: 'Jan, the AI coach',
-        body: `Jan is the in-app AI coach. Conversational, personalized to your goals, present without being noisy. Designing for an AI coach meant designing for trust: when does Jan speak, when does Jan stay quiet, and how does the app make clear that this is an assistant, not a doctor.<br/><br/>The interaction model treats Jan as a layer that <em>understands</em> the rest of the app, not a separate chat island. You can ask Jan from anywhere. The answer lands in context, right where the question came from.`
+        body: `Jan is the in-app AI coach. Conversational, personalized, present without being noisy. The interaction model treats Jan as a layer that <em>understands</em> the rest of the app, not a separate chat island. Ask Jan from anywhere; the answer lands in context, right where the question came from.`
       },
       {
         h: 'Mobile craft',
-        body: `Senior mobile design at this product means owning the texture: scanning motion, haptics on a confirmed log, the easing on a spike chart, the gesture for swapping a food, the empty states, the accessibility pass. Every detail is the product when the product is asking people to change a habit.<br/><br/>Built native iOS, with a design system tuned for clinical readability in dark + light, and motion designed to feel like the app is paying attention to you, not the other way around.`
-      },
-      {
-        h: 'Reflection',
-        body: `Designing clinical-grade AI for everyday humans is a different bar than designing for power users. The audience is anyone with a phone and a reason to change. The product has to feel calm, trustworthy, and a little bit magical at the moment of truth, then get out of the way.`
+        body: `Senior mobile design at this product means owning the texture: scanning motion, haptics on a confirmed log, the easing on a spike chart, the empty states, the accessibility pass. Every detail is the product when the product is asking people to change a habit. Built native iOS with a design system tuned for clinical readability and motion that feels like the app is paying attention to you.`
       }
     ],
     quote: "See a food's impact before you eat it.",
@@ -416,31 +510,41 @@ const CASES = {
     sections: [
       {
         h: 'The brief',
-        body: `In 2011 I co-founded Little Monsters with Lady Gaga, a purpose-built creative community for her global superfan base. Inspired by what DeviantArt did for my own creative development, I designed a platform that treated fans as artists, not audience. A place to share, create, and inspire, where fan art was fine art and belonging was the product.`
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba63p7i1595m541rbs1k441oht8.png" alt="Little Monsters"/>`,
+        mediaClass: 'kenburns cinema',
+        mediaCaption: 'Little Monsters · 2011',
+        body: `In 2011 I co-founded Little Monsters with Lady Gaga, a purpose-built creative community for her global superfan base. Inspired by what DeviantArt did for my own creative development, I designed a platform that treated fans as artists, not audience. Fan art was fine art. Belonging was the product.`
       },
       {
         h: 'The problem',
-        body: `<strong class="text-text-primary">Fans had no real home.</strong> In 2011, fan communities lived in comment sections, Facebook groups, and scattered forums. They had no dedicated creative infrastructure: no tools, no identity, no sense of permanence. Little Monsters was built to change that. Not just a social network, but a creative platform purpose-built for one of the world&rsquo;s most passionate fan communities, with tools, culture, and a philosophy to match their energy.`
-      },
-      {
-        h: 'What we built',
-        body: `<strong class="text-text-primary">Six tools. One culture.</strong><br/><br/><strong class="text-text-primary">01 Creative Studio.</strong> &ldquo;Inspired by&rdquo; remixing, where fans built on each other&rsquo;s art and created collaborative chains of creativity that spanned the globe.<br/><br/><strong class="text-text-primary">02 Live Translation.</strong> Real-time community chat via Google Translate, so a fan in Tokyo and one in São Paulo could connect without friction.<br/><br/><strong class="text-text-primary">03 One-Click Merch.</strong> Fan artwork on apparel in minutes. Your creation could ship to the world the same day.<br/><br/><strong class="text-text-primary">04 Monster Map.</strong> Location-based fan discovery for concert meetups, turning strangers in a venue into community before the first song.<br/><br/><strong class="text-text-primary">05 Monstervisions.</strong> Exclusive behind-the-scenes from Gaga that felt personal, not broadcast. The real Gaga, for her real fans.<br/><br/><strong class="text-text-primary">06 Webcam Drops.</strong> Instant content from webcam to community. Zero friction between creative impulse and published post.`
-      },
-      {
-        h: 'Cultural impact',
-        body: `<strong class="text-text-primary">An inclusive safe space.</strong> The platform became a lifeline for LGBTQ+ youth, bullied teenagers, and young people battling anxiety and depression. A space built around love and acceptance that existed nowhere else for its community.<br/><br/><strong class="text-text-primary">Launching creative careers.</strong> Artists like Helen Green gained global recognition through the platform. Her fan art caught Gaga&rsquo;s eye and opened doors to Haus of Gaga collaboration. Little Monsters turned fans into professionals.<br/><br/><strong class="text-text-primary">Artist–fan reinvented.</strong> Gaga participated in chatrooms, shared Monstervisions, and responded directly to fan art. Not broadcasting to an audience: being present with a community.<br/><br/><strong class="text-text-primary">No borders, one community.</strong> Real-time translation meant language was no longer a wall. Creativity was the common language.`
+        body: `<strong class="text-text-primary">Fans had no real home.</strong> In 2011, fan communities lived in comment sections, Facebook groups, and scattered forums. No dedicated creative infrastructure, no tools, no identity, no permanence. Little Monsters was built as a creative platform purpose-built for one of the world's most passionate fan communities, with tools, culture, and philosophy to match their energy.`
       },
       {
         h: 'Fan art = fine art',
-        body: `Artwork by Helen Green, Iggy Proof, DendaReloaded, N.Gwinner, and community artists worldwide. We treated their work with the same reverence as fine art.<div class="fan-collage" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-top:24px;"><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba6hplmmdtab877e1utu5du1v.jpg" alt="Fan art" style="width:100%; aspect-ratio:1/1.2; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(-2deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba6hv5g14s41t1r5m61rrp1n5021.jpg" alt="Fan art" style="width:100%; aspect-ratio:1/1.3; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(1.5deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba6k2ms13jb18a24li33v1dgn7.jpg" alt="Fan art" style="width:100%; aspect-ratio:1/1.2; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(-1deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba6lujeipu1ii31vqv1unq1ghf9.jpg" alt="Fan art" style="width:100%; aspect-ratio:1/1.3; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(2deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba6ns7c6hh167at5un6np79f.jpg" alt="Fan art" style="width:100%; aspect-ratio:1/1.2; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(-1.5deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bbc96apj1addi2313ii1hpnu4u3.jpeg" alt="Fan art" style="width:100%; aspect-ratio:1/1.3; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(1deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba63p7jvqu10au1ag31r4s1kf0h.png" alt="Fan art" style="width:100%; aspect-ratio:1/1.2; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(-2deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bba63p7k1nij1ql01irs1c514d7o.png" alt="Fan art" style="width:100%; aspect-ratio:1/1.3; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(1.5deg); transition: transform .35s ease;"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bbdqr8b8dbontm1o1j1cii6h83.jpg" alt="Fan art" style="width:100%; aspect-ratio:1/1.2; object-fit:cover; border-radius:14px; border:1px solid hsl(var(--stroke)); transform:rotate(-1deg); transition: transform .35s ease;"/></div>`
+        gallery: [
+          'https://assets.dunked.com/assets/prod/117833/p1bba6hplmmdtab877e1utu5du1v.jpg',
+          'https://assets.dunked.com/assets/prod/117833/p1bba6hv5g14s41t1r5m61rrp1n5021.jpg',
+          'https://assets.dunked.com/assets/prod/117833/p1bba6k2ms13jb18a24li33v1dgn7.jpg',
+          'https://assets.dunked.com/assets/prod/117833/p1bba6lujeipu1ii31vqv1unq1ghf9.jpg',
+          'https://assets.dunked.com/assets/prod/117833/p1bba6ns7c6hh167at5un6np79f.jpg',
+          'https://assets.dunked.com/assets/prod/117833/p1bbc96apj1addi2313ii1hpnu4u3.jpeg',
+          'https://assets.dunked.com/assets/prod/117833/p1bba63p7jvqu10au1ag31r4s1kf0h.png',
+          'https://assets.dunked.com/assets/prod/117833/p1bba63p7k1nij1ql01irs1c514d7o.png',
+          'https://assets.dunked.com/assets/prod/117833/p1bbdqr8b8dbontm1o1j1cii6h83.jpg'
+        ],
+        body: `Artwork by Helen Green, Iggy Proof, DendaReloaded, N.Gwinner, and community artists worldwide. We treated their work with the same reverence as fine art. DeviantArt shaped who I am as a designer. I wanted to build for the next generation of young creatives what DeviantArt did for mine.`
+      },
+      {
+        h: 'What we built',
+        body: `<strong class="text-text-primary">Six tools. One culture.</strong><br/><br/><strong class="text-text-primary">Creative Studio.</strong> "Inspired by" remixing, where fans built on each other's art in collaborative chains that spanned the globe.<br/><br/><strong class="text-text-primary">Live Translation.</strong> Real-time chat so a fan in Tokyo and one in São Paulo could connect without friction.<br/><br/><strong class="text-text-primary">One-Click Merch.</strong> Fan artwork on apparel in minutes. Your creation shipped the same day.<br/><br/><strong class="text-text-primary">Monster Map.</strong> Location-based fan discovery for concert meetups.<br/><br/><strong class="text-text-primary">Monstervisions.</strong> Exclusive behind-the-scenes from Gaga that felt personal, not broadcast.<br/><br/><strong class="text-text-primary">Webcam Drops.</strong> Zero friction between creative impulse and published post.`
+      },
+      {
+        h: 'Cultural impact',
+        body: `<strong class="text-text-primary">An inclusive safe space.</strong> A lifeline for LGBTQ+ youth, bullied teenagers, and young people battling anxiety and depression.<br/><br/><strong class="text-text-primary">Launching careers.</strong> Helen Green gained global recognition through the platform, and her fan art opened doors to Haus of Gaga collaboration.<br/><br/><strong class="text-text-primary">Artist–fan, reinvented.</strong> Gaga participated in chatrooms, shared Monstervisions, and responded directly to fan art. Present with a community, not broadcasting to an audience.`
       },
       {
         h: 'Press',
-        body: `WIRED, TechCrunch, Rolling Stone, Fast Company, CNN, ABC News, NME, and TIME covered the launch. Little Monsters was named one of the first true fan platforms and a model for artist–community relationships that the rest of the industry would later try to copy.`
-      },
-      {
-        h: 'Design philosophy',
-        body: `<strong class="text-text-primary">Fan art = fine art.</strong> DeviantArt shaped who I am as a designer. I wanted to build for the next generation of young creatives what DeviantArt did for mine: a special place that takes their work seriously, that builds infrastructure for passion, and that proves creativity is a legitimate path. Little Monsters was that platform. And it worked.`
+        body: `WIRED, TechCrunch, Rolling Stone, Fast Company, CNN, ABC News, NME, and TIME. Named one of the first true fan platforms and a model for artist–community relationships that the rest of the industry would later try to copy.`
       }
     ],
     quote: "This isn't a social network. It's a place of love and acceptance where every fan is also a creator, and every creation matters.",
@@ -504,19 +608,32 @@ function render(slug) {
 
       <!-- Sections -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-        <div class="md:col-span-12 space-y-16 md:space-y-24">
+        <div class="md:col-span-12 space-y-20 md:space-y-28">
           ${c.sections.map((s, i) => `
-            <section class="reveal grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
-              <div class="md:col-span-3">
-                <div class="text-xs uppercase tracking-[0.3em] mb-2" style="color:hsl(var(--muted))">0${i+1}</div>
-                <h2 class="text-2xl md:text-3xl" style="color:hsl(var(--text))">
-                  ${s.h.includes(' ')
-                    ? s.h.split(' ').map((w, wi)=> wi === s.h.split(' ').length-1 ? `<span class="font-display italic">${w}</span>` : w).join(' ')
-                    : `<span class="font-display italic">${s.h}</span>`}
-                </h2>
-              </div>
-              <div class="md:col-span-9">
-                <p class="text-base md:text-lg leading-relaxed" style="color:hsl(var(--text) / .85)">${s.body}</p>
+            <section class="reveal cs-section">
+              ${s.media ? `
+                <div class="cs-section-media ${s.mediaClass || 'kenburns wide'}">
+                  ${s.media}
+                  ${s.mediaCaption ? `<div class="cs-media-gradient"></div><div class="cs-media-caption"><span>${s.mediaCaption}</span><span aria-hidden="true">↗</span></div>` : ''}
+                </div>
+              ` : ''}
+              ${s.gallery ? `
+                <div class="cs-section-gallery ${s.galleryClass || ''}">
+                  ${s.gallery.map(g => `<div class="cs-tile"><img loading="lazy" src="${g}" alt=""/></div>`).join('')}
+                </div>
+              ` : ''}
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
+                <div class="md:col-span-3">
+                  <div class="text-xs uppercase tracking-[0.3em] mb-2" style="color:hsl(var(--muted))">0${i+1}</div>
+                  <h2 class="text-2xl md:text-3xl" style="color:hsl(var(--text))">
+                    ${s.h.includes(' ')
+                      ? s.h.split(' ').map((w, wi)=> wi === s.h.split(' ').length-1 ? `<span class="font-display italic">${w}</span>` : w).join(' ')
+                      : `<span class="font-display italic">${s.h}</span>`}
+                  </h2>
+                </div>
+                <div class="md:col-span-9">
+                  <p class="text-base md:text-lg leading-relaxed" style="color:hsl(var(--text) / .85)">${s.body}</p>
+                </div>
               </div>
             </section>
           `).join('')}
