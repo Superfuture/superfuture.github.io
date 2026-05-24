@@ -1500,13 +1500,18 @@ gsap.to('#marquee', { xPercent: -50, duration: 40, ease: 'none', repeat: -1 });
 gsap.registerPlugin(ScrollTrigger);
 
 /* ============ ASK JOEY ============ */
-document.addEventListener('DOMContentLoaded', function askJoey(){
+function bootAskJoey(){
   const stream = document.getElementById('askStream');
   const suggests = document.getElementById('askSuggests');
   const form = document.getElementById('askForm');
   const input = document.getElementById('askInput');
   const send = document.getElementById('askSend');
-  if (!stream || !form) return;
+  if (!stream || !form) {
+    // Widget HTML not in DOM yet — try again next frame
+    return requestAnimationFrame(bootAskJoey);
+  }
+  if (bootAskJoey._init) return;
+  bootAskJoey._init = true;
 
   const SUGGESTIONS = [
     "What's your superpower?",
@@ -1650,7 +1655,8 @@ document.addEventListener('DOMContentLoaded', function askJoey(){
     e.preventDefault();
     ask(input.value);
   });
-});
+}
+bootAskJoey();
 
 /* ============ BOOK 3D MOUSE TILT ============ */
 (function bookTilt(){
