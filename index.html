@@ -2157,20 +2157,24 @@ bootAskJoey();
   });
 })();
 
-/* ============ EASTER EGG: UP UP DOWN DOWN ============ */
+/* ============ EASTER EGG: TYPE 'JP' ============ */
 (function konami(){
-  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown'];
+  const seq = ['j','p'];
   let i = 0;
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Shift' || e.key === 'Meta' || e.key === 'Control' || e.key === 'Alt') return;
-    if (e.key === seq[i]) {
+    // Don't fire while typing in an input/textarea
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === seq[i]) {
       i++;
       if (i === seq.length) {
         i = 0;
         fireKonami();
       }
     } else {
-      i = (e.key === seq[0]) ? 1 : 0;
+      i = (key === seq[0]) ? 1 : 0;
     }
   });
   function fireKonami(){
