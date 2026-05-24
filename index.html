@@ -855,8 +855,12 @@
        style="background:hsl(var(--surface) / 0.85)">
     <a href="#top" class="logo-wrap relative w-9 h-9 rounded-full flex items-center justify-center">
       <span class="logo-ring absolute inset-0 rounded-full"></span>
-      <span class="relative w-[calc(100%-3px)] h-[calc(100%-3px)] rounded-full flex items-center justify-center font-display italic text-[13px]"
-            style="background:hsl(var(--bg)); color:hsl(var(--text))">JP</span>
+      <span class="relative w-[calc(100%-3px)] h-[calc(100%-3px)] rounded-full flex items-center justify-center"
+            style="background:hsl(var(--bg)); color:hsl(var(--text))">
+        <svg viewBox="0 0 24 24" width="13" height="13" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 1 C12.4 7.6 16.4 11.6 23 12 C16.4 12.4 12.4 16.4 12 23 C11.6 16.4 7.6 12.4 1 12 C7.6 11.6 11.6 7.6 12 1 Z" fill="currentColor"/>
+        </svg>
+      </span>
     </a>
     <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
     <a href="#top"  class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="top">Home</a>
@@ -882,12 +886,15 @@
 
   <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
     <div class="blur-in text-xs uppercase tracking-[0.3em] mb-8" style="color:hsl(var(--muted))">Portfolio '26</div>
-    <h1 class="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight mb-6" style="color:hsl(var(--text))">Joey Primiani</h1>
-    <p class="blur-in text-base md:text-lg mb-4" style="color:hsl(var(--text) / .9)">
-      A <span id="roleWord" class="font-display italic animate-role-fade-in inline-block" style="color:hsl(var(--text))">Designer</span> based in the Bay Area.
+    <h1 class="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight mb-8" style="color:hsl(var(--text))">Joey Primiani</h1>
+    <p class="blur-in text-2xl md:text-3xl lg:text-4xl font-display italic leading-tight max-w-3xl mb-6" style="color:hsl(var(--text))">
+      Create the future you want to live in.
+    </p>
+    <p class="blur-in text-sm md:text-base max-w-md mb-3" style="color:hsl(var(--muted))">
+      <span id="roleWord" class="animate-role-fade-in inline-block" style="color:hsl(var(--text))">Senior Product Designer</span> at LinkedIn, based in the Bay Area.
     </p>
     <p class="blur-in text-sm md:text-base max-w-md mb-12" style="color:hsl(var(--muted))">
-      Fifteen years designing mobile systems at the frontier. LinkedIn Premium, Wing at Google X, founding-era LinkedIn iOS. Claude Code craft as a superpower.
+      Fifteen years at the frontier. LinkedIn Premium, Wing at Google X, founding-era LinkedIn iOS. Claude Code craft as a superpower.
     </p>
     <div class="blur-in inline-flex flex-wrap items-center justify-center gap-4">
       <a href="#work" class="ring-btn rounded-full text-sm">
@@ -1370,10 +1377,6 @@
 
   <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
     <div class="text-center mb-20 md:mb-28">
-      <p class="text-xs uppercase tracking-[0.3em] mb-6" style="color:hsl(var(--muted))">Manifesto</p>
-      <p class="text-2xl md:text-3xl lg:text-4xl font-display italic leading-tight max-w-3xl mx-auto mb-12 md:mb-16" style="color:hsl(var(--text))">
-        Create the future you want to live in.
-      </p>
       <p class="text-xs uppercase tracking-[0.3em] mb-4" style="color:hsl(var(--muted))">Let's build something</p>
       <h2 class="text-5xl md:text-7xl lg:text-8xl font-display italic mb-10" style="color:hsl(var(--text))">Get in touch</h2>
       <a href="mailto:jprimiani@gmail.com" class="ring-btn rounded-full text-sm md:text-base inline-flex">
@@ -1425,7 +1428,7 @@ const PROJECTS = [
   {
     span: 7, slug: 'ai-native', name: 'Claude Code Craft', category: 'Studio · 2024–Present',
     summary: 'Designing with Claude Code as the medium. Vibe-coded prototypes that pressure-test ideas in hours, including this portfolio.',
-    img: 'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif'
+    img: 'claude-craft.png'
   }
 ];
 
@@ -1612,7 +1615,7 @@ function runEntrance(){
 
 /* ============ ROLE CYCLER ============ */
 (function roleCycler(){
-  const roles = ['Designer','Founder','Builder','Architect'];
+  const roles = ['Senior Product Designer','Mobile Designer','AI Designer','Frontier Designer'];
   let i = 0;
   const el = document.getElementById('roleWord');
   setInterval(()=>{
