@@ -1693,11 +1693,10 @@ const TESTIMONIALS = [
   el.innerHTML = Array.from({length:10}, () => `<span class="px-6">${piece}</span>`).join('');
 })();
 
-/* ============ HLS VIDEO (hero eager on desktop, contact lazy) ============ */
+/* ============ HLS VIDEO (hero eager, contact lazy) ============ */
 (function bootVideo(){
   const src = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
-  const isMobile = window.matchMedia('(max-width: 767px)').matches
-    || (navigator.connection && navigator.connection.saveData);
+  const saveData = navigator.connection && navigator.connection.saveData;
   function attach(v) {
     if (window.Hls && Hls.isSupported()) {
       const hls = new Hls();
@@ -1707,9 +1706,9 @@ const TESTIMONIALS = [
       v.src = src;
     }
   }
-  // Hero video: load immediately on desktop, skip on mobile (poster only)
+  // Hero video: load immediately (skip only on explicit save-data)
   const hero = document.getElementById('bgVideo');
-  if (hero && !isMobile) attach(hero);
+  if (hero && !saveData) attach(hero);
   // Contact video: only load when scrolled into view
   const contact = document.getElementById('bgVideo2');
   if (contact) {
