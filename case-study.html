@@ -100,6 +100,52 @@
   .pullquote::before { content: '“'; }
   .pullquote::after { content: '”'; }
 
+  /* Inline case-study media */
+  .cs-media {
+    display: block;
+    margin: 28px 0 0;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface));
+    box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+  }
+  .cs-media video, .cs-media img { width: 100%; height: auto; display: block; }
+  .cs-media-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .cs-media-row img {
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid hsl(var(--stroke));
+    box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  }
+
+  /* App CTA button */
+  .cs-app-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: 9999px;
+    background: hsl(var(--text));
+    color: hsl(var(--bg));
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 15px;
+    transition: transform .25s ease, filter .25s ease;
+  }
+  .cs-app-cta:hover { transform: translateY(-2px); filter: brightness(1.05); }
+  .cs-app-cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
   /* Lite YouTube embed */
   .yt-lite {
     display: block;
@@ -255,6 +301,8 @@ const CASES = {
     ],
     quote: 'Prototype before brief.',
     next: 'wing',
+    appUrl: 'https://www.linkedin.com/premium/',
+    appLabel: 'Try LinkedIn Premium',
   },
 
   'wing': {
@@ -285,7 +333,7 @@ const CASES = {
       },
       {
         h: 'Key decisions',
-        body: `<strong class="text-text-primary">Show the drone, always.</strong> An anxious user wants to know what's happening overhead. We invested in a real-time live view that became the calming centerpiece of the experience.<br/><br/><strong class="text-text-primary">Motion as trust.</strong> The drone&rsquo;s on-screen movement, the package descent, the arrival cue: every easing curve was tuned to feel calm and predictable, never urgent. Motion was the primary trust-builder on a product where a small autonomous aircraft is overhead.<br/><br/><strong class="text-text-primary">Lean on the food-delivery mental model.</strong> Customers already understood "your courier is on the way", we framed the drone the same way to avoid teaching a new metaphor.<br/><br/><strong class="text-text-primary">Doorstep handoff as a moment.</strong> The drone lowering the package is the headline moment of the product. We designed an audio + on-screen cue to make it unmistakable, calm, and a little magical.`
+        body: `<strong class="text-text-primary">Show the drone, always.</strong> An anxious user wants to know what's happening overhead. We invested in a real-time live view that became the calming centerpiece of the experience.<div class="cs-media"><video src="opensky.mp4" autoplay muted loop playsinline preload="auto"></video></div><br/><strong class="text-text-primary">Motion as trust.</strong> The drone&rsquo;s on-screen movement, the package descent, the arrival cue: every easing curve was tuned to feel calm and predictable, never urgent. Motion was the primary trust-builder on a product where a small autonomous aircraft is overhead.<br/><br/><strong class="text-text-primary">Lean on the food-delivery mental model.</strong> Customers already understood "your courier is on the way", we framed the drone the same way to avoid teaching a new metaphor.<br/><br/><strong class="text-text-primary">Doorstep handoff as a moment.</strong> The drone lowering the package is the headline moment of the product. We designed an audio + on-screen cue to make it unmistakable, calm, and a little magical.`
       },
       {
         h: 'Outcomes',
@@ -298,6 +346,8 @@ const CASES = {
     ],
     quote: 'Trust the people you fly over.',
     next: 'january-ai',
+    appUrl: 'https://wing.com',
+    appLabel: 'Visit Wing',
   },
 
   'january-ai': {
@@ -320,7 +370,7 @@ const CASES = {
       },
       {
         h: 'The headline feature: AI food scanning',
-        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<br/><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
+        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<div class="cs-media-row"><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png" alt="January AI device"/></div><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
       },
       {
         h: 'Glucose predictions, without a sensor',
@@ -341,6 +391,8 @@ const CASES = {
     ],
     quote: "See a food's impact before you eat it.",
     next: 'little-monsters',
+    appUrl: 'https://january.ai/app',
+    appLabel: 'Open the January AI app',
   },
 
   'little-monsters': {
@@ -388,6 +440,8 @@ const CASES = {
     ],
     quote: "This isn't a social network. It's a place of love and acceptance where every fan is also a creator, and every creation matters.",
     next: 'linkedin-premium',
+    appUrl: 'https://superfuture.github.io/Claude_Code/little-monsters.html',
+    appLabel: 'View the full case study',
   }
 };
 
@@ -461,6 +515,14 @@ function render(slug) {
               </div>
             </section>
           `).join('')}
+
+          ${c.appUrl ? `
+            <section class="reveal cs-app-cta-wrap">
+              <a href="${c.appUrl}" target="_blank" rel="noopener" class="cs-app-cta">
+                ${c.appLabel || 'Open the app'} <span aria-hidden="true">↗</span>
+              </a>
+            </section>
+          ` : ''}
 
           <!-- Pull quote -->
           <section class="reveal py-12 md:py-16 border-y" style="border-color:hsl(var(--stroke))">
