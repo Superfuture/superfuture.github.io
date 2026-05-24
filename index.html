@@ -1968,7 +1968,16 @@ function bootAskJoey(){
       a: "At Google X's Wing I led consumer mobile design for Alphabet's drone delivery moonshot. We designed for a behavior nobody had ever performed before — every assumption I started with was wrong by version three. The work contributed to one of the first FAA-approved drone delivery experiences in the U.S." },
 
     { keys: ['linkedin','premium','current','currently','what do you do','where do you work'],
-      a: "I'm a Senior Product Designer at LinkedIn, leading design for premium product experiences shipped to hundreds of millions of professionals. Lately I've been pushing AI-native prototyping across the org so teams can pressure-test ideas in hours instead of quarters." },
+      a: "I'm a Senior Product Designer at LinkedIn, leading design for premium product experiences shipped to hundreds of millions of professionals. Recent shipped work includes the <b>LinkedIn × Calendly</b> integration that lets Premium subscribers add a 'Book an appointment' button to their profile. I'm also pushing AI-native prototyping across the org." },
+
+    { keys: ['calendly','partnership','integration','book a meeting','book appointment','scheduling'],
+      a: "I led design on the <b>LinkedIn × Calendly</b> partnership. Premium subscribers can drop a 'Book an appointment' button on their profile, and a browser extension lets them schedule from LinkedIn Messaging, Sales Navigator, and Recruiter without leaving the page. <a href='https://calendly.com/integration/linkedin' target='_blank' style='color:#89AACC'>View the integration ↗</a>" },
+
+    { keys: ['january','january ai','food scan','food logging','glucose','cgm','nutrition','health'],
+      a: "I designed iOS for <b>January AI</b>, a clinical-grade AI nutrition platform. The headline feature is photo-based food scanning that predicts your glucose spike before you eat. I designed the scanning animation as a 3-beat sequence (capture, recognize, predict) and Jan, the in-app AI coach. 54M+ foods, 4.5★ App Store. <a href='https://january.ai/app' target='_blank' style='color:#89AACC'>Open the app ↗</a>" },
+
+    { keys: ['patent','invention','uspto','inventor','radial'],
+      a: "I'm a named inventor on <b>US Patent 8,869,068</b>, Content Sharing Application Utilizing Radially-Distributed Menus. Granted October 2014. Filed during my Backplane / Little Monsters era. Patents are rare for designers. <a href='https://patents.google.com/patent/US8869068B2' target='_blank' style='color:#89AACC'>View the patent ↗</a>" },
 
     { keys: ['linkedin ios','founding','early','founding mobile','2010','2011','2012'],
       a: "Founding-era LinkedIn iOS, 2010–2012. We re-architected LinkedIn for the touch era as a coherent mobile system: feed, profile, search, messaging. Scaled to 200M+ members. That's where I learned to think in systems rather than screens." },
@@ -2146,6 +2155,40 @@ bootAskJoey();
     cancelAnimationFrame(raf);
     tilt.style.transform = 'rotateY(0deg) rotateX(0deg)';
   });
+})();
+
+/* ============ EASTER EGG: KONAMI CODE ============ */
+(function konami(){
+  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let i = 0;
+  document.addEventListener('keydown', (e) => {
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (k === seq[i]) {
+      i++;
+      if (i === seq.length) {
+        i = 0;
+        fireKonami();
+      }
+    } else {
+      i = (k === seq[0]) ? 1 : 0;
+    }
+  });
+  function fireKonami(){
+    const flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;inset:0;z-index:9999;pointer-events:none;background:linear-gradient(120deg,#ff6b9d,#c779ff,#6b9dff,#6bd9c5,#ffd966,#ff8c6b);opacity:0;mix-blend-mode:screen;transition:opacity .4s ease;';
+    const toast = document.createElement('div');
+    toast.textContent = '✦ welcome to the future ✦';
+    toast.style.cssText = 'position:fixed;bottom:24%;left:50%;transform:translateX(-50%);z-index:10000;font-family:"Instrument Serif",serif;font-style:italic;font-size:48px;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,0.6);opacity:0;transition:opacity .5s ease,transform .8s cubic-bezier(.22,1,.36,1);';
+    document.body.appendChild(flash);
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => {
+      flash.style.opacity = '0.5';
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(-12px)';
+    });
+    setTimeout(() => { flash.style.opacity = '0'; toast.style.opacity = '0'; }, 2200);
+    setTimeout(() => { flash.remove(); toast.remove(); }, 2800);
+  }
 })();
 
 /* ============ SMOOTH SCROLL FOR ANCHORS (delegated, custom easing + land flash) ============ */
