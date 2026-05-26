@@ -407,7 +407,7 @@
   /* A soft rainbow band sweeps across a dark placeholder while the image
      loads, then crossfades out once it fires `load`. */
   .skel { isolation: isolate; }
-  .skel::after {
+  .skel::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -431,7 +431,7 @@
     animation: skelSweep 1.8s linear infinite;
     transition: opacity .55s ease;
   }
-  .skel.loaded::after { opacity: 0; animation: none; }
+  .skel.loaded::before { opacity: 0; animation: none; }
   @keyframes skelSweep {
     0%   { background-position: -120% 0; }
     100% { background-position:  220% 0; }
@@ -441,7 +441,7 @@
   .skel-img { opacity: 0; transition: opacity .6s ease; }
   .skel-img.loaded { opacity: 1; }
   @media (prefers-reduced-motion: reduce) {
-    .skel::after { animation: none; }
+    .skel::before { animation: none; }
   }
 </style>
 </head>

@@ -1091,7 +1091,7 @@
   /* Container holding a loading image. The shimmer is painted on top
      (::after) and crossfades out once the image fires `load`. */
   .skel { isolation: isolate; }
-  .skel::after {
+  .skel::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -1117,7 +1117,7 @@
     animation: skelSweep 1.8s linear infinite;
     transition: opacity .55s ease;
   }
-  .skel.loaded::after {
+  .skel.loaded::before {
     opacity: 0;
     animation: none;
   }
@@ -1136,7 +1136,7 @@
   .skel-img.loaded { opacity: 1; }
 
   @media (prefers-reduced-motion: reduce) {
-    .skel::after { animation: none; }
+    .skel::before { animation: none; }
   }
 </style>
 </head>
