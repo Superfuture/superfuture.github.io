@@ -1889,10 +1889,19 @@ const TESTIMONIALS = [
 
 /* ============ HERO ENTRANCE (GSAP) ============ */
 function runEntrance(){
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.to('.name-reveal', { opacity: 1, y: 0, duration: 1.2, delay: 0.1, scale: 1, transform: 'translateY(0)' })
-    .fromTo('.name-reveal', { y: 50 }, { y: 0, duration: 1.2 }, '<')
-    .fromTo('.blur-in', { opacity: 0, filter: 'blur(10px)', y: 20 }, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 1, stagger: 0.1 }, '-=0.9');
+  const reveal = () => {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.fromTo('.name-reveal', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.1 })
+      .fromTo('.blur-in', { opacity: 0, filter: 'blur(10px)', y: 20 }, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 1, stagger: 0.1 }, '-=0.9');
+  };
+  // Only reveal the wordmark once Instrument Serif is actually ready, so it can
+  // never paint in the (wider) fallback font and clip. 2s safety so it never hangs.
+  let fired = false;
+  const go = () => { if (fired) return; fired = true; reveal(); };
+  try {
+    document.fonts.load('italic 1em "Instrument Serif"').then(go).catch(go);
+  } catch (e) { go(); }
+  setTimeout(go, 2000);
 }
 
 /* ============ ROLE CYCLER ============ */
