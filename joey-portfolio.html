@@ -1126,12 +1126,14 @@
     100% { background-position:  220% 0; }
   }
 
-  /* The image itself fades in under the shimmer as it crossfades out. */
-  .skel-img, .skel-vid {
+  /* The image itself fades in under the shimmer as it crossfades out.
+     Videos are NOT gated — their poster is the placeholder, so the skeleton
+     can never hide a video (autoplay/load is unreliable under file://). */
+  .skel-img {
     opacity: 0;
     transition: opacity .6s ease;
   }
-  .skel-img.loaded, .skel-vid.loaded { opacity: 1; }
+  .skel-img.loaded { opacity: 1; }
 
   @media (prefers-reduced-motion: reduce) {
     .skel::after { animation: none; }
@@ -1717,10 +1719,10 @@ const TESTIMONIALS = [
 (function renderBento(){
   const root = document.getElementById('bento');
   root.innerHTML = PROJECTS.map(p => `
-    <a href="case-study.html#${p.slug}" class="bento-card skel group relative overflow-hidden rounded-3xl border md:col-span-${p.span} block"
+    <a href="case-study.html#${p.slug}" class="bento-card ${p.video ? '' : 'skel'} group relative overflow-hidden rounded-3xl border md:col-span-${p.span} block"
        style="background:hsl(var(--surface)); border-color:hsl(var(--stroke)); aspect-ratio: ${p.span === 7 ? '16/10' : '5/6'};">
       ${p.video
-        ? `<video class="img skel-vid absolute inset-0 w-full h-full object-cover" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
+        ? `<video class="img absolute inset-0 w-full h-full object-cover" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
         : `<img class="img skel-img absolute inset-0 w-full h-full object-cover" src="${p.img}" alt="${p.name}" loading="lazy"/>`}
       <div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>
       <div class="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4">
@@ -1755,12 +1757,19 @@ const TESTIMONIALS = [
     el.dataset.skelWired = '1';
     const isVideo = el.tagName === 'VIDEO';
     // Already cached / ready → reveal immediately, no flash.
-    if ((isVideo && el.readyState >= 2) || (!isVideo && el.complete && el.naturalWidth > 0)) {
+    if ((isVideo && el.readyState >= 1) || (!isVideo && el.complete && el.naturalWidth > 0)) {
       done(el); return;
     }
-    const ev = isVideo ? 'loadeddata' : 'load';
-    el.addEventListener(ev, () => done(el), { once: true });
+    if (isVideo) {
+      // Videos under file:// often never fire 'loadeddata' (autoplay/load deferred),
+      // so reveal on the earliest of several signals.
+      ['loadedmetadata', 'loadeddata', 'canplay', 'playing'].forEach(ev =>
+        el.addEventListener(ev, () => done(el), { once: true }));
+    } else {
+      el.addEventListener('load', () => done(el), { once: true });
+    }
     el.addEventListener('error', () => done(el), { once: true }); // never trap on a broken src
+    setTimeout(() => done(el), isVideo ? 2500 : 4000);            // safety net: never stay hidden
   }
   function scan(){ document.querySelectorAll('.skel-img, .skel-vid').forEach(wire); }
   scan();

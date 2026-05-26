@@ -277,6 +277,17 @@
     border-color: rgba(137,170,204,0.6);
     background: hsl(var(--surface) / 1.2);
   }
+  /* Keep browser-autofilled fields on the dark theme (override the light autofill bg) */
+  .cs-gate-field input:-webkit-autofill,
+  .cs-gate-field input:-webkit-autofill:hover,
+  .cs-gate-field input:-webkit-autofill:focus,
+  .cs-gate-field textarea:-webkit-autofill {
+    -webkit-text-fill-color: hsl(var(--text));
+    -webkit-box-shadow: 0 0 0 1000px hsl(var(--surface)) inset;
+            box-shadow: 0 0 0 1000px hsl(var(--surface)) inset;
+    caret-color: hsl(var(--text));
+    transition: background-color 9999s ease-in-out 0s;
+  }
   .cs-gate-submit {
     display: inline-flex;
     align-items: center;
@@ -425,8 +436,10 @@
     0%   { background-position: -120% 0; }
     100% { background-position:  220% 0; }
   }
-  .skel-img, .skel-vid { opacity: 0; transition: opacity .6s ease; }
-  .skel-img.loaded, .skel-vid.loaded { opacity: 1; }
+  /* Only images are opacity-gated; videos render normally (their poster is
+     the placeholder) so the skeleton can never hide a video. */
+  .skel-img { opacity: 0; transition: opacity .6s ease; }
+  .skel-img.loaded { opacity: 1; }
   @media (prefers-reduced-motion: reduce) {
     .skel::after { animation: none; }
   }
@@ -573,8 +586,8 @@ const CASES = {
       },
       {
         h: 'Show the drone, always',
-        media: `<video src="opensky.mp4" autoplay muted loop playsinline preload="auto" poster="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22691068/See_Where_You_Can_and_Cannot_Fly.jpg?quality=90&strip=all&crop=0,0,100,100" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>`,
-        mediaClass: 'opensky',
+        media: `<iframe class="yt-bg" src="https://www.youtube.com/embed/AmO4HU-V1pM?autoplay=1&mute=1&loop=1&playlist=AmO4HU-V1pM&controls=0&modestbranding=1&rel=0&playsinline=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0" title="OpenSky" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>`,
+        mediaClass: 'wide',
         mediaCaption: 'OpenSky · Real-time drone view',
         body: `<strong class="text-text-primary">Decision:</strong> a real-time live view of the drone's position and intent, visible to the customer from order through handoff.<br/><br/><strong class="text-text-primary">The trade-off.</strong> Showing the drone increased load on the mobile client, exposed flight-path details that regulatory had a strong opinion on, and risked confusing customers who didn't know how to "read" an aerial view. The alternative, a simple "your order is on the way" status, would have been simpler to build and easier to approve internally.<br/><br/><strong class="text-text-primary">Why we shipped the live view anyway.</strong> Diary studies were unambiguous: customers who couldn't see the drone walked outside to find it, which created safety risk and broke the operation. The map view was the cheapest behavior change we could make. We worked with regulatory to design a view that showed enough to calm the customer (position, altitude band, descent state) without revealing operationally sensitive flight-path data.<br/><br/><strong class="text-text-primary">Motion is the trust signal.</strong> Every easing curve, every transition, was tuned for "calm and predictable" over "exciting." A drone overhead is already novel; the UI's job was to make it boring in the best possible way.`
       },
@@ -925,18 +938,27 @@ function wireSkel(el){
     el.classList.add('loaded');
     el.closest('.skel')?.classList.add('loaded');
   };
-  const ready = isVideo ? el.readyState >= 2 : (el.complete && el.naturalWidth > 0);
-  if (ready) { done(); return; }                       // cached → reveal, no flash
-  el.addEventListener(isVideo ? 'loadeddata' : 'load', done, { once: true });
+  const ready = isVideo ? el.readyState >= 1 : (el.complete && el.naturalWidth > 0);
+  if (ready) { done(); return; }                       // cached / metadata ready → reveal
+  if (isVideo) {
+    // Videos under file:// often never fire 'loadeddata' (autoplay/load deferred),
+    // so reveal on the earliest of several signals.
+    ['loadedmetadata', 'loadeddata', 'canplay', 'playing'].forEach(ev =>
+      el.addEventListener(ev, done, { once: true }));
+  } else {
+    el.addEventListener('load', done, { once: true });
+  }
   el.addEventListener('error', done, { once: true });  // never trap on a broken src
+  setTimeout(done, isVideo ? 2500 : 4000);             // safety net: never stay hidden
 }
 function setupSkeletons(root){
-  // Mark host containers that actually contain an image/video
+  // Only IMAGE media gets the skeleton — videos render normally (poster +
+  // autoplay), so the shimmer can never hide a video, even if JS is flaky.
   const host = el => el.classList.add('skel');
   const heroMedia = root.querySelector('.cs-hero-media');
-  if (heroMedia && heroMedia.querySelector('img, video')) host(heroMedia);
+  if (heroMedia && heroMedia.querySelector(':scope > img')) host(heroMedia);
   root.querySelectorAll('.cs-section-media').forEach(c => {
-    if (c.querySelector(':scope > img, :scope > video')) host(c);
+    if (c.querySelector(':scope > img')) host(c);
   });
   root.querySelectorAll('.cs-section-gallery .cs-tile').forEach(host);
   // Wrap loose inline-row images so each can carry its own shimmer
@@ -946,9 +968,9 @@ function setupSkeletons(root){
     img.replaceWith(cell);
     cell.appendChild(img);
   });
-  // Tag every direct media child of a skel host, then wire load events
-  root.querySelectorAll('.skel > img, .skel > video').forEach(el => {
-    el.classList.add(el.tagName === 'VIDEO' ? 'skel-vid' : 'skel-img');
+  // Tag images inside skel hosts, then wire load events (videos untouched)
+  root.querySelectorAll('.skel > img').forEach(el => {
+    el.classList.add('skel-img');
     wireSkel(el);
   });
 }
