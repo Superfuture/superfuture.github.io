@@ -164,7 +164,10 @@
 
   /* Scroll perf: skip rendering off-screen sections until they approach the viewport.
      Each section reserves a typical height so the scrollbar doesn't jump. */
-  #work, #recognition, #book, #testimonials, #playground, #about, #contact {
+  /* NOTE: #contact is intentionally excluded — as the last section its
+     reserved contain-intrinsic-size (1200px) overshot its real height
+     (~750px), leaving a phantom gap below the footer on mobile. */
+  #work, #recognition, #book, #testimonials, #playground, #about {
     content-visibility: auto;
     contain-intrinsic-size: 1px 1200px;
   }
@@ -1083,6 +1086,56 @@
 
   /* Pinned content vertical anchor */
   .pin-content { will-change: transform; }
+
+  /* ============ SKELETON LOADER — rainbow shine sweep ============ */
+  /* Container holding a loading image. The shimmer is painted on top
+     (::after) and crossfades out once the image fires `load`. */
+  .skel { isolation: isolate; }
+  .skel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    border-radius: inherit;
+    pointer-events: none;
+    /* A soft rainbow band that sweeps across a dark surface. Transparent
+       edges so the card's own background shows between passes. */
+    background:
+      linear-gradient(90deg,
+        rgba(255,107,157,0)   0%,
+        rgba(255,107,157,.42) 14%,
+        rgba(199,121,255,.42) 28%,
+        rgba(107,157,255,.42) 42%,
+        rgba(107,217,197,.42) 56%,
+        rgba(255,217,102,.42) 70%,
+        rgba(255,140,107,.42) 84%,
+        rgba(255,107,157,0)  100%);
+    background-color: hsl(var(--surface));
+    background-size: 220% 100%;
+    background-repeat: no-repeat;
+    background-position: -120% 0;
+    animation: skelSweep 1.8s linear infinite;
+    transition: opacity .55s ease;
+  }
+  .skel.loaded::after {
+    opacity: 0;
+    animation: none;
+  }
+  @keyframes skelSweep {
+    0%   { background-position: -120% 0; }
+    100% { background-position:  220% 0; }
+  }
+
+  /* The image itself fades in under the shimmer as it crossfades out. */
+  .skel-img, .skel-vid {
+    opacity: 0;
+    transition: opacity .6s ease;
+  }
+  .skel-img.loaded, .skel-vid.loaded { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skel::after { animation: none; }
+  }
 </style>
 </head>
 <body class="font-body">
@@ -1143,7 +1196,7 @@
 
   <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
     <div class="blur-in text-xs uppercase tracking-[0.3em] mb-8" style="color:hsl(var(--muted))">Portfolio '26</div>
-    <h1 class="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight mb-6" style="color:hsl(var(--text))">Joey Primiani</h1>
+    <h1 class="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic tracking-tight mb-6" style="color:hsl(var(--text)); line-height:1.12; padding-bottom:0.12em">Joey Primiani</h1>
     <p class="blur-in text-base md:text-lg mb-4" style="color:hsl(var(--text) / .9)">
       A <span id="roleWord" class="font-display italic animate-role-fade-in inline-block" style="color:hsl(var(--text))">Designer</span> based in the Bay Area.
     </p>
@@ -1424,30 +1477,30 @@
   <div class="absolute inset-0 z-20 pointer-events-none">
     <div class="max-w-[1400px] mx-auto h-full grid grid-cols-2 gap-8 md:gap-32 px-6 md:px-10">
       <div id="playColL" class="flex flex-col gap-16 md:gap-32 items-end pt-[15vh]">
-        <a href="https://superfuture.github.io/Claude_Code/ditto-prototype.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:-3deg; max-width:300px;">
-          <img src="ditto-mobile-final.png" alt="Ditto" loading="lazy"/>
+        <a href="https://superfuture.github.io/Claude_Code/ditto-prototype.html" target="_blank" rel="noopener" class="play-tile skel pointer-events-auto" style="--r:-3deg; max-width:300px;">
+          <img class="skel-img" src="ditto-mobile-final.png" alt="Ditto" loading="lazy"/>
           <div class="play-tile-label"><span class="font-display italic">Ditto</span></div>
         </a>
-        <a href="breathe-app.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:2deg; max-width:260px;">
-          <img src="breathe-thumb.png" alt="Breathe" loading="lazy"/>
+        <a href="breathe-app.html" target="_blank" rel="noopener" class="play-tile skel pointer-events-auto" style="--r:2deg; max-width:260px;">
+          <img class="skel-img" src="breathe-thumb.png" alt="Breathe" loading="lazy"/>
           <div class="play-tile-label"><span class="font-display italic">Breathe</span></div>
         </a>
-        <a href="superfuture.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:-2deg; max-width:280px;">
-          <img src="superfuture-thumb.png" alt="Superfuture" loading="lazy"/>
+        <a href="superfuture.html" target="_blank" rel="noopener" class="play-tile skel pointer-events-auto" style="--r:-2deg; max-width:280px;">
+          <img class="skel-img" src="superfuture-thumb.png" alt="Superfuture" loading="lazy"/>
           <div class="play-tile-label"><span class="font-display italic">Superfuture</span></div>
         </a>
       </div>
       <div id="playColR" class="flex flex-col gap-16 md:gap-32 items-start pt-[45vh]">
-        <a href="https://aeon-6ur.pages.dev/" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:3deg; max-width:280px;">
-          <img src="aeon-mobile.png" alt="Aeon" loading="lazy"/>
+        <a href="https://aeon-6ur.pages.dev/" target="_blank" rel="noopener" class="play-tile skel pointer-events-auto" style="--r:3deg; max-width:280px;">
+          <img class="skel-img" src="aeon-mobile.png" alt="Aeon" loading="lazy"/>
           <div class="play-tile-label"><span class="font-display italic">Aeon</span></div>
         </a>
-        <a href="operator.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:-2deg; max-width:300px;">
-          <img src="operator-thumb.png" alt="Operator" loading="lazy"/>
+        <a href="operator.html" target="_blank" rel="noopener" class="play-tile skel pointer-events-auto" style="--r:-2deg; max-width:300px;">
+          <img class="skel-img" src="operator-thumb.png" alt="Operator" loading="lazy"/>
           <div class="play-tile-label"><span class="font-display italic">Operator</span></div>
         </a>
-        <a href="vibez.html" target="_blank" rel="noopener" class="play-tile pointer-events-auto" style="--r:2deg; max-width:260px;">
-          <img src="vibez-thumb.png" alt="Vibez" loading="lazy"/>
+        <a href="vibez.html" target="_blank" rel="noopener" class="play-tile skel pointer-events-auto" style="--r:2deg; max-width:260px;">
+          <img class="skel-img" src="vibez-thumb.png" alt="Vibez" loading="lazy"/>
           <div class="play-tile-label"><span class="font-display italic">Vibez</span></div>
         </a>
       </div>
@@ -1461,12 +1514,12 @@
     <div class="reveal grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-start">
       <!-- Headshot -->
       <div class="md:col-span-5 order-1 md:sticky md:top-28">
-        <div class="relative max-w-[420px] mx-auto md:mx-0">
+        <div class="skel rounded-3xl relative max-w-[420px] mx-auto md:mx-0">
           <div class="absolute inset-0 -m-3 rounded-3xl opacity-40"
-               style="background: radial-gradient(circle at 30% 40%, rgba(137,170,204,0.5), transparent 60%), radial-gradient(circle at 70% 60%, rgba(78,133,191,0.4), transparent 60%); filter: blur(40px);"></div>
+               style="background: radial-gradient(circle at 30% 40%, rgba(137,170,204,0.5), transparent 60%), radial-gradient(circle at 70% 60%, rgba(78,133,191,0.4), transparent 60%); filter: blur(40px); z-index:0;"></div>
           <img src="joey-headshot.png"
                alt="Joey Primiani"
-               class="relative w-full h-auto rounded-3xl border"
+               class="skel-img relative w-full h-auto rounded-3xl border"
                style="border-color:hsl(var(--stroke));"
                loading="lazy"/>
         </div>
@@ -1643,7 +1696,7 @@ const TESTIMONIALS = [
   {
     initials: 'NJ', name: 'Neha Jain',
     title: 'Engineering Leader, LinkedIn',
-    quote: 'A rare combination of design talent, product sense, AI fluency, and collaborative energy.',
+    quote: 'A rare combination of design talent, product sense, AI fluency and collaborative energy.',
     img: 't-nj.png'
   },
   {
@@ -1664,11 +1717,11 @@ const TESTIMONIALS = [
 (function renderBento(){
   const root = document.getElementById('bento');
   root.innerHTML = PROJECTS.map(p => `
-    <a href="case-study.html#${p.slug}" class="bento-card group relative overflow-hidden rounded-3xl border md:col-span-${p.span} block"
+    <a href="case-study.html#${p.slug}" class="bento-card skel group relative overflow-hidden rounded-3xl border md:col-span-${p.span} block"
        style="background:hsl(var(--surface)); border-color:hsl(var(--stroke)); aspect-ratio: ${p.span === 7 ? '16/10' : '5/6'};">
       ${p.video
-        ? `<video class="img absolute inset-0 w-full h-full object-cover" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
-        : `<img class="img absolute inset-0 w-full h-full object-cover" src="${p.img}" alt="${p.name}" loading="lazy"/>`}
+        ? `<video class="img skel-vid absolute inset-0 w-full h-full object-cover" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
+        : `<img class="img skel-img absolute inset-0 w-full h-full object-cover" src="${p.img}" alt="${p.name}" loading="lazy"/>`}
       <div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>
       <div class="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4">
         <div>
@@ -1685,6 +1738,33 @@ const TESTIMONIALS = [
         </div>
       </div>
     </a>`).join('');
+})();
+
+/* ============ SKELETON IMAGE LOADER ============ */
+/* Crossfades the rainbow shimmer (.skel) out and the image (.skel-img /
+   .skel-vid) in once it loads. Runs after bento/testimonials render so
+   JS-injected images are caught too. */
+(function skeletonLoader(){
+  function done(el){
+    el.classList.add('loaded');
+    const host = el.closest('.skel');
+    if (host) host.classList.add('loaded');
+  }
+  function wire(el){
+    if (el.dataset.skelWired) return;
+    el.dataset.skelWired = '1';
+    const isVideo = el.tagName === 'VIDEO';
+    // Already cached / ready → reveal immediately, no flash.
+    if ((isVideo && el.readyState >= 2) || (!isVideo && el.complete && el.naturalWidth > 0)) {
+      done(el); return;
+    }
+    const ev = isVideo ? 'loadeddata' : 'load';
+    el.addEventListener(ev, () => done(el), { once: true });
+    el.addEventListener('error', () => done(el), { once: true }); // never trap on a broken src
+  }
+  function scan(){ document.querySelectorAll('.skel-img, .skel-vid').forEach(wire); }
+  scan();
+  window.addEventListener('load', scan);
 })();
 
 /* ============ RENDER TESTIMONIALS ============ */

@@ -124,6 +124,9 @@
     border: 1px solid hsl(var(--stroke));
     box-shadow: 0 14px 30px rgba(0,0,0,0.35);
   }
+  /* JS wraps each loose row image so it can host its own shimmer */
+  .cs-media-cell { position: relative; border-radius: 18px; display: block; }
+  .cs-media-cell img { margin: 0; }
 
   /* Section-level media (new: leads each section) */
   .cs-section { display: grid; gap: 32px; }
@@ -148,6 +151,8 @@
   .cs-section-media.cinema { aspect-ratio: 21/9; }
   .cs-section-media.square { aspect-ratio: 1/1; }
   .cs-section-media.tall { aspect-ratio: 4/5; }
+  /* OpenSky drone video is natively 1468×1198 — match it so the frame fills without bars */
+  .cs-section-media.opensky { aspect-ratio: 1468/1198; }
   .cs-section-media.kenburns > img { animation: kenburns 22s ease-in-out infinite alternate; }
 
   /* YouTube cinemagraph: oversize the iframe so all YT chrome falls outside the visible area */
@@ -386,6 +391,45 @@
     display: flex; justify-content: space-between; align-items: center;
     font-style: normal;
   }
+
+  /* ============ SKELETON LOADER — rainbow shine sweep ============ */
+  /* A soft rainbow band sweeps across a dark placeholder while the image
+     loads, then crossfades out once it fires `load`. */
+  .skel { isolation: isolate; }
+  .skel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg,
+        rgba(255,107,157,0)   0%,
+        rgba(255,107,157,.42) 14%,
+        rgba(199,121,255,.42) 28%,
+        rgba(107,157,255,.42) 42%,
+        rgba(107,217,197,.42) 56%,
+        rgba(255,217,102,.42) 70%,
+        rgba(255,140,107,.42) 84%,
+        rgba(255,107,157,0)  100%);
+    background-color: hsl(var(--surface));
+    background-size: 220% 100%;
+    background-repeat: no-repeat;
+    background-position: -120% 0;
+    animation: skelSweep 1.8s linear infinite;
+    transition: opacity .55s ease;
+  }
+  .skel.loaded::after { opacity: 0; animation: none; }
+  @keyframes skelSweep {
+    0%   { background-position: -120% 0; }
+    100% { background-position:  220% 0; }
+  }
+  .skel-img, .skel-vid { opacity: 0; transition: opacity .6s ease; }
+  .skel-img.loaded, .skel-vid.loaded { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .skel::after { animation: none; }
+  }
 </style>
 </head>
 <body class="font-body">
@@ -530,7 +574,7 @@ const CASES = {
       {
         h: 'Show the drone, always',
         media: `<video src="opensky.mp4" autoplay muted loop playsinline preload="auto" poster="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22691068/See_Where_You_Can_and_Cannot_Fly.jpg?quality=90&strip=all&crop=0,0,100,100" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>`,
-        mediaClass: 'wide',
+        mediaClass: 'opensky',
         mediaCaption: 'OpenSky · Real-time drone view',
         body: `<strong class="text-text-primary">Decision:</strong> a real-time live view of the drone's position and intent, visible to the customer from order through handoff.<br/><br/><strong class="text-text-primary">The trade-off.</strong> Showing the drone increased load on the mobile client, exposed flight-path details that regulatory had a strong opinion on, and risked confusing customers who didn't know how to "read" an aerial view. The alternative, a simple "your order is on the way" status, would have been simpler to build and easier to approve internally.<br/><br/><strong class="text-text-primary">Why we shipped the live view anyway.</strong> Diary studies were unambiguous: customers who couldn't see the drone walked outside to find it, which created safety risk and broke the operation. The map view was the cheapest behavior change we could make. We worked with regulatory to design a view that showed enough to calm the customer (position, altitude band, descent state) without revealing operationally sensitive flight-path data.<br/><br/><strong class="text-text-primary">Motion is the trust signal.</strong> Every easing curve, every transition, was tuned for "calm and predictable" over "exciting." A drone overhead is already novel; the UI's job was to make it boring in the best possible way.`
       },
@@ -538,7 +582,6 @@ const CASES = {
         h: 'Design the failure path first',
         media: `<img loading="lazy" src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22691068/See_Where_You_Can_and_Cannot_Fly.jpg?quality=90&strip=all&crop=0,0,100,100" alt="Wing × Alphabet · OpenSky coverage on The Verge"/>`,
         mediaClass: 'kenburns wide',
-        mediaCaption: 'Wing × Alphabet · The Verge',
         body: `<strong class="text-text-primary">Decision:</strong> design the abort states before designing the happy path.<br/><br/><strong class="text-text-primary">Why.</strong> A drone delivery has more abort states than a normal order: weather aborts, wind aborts, payload-attachment failures, late tether captures, regulatory holds, returns. In early prototypes, the abort copy was added as an afterthought. Customer trust collapsed every time. People interpreted any abort as "the drone is broken and might be over my house."<br/><br/><strong class="text-text-primary">What we changed.</strong> We rewrote every abort state into the customer's frame, not the operator's. "Your order is delayed because of wind. We'll return it to the store and reorder for you" instead of "Aborted: wind speed exceeded threshold." We added a refund or rebook action in the same screen, so the abort didn't feel like a dead end. Trust scores in user testing went from "I'm nervous" to "OK, that makes sense" within one design round.<br/><br/><strong class="text-text-primary">Trade-off.</strong> This meant slowing down the happy-path polish for a quarter. It paid off; we spent the saved time on the doorstep moment, which became the product's signature.`
       },
       {
@@ -706,7 +749,7 @@ function render(slug) {
         </header>
 
         <!-- Hero image -->
-        <div class="reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9;">
+        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9;">
           ${c.heroVideo
             ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full object-cover"></video>`
             : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full object-cover" loading="eager"/>`}
@@ -854,6 +897,9 @@ function render(slug) {
     });
   }
 
+  // skeleton loaders — rainbow shimmer over images until they load
+  setupSkeletons(root);
+
   // reveal animations
   requestAnimationFrame(() => {
     const io = new IntersectionObserver((entries) => {
@@ -868,6 +914,43 @@ function render(slug) {
   });
 
   window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+/* ============ SKELETON IMAGE LOADER ============ */
+function wireSkel(el){
+  if (el.dataset.skelWired) return;
+  el.dataset.skelWired = '1';
+  const isVideo = el.tagName === 'VIDEO';
+  const done = () => {
+    el.classList.add('loaded');
+    el.closest('.skel')?.classList.add('loaded');
+  };
+  const ready = isVideo ? el.readyState >= 2 : (el.complete && el.naturalWidth > 0);
+  if (ready) { done(); return; }                       // cached → reveal, no flash
+  el.addEventListener(isVideo ? 'loadeddata' : 'load', done, { once: true });
+  el.addEventListener('error', done, { once: true });  // never trap on a broken src
+}
+function setupSkeletons(root){
+  // Mark host containers that actually contain an image/video
+  const host = el => el.classList.add('skel');
+  const heroMedia = root.querySelector('.cs-hero-media');
+  if (heroMedia && heroMedia.querySelector('img, video')) host(heroMedia);
+  root.querySelectorAll('.cs-section-media').forEach(c => {
+    if (c.querySelector(':scope > img, :scope > video')) host(c);
+  });
+  root.querySelectorAll('.cs-section-gallery .cs-tile').forEach(host);
+  // Wrap loose inline-row images so each can carry its own shimmer
+  root.querySelectorAll('.cs-media-row > img').forEach(img => {
+    const cell = document.createElement('div');
+    cell.className = 'skel cs-media-cell';
+    img.replaceWith(cell);
+    cell.appendChild(img);
+  });
+  // Tag every direct media child of a skel host, then wire load events
+  root.querySelectorAll('.skel > img, .skel > video').forEach(el => {
+    el.classList.add(el.tagName === 'VIDEO' ? 'skel-vid' : 'skel-img');
+    wireSkel(el);
+  });
 }
 
 function route() {
