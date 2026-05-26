@@ -797,6 +797,7 @@ function render(slug) {
                 </div>
               </div>
               <form id="caseStudyRequest" class="md:col-span-7 cs-gate-form" novalidate>
+                <input type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"/>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                   <label class="cs-gate-field">
                     <span class="cs-gate-label">First name <em>(Required)</em></span>
@@ -822,7 +823,8 @@ function render(slug) {
                 <button type="submit" class="cs-gate-submit mt-7 md:mt-8">
                   Send request <span aria-hidden="true">↗</span>
                 </button>
-                <p class="cs-gate-success" hidden>Got it. I'll send a link to your inbox shortly. Thanks for reaching out.</p>
+                <p class="cs-gate-success" hidden>Thanks for reaching out, I'll be in touch shortly.</p>
+                <p class="cs-gate-error" hidden style="color:#ef4444; margin-top:0.75rem">Something went wrong sending your request — please email <a href="mailto:jprimiani@gmail.com" style="text-decoration:underline">jprimiani@gmail.com</a> directly.</p>
               </form>
             </section>
           ` : `
@@ -881,34 +883,44 @@ function render(slug) {
   document.getElementById('nextName').innerHTML = `<span class="font-display italic">${next.name}</span> →`;
   document.getElementById('nextCat').textContent = next.category;
 
-  // gated request form: submit via mailto
+  // gated request form: submit to Cloudflare Worker at /api/case-study-request
   const form = document.getElementById('caseStudyRequest');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
-      const firstName = (fd.get('firstName') || '').toString().trim();
-      const lastName  = (fd.get('lastName')  || '').toString().trim();
-      const email     = (fd.get('email')     || '').toString().trim();
-      const company   = (fd.get('company')   || '').toString().trim();
-      const note      = (fd.get('note')      || '').toString().trim();
+      const firstName = (fd.get('firstName')   || '').toString().trim();
+      const lastName  = (fd.get('lastName')    || '').toString().trim();
+      const email     = (fd.get('email')       || '').toString().trim();
+      const company   = (fd.get('company')     || '').toString().trim();
+      const note      = (fd.get('note')        || '').toString().trim();
+      const honeypot  = (fd.get('company_url') || '').toString().trim();
       if (!firstName || !lastName || !email) { form.reportValidity(); return; }
-      const subject = encodeURIComponent(`Case study access request — ${c.name}`);
-      const lines = [
-        `Hi Joey,`,
-        ``,
-        `I'd like access to the ${c.name} case study.`,
-        ``,
-        `Name: ${firstName} ${lastName}`,
-        `Email: ${email}`,
-        company ? `Company: ${company}` : null,
-        note ? `\nNote:\n${note}` : null,
-      ].filter(Boolean).join('\n');
-      window.location.href = `mailto:jprimiani@gmail.com?subject=${subject}&body=${encodeURIComponent(lines)}`;
       const success = form.querySelector('.cs-gate-success');
-      if (success) success.hidden = false;
-      const btn = form.querySelector('.cs-gate-submit');
-      if (btn) { btn.disabled = true; btn.textContent = 'Request sent ✓'; }
+      const errorEl = form.querySelector('.cs-gate-error');
+      const btn     = form.querySelector('.cs-gate-submit');
+      const original = btn ? btn.innerHTML : '';
+      if (errorEl) errorEl.hidden = true;
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      try {
+        const res = await fetch('/api/case-study-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName, lastName, email, company, note,
+            company_url: honeypot,                          // spam honeypot — must stay empty
+            caseStudy: c.name,
+            slug: location.hash.replace('#', ''),
+          }),
+        });
+        if (!res.ok) throw new Error('Request failed: ' + res.status);
+        if (success) success.hidden = false;
+        if (btn) btn.textContent = 'Request sent ✓';
+        form.querySelectorAll('input, textarea').forEach((el) => { el.disabled = true; });
+      } catch (err) {
+        if (btn) { btn.disabled = false; btn.innerHTML = original; }
+        if (errorEl) errorEl.hidden = false;
+      }
     });
   }
 
