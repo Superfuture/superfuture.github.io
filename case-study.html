@@ -299,6 +299,48 @@
   .cs-section-gallery.fullwidth .cs-tile img { height: auto; object-fit: contain; }
   @media (max-width: 640px) { .cs-section-gallery.fullwidth { grid-template-columns: 1fr; } }
 
+  /* ===== Lookbook rail: horizontal scroll carousel with center-focus spotlight ===== */
+  .cs-hscroll-wrap { position: relative; margin-top: 10px; }
+  .cs-hscroll {
+    display: flex; gap: 22px; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x proximity; scroll-behavior: smooth;
+    padding: 22px 2px 26px; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; cursor: grab;
+    -webkit-mask: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+            mask: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+  }
+  .cs-hscroll::-webkit-scrollbar { display: none; }
+  .cs-hscroll.dragging { cursor: grabbing; scroll-behavior: auto; scroll-snap-type: none; }
+  .cs-hslide {
+    flex: 0 0 auto; height: clamp(340px, 54vh, 500px); margin: 0;
+    scroll-snap-align: center; border-radius: 20px; overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    box-shadow: 0 26px 60px rgba(0,0,0,.45);
+    transform: scale(var(--s, 1)); opacity: var(--o, 1);
+    transition: transform .6s cubic-bezier(.22,.61,.36,1), opacity .6s ease, box-shadow .6s ease;
+    will-change: transform;
+  }
+  .cs-hslide img {
+    height: 100%; width: auto; display: block; object-fit: cover;
+    pointer-events: none; user-select: none; -webkit-user-drag: none;
+    transition: transform 1s cubic-bezier(.22,.61,.36,1);
+  }
+  .cs-hslide:hover { box-shadow: 0 34px 80px rgba(0,0,0,.55); }
+  .cs-hslide:hover img { transform: scale(1.05); }
+  .cs-hscroll-bar { height: 2px; width: 120px; margin: 4px auto 0; background: hsl(var(--stroke)); border-radius: 2px; overflow: hidden; }
+  .cs-hscroll-fill { display: block; height: 100%; width: 100%; transform-origin: left center; transform: scaleX(.07); background: hsl(var(--text)); transition: transform .15s ease-out; }
+  /* staggered entrance as the section reveals */
+  .reveal:not(.in) .cs-hslide { opacity: 0; }
+  .reveal.in .cs-hslide { animation: hsIn .7s cubic-bezier(.22,.61,.36,1) backwards; animation-delay: calc(var(--i, 0) * .07s); }
+  @keyframes hsIn { from { opacity: 0; transform: translateY(30px) scale(.93); } to { opacity: 1; transform: none; } }
+  html[data-theme="light"] .cs-hslide { box-shadow: 0 22px 50px rgba(90,75,55,0.16); }
+  @media (prefers-reduced-motion: reduce) {
+    .cs-hscroll { scroll-behavior: auto; }
+    .reveal.in .cs-hslide { animation: none; }
+    .cs-hslide { transition: none; transform: none !important; opacity: 1 !important; }
+    .cs-hslide:hover img { transform: none; }
+  }
+
   /* app-screen mockups: 2-up, keep their own device framing */
   .cs-section-gallery.appshots { grid-template-columns: repeat(2, 1fr); gap: 18px; }
   .cs-section-gallery.appshots .cs-tile { aspect-ratio: 4/3; background: hsl(var(--surface)); }
@@ -1003,7 +1045,7 @@ const CASES = {
         mediaClass: 'wide',
         mediaCaption: 'XO · the connected app',
         body: `I created and led the XO app: the control surface for app-connected garments and the social home of the brand. It paired with the wearables over Bluetooth LE, let people customize what their clothing displayed, and turned getting dressed into an act of self-expression and play. You could watch a piece come alive and buy it in the same view, straight from the runway.`,
-        gallery: ['studioxo-app-dress.jpg', 'studioxo-app-backpack.jpg'],
+        gallery: ['studioxo-app-magenta.jpg', 'studioxo-app-dress.jpg'],
         galleryClass: 'appshots',
       },
       {
@@ -1019,7 +1061,7 @@ const CASES = {
         mediaClass: 'wide',
         mediaCaption: '2415 · fibre-optic, app-connected',
         body: `<strong class="text-text-primary">Twentyfour15</strong> took the lab work to the street: the world's first <strong class="text-text-primary">app-connected, fibre-optic colour-changing apparel</strong>. Garments paired to an iOS app over Bluetooth and animated in any colour, in sync with your music, a framework we called a <em>Platform for the Body</em>. It launched as a sold-out pop-up on Floral Street during London Fashion Week 2017.`,
-        gallery: ['studioxo-look-1.png', 'studioxo-look-2.png', 'studioxo-look-3.png', 'studioxo-look-4.png', 'studioxo-look-5.png', 'studioxo-look-6.jpg'],
+        hscroll: ['studioxo-look-1.png', 'studioxo-look-2.png', 'studioxo-look-3.png', 'studioxo-look-4.png', 'studioxo-look-5.png', 'studioxo-look-6.jpg'],
       },
       {
         h: 'Recognition',
@@ -1344,6 +1386,14 @@ function render(slug) {
                     ${s.gallery.map(g => `<div class="cs-tile"><img loading="lazy" src="${g}" alt=""/></div>`).join('')}
                   </div>
                 ` : ''}
+                ${s.hscroll ? `
+                  <div class="cs-hscroll-wrap">
+                    <div class="cs-hscroll">
+                      ${s.hscroll.map((g, gi) => `<figure class="cs-hslide" style="--i:${gi}"><img loading="lazy" src="${g}" alt=""/></figure>`).join('')}
+                    </div>
+                    <div class="cs-hscroll-bar"><span class="cs-hscroll-fill"></span></div>
+                  </div>
+                ` : ''}
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
                   <div class="md:col-span-3">
                     <div class="text-xs uppercase tracking-[0.3em] mb-2" style="color:hsl(var(--muted))">0${i+1}</div>
@@ -1436,6 +1486,9 @@ function render(slug) {
   // animate numeric stats counting up when they enter view
   setupCountUp(root);
 
+  // horizontal lookbook rails: center-focus spotlight, drag / wheel / touch
+  setupLookbook(root);
+
   // reveal animations
   requestAnimationFrame(() => {
     const io = new IntersectionObserver((entries) => {
@@ -1473,6 +1526,68 @@ function wireSkel(el){
   }
   el.addEventListener('error', done, { once: true });  // never trap on a broken src
   setTimeout(done, isVideo ? 2500 : 4000);             // safety net: never stay hidden
+}
+function setupLookbook(root){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.querySelectorAll('.cs-hscroll').forEach(rail => {
+    const wrap   = rail.closest('.cs-hscroll-wrap');
+    const fill   = wrap ? wrap.querySelector('.cs-hscroll-fill') : null;
+    const slides = Array.from(rail.querySelectorAll('.cs-hslide'));
+    let raf = 0;
+
+    function update(){
+      raf = 0;
+      const rRect = rail.getBoundingClientRect();
+      const center = rRect.left + rRect.width / 2;
+      if (!reduce) {
+        slides.forEach(s => {
+          const r = s.getBoundingClientRect();
+          const c = r.left + r.width / 2;
+          const d = Math.min(1, Math.abs(c - center) / (rRect.width * 0.62));   // 0 at center → 1 at edge
+          s.style.setProperty('--s', (1 - d * 0.10).toFixed(3));
+          s.style.setProperty('--o', (1 - d * 0.42).toFixed(3));
+        });
+      }
+      if (fill){
+        const max = rail.scrollWidth - rail.clientWidth;
+        const p = max > 0 ? rail.scrollLeft / max : 0;
+        fill.style.transform = `scaleX(${Math.max(0.07, Math.min(1, p)).toFixed(3)})`;
+      }
+    }
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
+    rail.addEventListener('scroll', schedule, { passive: true });
+
+    // vertical wheel → horizontal travel (release back to the page at the ends)
+    rail.addEventListener('wheel', (e) => {
+      if (reduce) return;
+      const max = rail.scrollWidth - rail.clientWidth;
+      if (max <= 0) return;
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;     // trackpad horizontal: let it be
+      const atStart = rail.scrollLeft <= 0, atEnd = rail.scrollLeft >= max - 1;
+      if ((e.deltaY < 0 && atStart) || (e.deltaY > 0 && atEnd)) return;
+      e.preventDefault();
+      rail.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    // grab-and-drag
+    let down = false, sx = 0, sl = 0;
+    rail.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      down = true; sx = e.clientX; sl = rail.scrollLeft; rail.classList.add('dragging');
+    });
+    rail.addEventListener('pointermove', (e) => { if (down) rail.scrollLeft = sl - (e.clientX - sx); });
+    const end = () => { if (down){ down = false; rail.classList.remove('dragging'); } };
+    rail.addEventListener('pointerup', end);
+    rail.addEventListener('pointercancel', end);
+    rail.addEventListener('pointerleave', end);
+
+    const onResize = () => {
+      if (!document.body.contains(rail)) { window.removeEventListener('resize', onResize); return; }
+      update();
+    };
+    window.addEventListener('resize', onResize);
+    requestAnimationFrame(() => { update(); requestAnimationFrame(update); });
+  });
 }
 function setupCountUp(root){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
