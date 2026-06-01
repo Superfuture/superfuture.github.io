@@ -521,7 +521,7 @@
   }
   .work-card:hover .work-arrow { color: #89AACC; transform: translate(3px, -3px); }
   /* On mobile the ↗ renders as an iOS emoji and adds little; hide it there. */
-  @media (max-width: 640px) { .work-arrow, .joey-pill-sub .pill-arrow { display: none; } }
+  @media (max-width: 640px) { .work-arrow, .joey-pill-sub .pill-arrow, .ui-arrow { display: none; } }
   /* Placeholder tile for case studies whose art isn't in yet */
   .work-media.work-wip {
     display: flex; align-items: center; justify-content: center;
@@ -1805,7 +1805,7 @@
          class="ring-btn rounded-full text-sm md:text-base inline-flex">
         <span class="relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full"
               style="background:hsl(var(--surface)); color:hsl(var(--text))">
-          See more <span aria-hidden="true">↗</span>
+          See more <span class="ui-arrow" aria-hidden="true">↗</span>
         </span>
       </a>
     </div>
@@ -1829,7 +1829,7 @@
     </p>
     <a href="https://superfuture.github.io/Claude_Code/" target="_blank" rel="noopener" class="ring-btn rounded-full text-sm inline-flex">
       <span class="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
-            style="background:hsl(var(--surface)); color:hsl(var(--text))">See more <span aria-hidden="true">↗</span></span>
+            style="background:hsl(var(--surface)); color:hsl(var(--text))">See more <span class="ui-arrow" aria-hidden="true">↗</span></span>
     </a>
   </div>
 
