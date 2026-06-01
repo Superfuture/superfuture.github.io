@@ -170,6 +170,8 @@
   #themeToggle .ico-moon { opacity: 0; transform: rotate(-90deg) scale(.5); }
   html[data-theme="light"] #themeToggle .ico-sun  { opacity: 0; transform: rotate(90deg) scale(.5); }
   html[data-theme="light"] #themeToggle .ico-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+  /* On mobile the ↗ renders as an iOS emoji; hide it (kept on desktop). */
+  @media (max-width: 640px) { .ui-arrow { display: none; } }
 </style>
 </head>
 <body>
@@ -232,7 +234,7 @@
            class="ring-btn flex-1 inline-flex rounded-full text-sm">
           <span class="relative inline-flex flex-1 justify-center items-center gap-2 px-5 py-3.5 rounded-full whitespace-nowrap"
                 style="background:hsl(var(--surface)); color:hsl(var(--text))">
-            Open in new tab <span aria-hidden="true">↗</span>
+            Open in new tab <span class="ui-arrow" aria-hidden="true">↗</span>
           </span>
         </a>
       </div>

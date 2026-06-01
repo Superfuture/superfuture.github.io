@@ -193,6 +193,8 @@
   .cs-section { display: grid; gap: 32px; }
   .cs-section p a { color: hsl(var(--text)); font-weight: 700; text-decoration: none; transition: opacity .2s ease; }
   .cs-section p a:hover { text-decoration: underline; text-underline-offset: 2px; }
+  /* On mobile the ↗ renders as an iOS emoji; hide it (kept on desktop). */
+  @media (max-width: 640px) { .ui-arrow { display: none; } }
   @media (min-width: 768px) { .cs-section { gap: 48px; } }
   .cs-section-media {
     position: relative;
@@ -659,7 +661,7 @@
       <a href="mailto:jprimiani@gmail.com" class="ring-btn rounded-full text-sm md:text-base inline-flex">
         <span class="relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full"
               style="background:hsl(var(--surface)); color:hsl(var(--text))">
-          jprimiani@gmail.com <span aria-hidden="true">↗</span>
+          jprimiani@gmail.com <span class="ui-arrow" aria-hidden="true">↗</span>
         </span>
       </a>
     </div>
@@ -1243,7 +1245,7 @@ function render(slug) {
           <textarea name="note" rows="3" placeholder="What about the work caught your eye?"></textarea>
         </label>
         <button type="submit" class="cs-gate-submit mt-7 md:mt-8">
-          Send request <span aria-hidden="true">↗</span>
+          Send request <span class="ui-arrow" aria-hidden="true">↗</span>
         </button>
         <p class="cs-gate-success" hidden>Thanks for reaching out, I'll be in touch shortly.</p>
         <p class="cs-gate-error" hidden style="color:#ef4444; margin-top:0.75rem">Something went wrong sending your request, please email <a href="mailto:jprimiani@gmail.com" style="text-decoration:underline">jprimiani@gmail.com</a> directly.</p>
@@ -1318,7 +1320,7 @@ function render(slug) {
                 ${s.media ? `
                   <div class="cs-section-media ${s.mediaClass || 'kenburns wide'}">
                     ${s.media}
-                    ${s.mediaCaption ? `<div class="cs-media-gradient"></div><div class="cs-media-caption"><span>${s.mediaCaption}</span><span aria-hidden="true">↗</span></div>` : ''}
+                    ${s.mediaCaption ? `<div class="cs-media-gradient"></div><div class="cs-media-caption"><span>${s.mediaCaption}</span><span class="ui-arrow" aria-hidden="true">↗</span></div>` : ''}
                   </div>
                 ` : ''}
                 ${s.gallery ? `
@@ -1346,7 +1348,7 @@ function render(slug) {
             ${c.appUrl ? `
               <section class="reveal cs-app-cta-wrap">
                 <a href="${c.appUrl}" target="_blank" rel="noopener" class="cs-app-cta">
-                  ${c.appLabel || 'Open the app'} <span aria-hidden="true">↗</span>
+                  ${c.appLabel || 'Open the app'} <span class="ui-arrow" aria-hidden="true">↗</span>
                 </a>
               </section>
             ` : ''}
