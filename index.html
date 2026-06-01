@@ -1549,7 +1549,7 @@
         Say hi <span aria-hidden="true" class="hidden sm:inline">↗</span>
       </span>
     </a>
-    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <div class="w-px h-5 mx-1.5 sm:mx-1" style="background:hsl(var(--stroke))"></div>
     <button id="cmdkBtn" class="cmdk-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open quick navigation (Command K)" title="Quick nav (⌘K)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <span class="cmdk-kbd hidden md:inline">⌘K</span>
@@ -1571,7 +1571,7 @@
   <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t to-transparent" style="--tw-gradient-from:hsl(var(--bg)); --tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to,transparent); background:linear-gradient(to top, hsl(var(--bg)), transparent);"></div>
 
   <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-    <div class="blur-in text-xs uppercase tracking-[0.3em] mb-8" style="color:hsl(var(--muted))">Portfolio '26</div>
+    <div class="blur-in text-xs uppercase tracking-[0.3em] mb-8 hidden sm:block" style="color:hsl(var(--muted))">Portfolio '26</div>
     <h1 class="name-reveal text-[clamp(2.4rem,11.5vw,3.75rem)] md:text-8xl lg:text-9xl font-display italic tracking-tight mb-6" style="color:hsl(var(--text)); line-height:1.3; padding-bottom:0.18em">Joey Primiani</h1>
     <p class="blur-in text-base md:text-lg mb-4" style="color:hsl(var(--text) / .9)">
       <span id="roleArticle">A</span> <span id="roleWord" class="font-display italic animate-role-fade-in inline-block" style="color:hsl(var(--text))">Designer</span> based in the Bay Area.
@@ -2893,11 +2893,8 @@ if (typeof bootAskJoey === 'function') { try { bootAskJoey(); } catch(e) { conso
 
   let animatedOnce = false, everOpened = false, lastFocus = null;
 
-  // One-time gentle nudge if the visitor never opens the agent.
+  // Idle nudge removed; keep a detached no-op so existing references stay safe.
   const nudge = document.createElement('div');
-  nudge.className = 'joey-nudge';
-  nudge.textContent = 'Questions? Ask me anything. 👋';
-  agent.appendChild(nudge);
 
   function openPanel() {
     everOpened = true;
@@ -2940,12 +2937,7 @@ if (typeof bootAskJoey === 'function') { try { bootAskJoey(); } catch(e) { conso
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  // Show the nudge once, ~28s in, only if untouched and not over the footer.
-  setTimeout(() => {
-    if (everOpened || agent.classList.contains('agent-hide')) return;
-    nudge.classList.add('show');
-    setTimeout(() => nudge.classList.remove('show'), 6500);
-  }, 28000);
+  // Idle nudge removed per request.
 })();
 </script>
 
