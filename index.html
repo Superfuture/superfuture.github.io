@@ -8,7 +8,7 @@
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Joey Primiani • Design Leader and AI creator</title>
-<meta name="description" content="Joey Primiani — Senior AI Product Designer at LinkedIn. 15+ years designing AI-native mobile systems. Hire a top AI designer with experience at LinkedIn Premium, Wing @ Google X, Studio XO, and Lady Gaga's Little Monsters. Forbes 30 Under 30. Cannes Gold Lion. Author of Think. Prompt. Create. Specializes in Claude Code, multi-modal AI, vibe-coding, and AI-native prototyping for frontier-tech companies.">
+<meta name="description" content="Joey Primiani, Senior AI Product Designer at LinkedIn. 15+ years designing AI-native mobile systems. Hire a top AI designer with experience at LinkedIn Premium, Wing @ Google X, Studio XO, and Lady Gaga's Little Monsters. Forbes 30 Under 30. Cannes Gold Lion. Author of Think. Prompt. Create. Specializes in Claude Code, multi-modal AI, vibe-coding, and AI-native prototyping for frontier-tech companies.">
 <meta name="keywords" content="AI designer, AI product designer, Senior Product Designer, AI-native design, Claude Code designer, Anthropic, LinkedIn Premium designer, Joey Primiani, vibe coding, AI prototyping, multi-modal design, frontier AI designer, top AI designer, Staff Product Designer, Principal Product Designer, mobile AI designer, Bay Area AI designer, Stanford d.School">
 <meta name="author" content="Joey Primiani">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -221,7 +221,7 @@
     #playPin { height: 100dvh; }
     .h-screen { height: 100dvh !important; }
     /* Hero is intentionally < full height so the Work section peeks above
-       the fold — a quieter scroll affordance than an explicit indicator. */
+       the fold - a quieter scroll affordance than an explicit indicator. */
     #top { height: 76dvh; }
   }
   @media (min-width: 768px) {
@@ -241,7 +241,7 @@
 
   /* Scroll perf: skip rendering off-screen sections until they approach the viewport.
      Each section reserves a typical height so the scrollbar doesn't jump. */
-  /* NOTE: #contact is intentionally excluded — as the last section its
+  /* NOTE: #contact is intentionally excluded - as the last section its
      reserved contain-intrinsic-size (1200px) overshot its real height
      (~750px), leaving a phantom gap below the footer on mobile. */
   #work, #recognition, #book, #testimonials, #playground, #about {
@@ -265,7 +265,7 @@
 
   .font-display { font-family: 'Instrument Serif', serif; }
 
-  /* Signature wordmark — Fraunces with custom variable axes */
+  /* Signature wordmark - Fraunces with custom variable axes */
   .signature-name {
     font-family: 'Fraunces', 'Instrument Serif', serif;
     font-style: italic;
@@ -345,7 +345,7 @@
     background-size: 4px 4px;
   }
 
-  /* Gradient border pill — accent ring on hover */
+  /* Gradient border pill - accent ring on hover */
   .ring-btn { position: relative; isolation: isolate; }
   .ring-btn::before {
     content:''; position:absolute; inset:-2px; border-radius: 9999px;
@@ -442,7 +442,7 @@
   .bento-card:hover { transform: translateY(-4px); border-color: rgba(137,170,204,0.3) !important; }
   .testi-card:hover { transform: translateY(-3px); }
 
-  /* ===== Clean work grid — uniform cards, caption below, autoplay video ===== */
+  /* ===== Clean work grid - uniform cards, caption below, autoplay video ===== */
   .work-card { display: block; text-decoration: none; perspective: 1100px; }
   @media (prefers-reduced-motion: reduce) { .work-card { perspective: none; } }
 
@@ -487,7 +487,7 @@
   /* Transparent device/app renders sit centered on the surface, never cropped */
   .work-media.contain .img { object-fit: contain; padding: 11% 15%; }
   /* Transparent device tiles float on the card's themed background; gentle Ken Burns keeps them alive.
-     (Images only — contained videos animate themselves.) */
+     (Images only - contained videos animate themselves.) */
   .work-media.contain img.img { animation: gridKenburns 17s ease-in-out infinite; }
   @keyframes gridKenburns {
     0%   { transform: scale(1.02) translateY(0); }
@@ -539,7 +539,7 @@
   /* Hero portrait gentle breathing on idle */
   .hero-name { animation: breath 10s ease-in-out infinite; }
 
-  /* Section landing flash — fired by nav click */
+  /* Section landing flash - fired by nav click */
   @keyframes sectionLand {
     0%   { box-shadow: inset 0 0 0 0px rgba(137,170,204,0); }
     20%  { box-shadow: inset 0 0 80px 8px rgba(137,170,204,0.18); }
@@ -549,7 +549,7 @@
     animation: sectionLand 1.1s cubic-bezier(.22,1,.36,1) forwards;
   }
 
-  /* Liquid glass — subtle (chips, nav, agent pill) */
+  /* Liquid glass - subtle (chips, nav, agent pill) */
   .liquid-glass {
     background: rgba(255,255,255,0.018);
     backdrop-filter: blur(10px) saturate(1.4);
@@ -615,7 +615,7 @@
     pointer-events: none;
   }
 
-  /* Joey Agent — floating widget */
+  /* Joey Agent - floating widget */
   .joey-agent {
     position: fixed;
     bottom: 20px;
@@ -1314,7 +1314,7 @@
   }
   .logo-mark svg, .logo-mark img { height: 100%; width: auto; display: block; }
   .logo-mark:hover { opacity: 1; transform: translateY(-1px); }
-  /* Clearbit logos are color — make them monochrome white via filter */
+  /* Clearbit logos are color - make them monochrome white via filter */
   .logo-mark img.logo-clearbit {
     filter: brightness(0) invert(1) saturate(0) contrast(1.1) opacity(0.92);
     object-fit: contain;
@@ -1335,7 +1335,7 @@
   /* Pinned content vertical anchor */
   .pin-content { will-change: transform; }
 
-  /* ============ SKELETON LOADER — rainbow shine sweep ============ */
+  /* ============ SKELETON LOADER - rainbow shine sweep ============ */
   /* Container holding a loading image. The shimmer is painted on top
      (::after) and crossfades out once the image fires `load`. */
   .skel { isolation: isolate; }
@@ -1375,7 +1375,7 @@
   }
 
   /* The image itself fades in under the shimmer as it crossfades out.
-     Videos are NOT gated — their poster is the placeholder, so the skeleton
+     Videos are NOT gated - their poster is the placeholder, so the skeleton
      can never hide a video (autoplay/load is unreliable under file://). */
   .skel-img {
     opacity: 0;
@@ -1392,7 +1392,7 @@
     --bg: 40 33% 97%;      /* warm off-white paper */
     --surface: 38 26% 93%;
     --text: 28 12% 13%;    /* warm near-black */
-    --muted: 30 9% 30%;    /* darker warm gray — more legible over earth video */
+    --muted: 30 9% 30%;    /* darker warm gray - more legible over earth video */
     --stroke: 38 18% 84%;
     --accent: 212 45% 48%;
   }
@@ -1408,7 +1408,7 @@
   html[data-theme="light"] #bgVideo2 { opacity: 0; }
   html[data-theme="light"] #earthVideo2 { opacity: 1; }
 
-  /* Top hero: cross-dissolve between space & earth with a gentle vertical drift —
+  /* Top hero: cross-dissolve between space & earth with a gentle vertical drift -
      reads as ascending to space / descending to earth, with no hard seam. */
   #bgVideo, #earthVideo {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -1417,7 +1417,7 @@
     transition: opacity 1.15s ease, transform 1.35s cubic-bezier(.5,0,.3,1);
     will-change: opacity, transform;
   }
-  /* Space video framed lower in the hero — smaller % moves it further down (50% = centered). */
+  /* Space video framed lower in the hero - smaller % moves it further down (50% = centered). */
   #bgVideo { object-position: center 0%; }
   #earthVideo { opacity: 0; transform: translateY(8%) scale(1.1); }                 /* earth waits just below */
   html[data-theme="light"] #bgVideo    { opacity: 0; transform: translateY(-8%) scale(1.1); } /* space drifts up & away */
@@ -2062,7 +2062,7 @@ const PROJECTS = [
   },
   {
     slug: 'flow-wallet', name: 'Flow Wallet', category: 'Mobile · Web3 Wallet',
-    summary: 'A self-custody crypto wallet built for everyone — hardware-grade security via the Secure Enclave, gas-free, with none of the jargon.',
+    summary: 'A self-custody crypto wallet built for everyone: hardware-grade security via the Secure Enclave, gas-free, with none of the jargon.',
     img: 'flow-wallet-tile.jpg',
     video: 'flowwallet-kb.mp4'        // 4:3 composition, gentle centered Ken Burns (text stays in frame)
   },
@@ -2277,7 +2277,7 @@ const TESTIMONIALS = [
   }
 })();
 
-/* ============ THEME TOGGLE — Earth (light) / Space (dark) ============ */
+/* ============ THEME TOGGLE - Earth (light) / Space (dark) ============ */
 (function themeToggle(){
   const root  = document.documentElement;
   const btn   = document.getElementById('themeToggle');
@@ -2474,7 +2474,7 @@ function runEntrance(){
 })();
 
 /* ============ GSAP MARQUEE ============ */
-/* Continuous motion — skip entirely for reduced-motion users. */
+/* Continuous motion - skip entirely for reduced-motion users. */
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   gsap.to('#marquee', { xPercent: -50, duration: 40, ease: 'none', repeat: -1 });
 }
@@ -2495,7 +2495,7 @@ function bootAskJoey(){
   const input = document.getElementById('askInput');
   const send = document.getElementById('askSend');
   if (!stream || !form) {
-    // Widget HTML not in DOM yet — try again next frame
+    // Widget HTML not in DOM yet - try again next frame
     return requestAnimationFrame(bootAskJoey);
   }
   if (bootAskJoey._init) return;
@@ -2597,7 +2597,7 @@ function bootAskJoey(){
     s = s.replace(/\n/g, '<br/>');
     return s;
   }
-  // A "thinking" bubble — visible latency handling is part of the AI-design story.
+  // A "thinking" bubble - visible latency handling is part of the AI-design story.
   function addThinking(){
     const el = document.createElement('div');
     el.className = 'ask-msg bot ask-thinking';
@@ -2638,7 +2638,7 @@ function bootAskJoey(){
     stream.appendChild(el);
     stream.scrollTop = stream.scrollHeight;
 
-    // Typewriter — handle HTML tags by skipping past them as one chunk
+    // Typewriter - handle HTML tags by skipping past them as one chunk
     let i = 0;
     const cursor = '<span class="ask-cursor"></span>';
     function tick() {
