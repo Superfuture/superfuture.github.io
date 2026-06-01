@@ -2,8 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Case Study, Joey Primiani</title>
+<script>
+  /* Shared theme (key: jp-theme): saved choice wins; default is dark. */
+  try { if (localStorage.getItem('jp-theme') === 'light') document.documentElement.setAttribute('data-theme','light'); } catch(e){}
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Case Studies, Joey Primiani</title>
+<meta name="description" content="Selected case studies by Joey Primiani: LinkedIn Premium, Wing @ Google X (OpenSky drone delivery), January AI, Flow Wallet, Folio, Lady Gaga's Little Monsters, Studio XO, Entangled and Cortex. AI-native and mobile product design from 0 to 1 and at scale.">
+<meta name="author" content="Joey Primiani">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="canonical" href="https://www.officialjp.com/case-study.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Joey Primiani">
+<meta property="og:title" content="Case Studies · Joey Primiani">
+<meta property="og:description" content="Frontier AI and mobile product design: LinkedIn Premium, Wing @ Google X, January AI, Flow Wallet, Folio, Studio XO, Cortex and more.">
+<meta property="og:url" content="https://www.officialjp.com/case-study.html">
+<meta property="og:image" content="https://www.officialjp.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@jp">
+<meta name="twitter:title" content="Case Studies · Joey Primiani">
+<meta name="twitter:description" content="Frontier AI and mobile product design from 0 to 1 and at scale.">
+<meta name="twitter:image" content="https://www.officialjp.com/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Case Studies · Joey Primiani",
+  "url": "https://www.officialjp.com/case-study.html",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Person",
+    "name": "Joey Primiani",
+    "url": "https://www.officialjp.com/",
+    "jobTitle": "Senior Product Designer",
+    "sameAs": ["https://www.linkedin.com/in/jprim", "https://x.com/jp", "https://instagram.com/officialjp"]
+  },
+  "hasPart": [
+    { "@type": "CreativeWork", "name": "LinkedIn Premium · AI & the Calendly integration", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Wing @ Google X · OpenSky drone delivery", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "January AI · clinical-grade AI nutrition", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Flow Wallet · self-custody crypto wallet", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Folio · community-first social network", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Little Monsters · co-founded with Lady Gaga", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Studio XO · fashion technology", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Entangled · collective-consciousness app", "creator": "Joey Primiani" },
+    { "@type": "CreativeWork", "name": "Cortex · radial-menu sharing extension", "creator": "Joey Primiani" }
+  ]
+}
+</script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +79,18 @@
   }
 </script>
 <style>
+  /* Smooth cross-document navigations (home <-> case studies). Ignored where unsupported. */
+  @view-transition { navigation: auto; }
+  @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+  ::view-transition-group(*) { animation-duration: .52s; animation-timing-function: cubic-bezier(.5, 0, .12, 1); }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .4s; animation-timing-function: ease-in-out; }
+
+  /* Consistent, branded keyboard focus ring */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
+  select:focus-visible, [tabindex="0"]:focus-visible {
+    outline: 2px solid #89AACC; outline-offset: 2px; border-radius: 3px;
+  }
+
   :root {
     --bg: 0 0% 4%;
     --surface: 0 0% 8%;
@@ -132,6 +191,8 @@
 
   /* Section-level media (new: leads each section) */
   .cs-section { display: grid; gap: 32px; }
+  .cs-section p a { color: #89AACC; text-decoration: underline; text-underline-offset: 2px; transition: color .2s ease; }
+  .cs-section p a:hover { color: #a9c2de; }
   @media (min-width: 768px) { .cs-section { gap: 48px; } }
   .cs-section-media {
     position: relative;
@@ -153,8 +214,11 @@
   .cs-section-media.cinema { aspect-ratio: 21/9; }
   .cs-section-media.square { aspect-ratio: 1/1; }
   .cs-section-media.tall { aspect-ratio: 4/5; }
-  /* OpenSky drone video is natively 1468×1198 — match it so the frame fills without bars */
+  /* OpenSky drone video is natively 1468×1198, match it so the frame fills without bars */
   .cs-section-media.opensky { aspect-ratio: 1468/1198; }
+  .cs-section-media.poly { aspect-ratio: 1280/826; }   /* polygon flight-planning recording */
+  .cs-section-media.flightplan { aspect-ratio: 1999/1158; }   /* lane-by-lane altitude-coded flight plan */
+  .cs-section-media.calendly { aspect-ratio: 1/1; max-width: 460px; margin-inline: auto; background: #ffffff; }   /* LinkedIn × Calendly demo, clean white, no texture */
   .cs-section-media.kenburns > img { animation: kenburns 22s ease-in-out infinite alternate; }
 
   /* YouTube cinemagraph: oversize the iframe so all YT chrome falls outside the visible area */
@@ -187,6 +251,9 @@
     pointer-events: none;
     z-index: 1;
   }
+  /* Transparent device render floating on the themed surface (adapts dark/light) */
+  .cs-section-media.device-pad { background: hsl(var(--surface)); }
+  .cs-section-media.device-pad > img { object-fit: contain; padding: 4% 5%; }
 
   /* Section-level gallery grid (multi-image, autoplays via hover scale) */
   .cs-section-gallery {
@@ -405,7 +472,7 @@
     font-style: normal;
   }
 
-  /* ============ SKELETON LOADER — rainbow shine sweep ============ */
+  /* ============ SKELETON LOADER, rainbow shine sweep ============ */
   /* A soft rainbow band sweeps across a dark placeholder while the image
      loads, then crossfades out once it fires `load`. */
   .skel { isolation: isolate; }
@@ -445,6 +512,86 @@
   @media (prefers-reduced-motion: reduce) {
     .skel::before { animation: none; }
   }
+
+  /* ============ LIGHT / EARTH THEME (shared with home via jp-theme) ============ */
+  html[data-theme="light"] {
+    --bg: 40 33% 97%;      /* warm off-white paper */
+    --surface: 38 26% 93%;
+    --text: 28 12% 13%;    /* warm near-black */
+    --muted: 30 9% 30%;
+    --stroke: 38 18% 84%;
+  }
+  body { transition: background-color .6s ease, color .6s ease; }
+
+  /* Nav border + softer warm shadows on case media in earth mode */
+  html[data-theme="light"] nav > div { border-color: rgba(120,100,80,0.14) !important; }
+  html[data-theme="light"] .cs-section-media,
+  html[data-theme="light"] .cs-hero-media { box-shadow: 0 18px 44px rgba(90,75,55,0.12); }
+  html[data-theme="light"] .cs-media,
+  html[data-theme="light"] .cs-media-row img,
+  html[data-theme="light"] .cs-section-gallery .cs-tile { box-shadow: 0 12px 28px rgba(90,75,55,0.10); }
+  html[data-theme="light"] .cs-section-gallery.iphone .cs-tile img { filter: drop-shadow(0 16px 30px rgba(90,75,55,0.18)); }
+
+  /* Transparent device figure: dark caption ink + light fade in earth mode */
+  html[data-theme="light"] .cs-section-media.device-pad .cs-media-caption { color: hsl(var(--muted)); text-shadow: none; }
+  html[data-theme="light"] .cs-section-media.device-pad .cs-media-gradient { background: linear-gradient(180deg, rgba(250,248,244,0) 55%, rgba(250,248,244,0.45) 100%); }
+
+  /* Stat numbers: dark→blue gradient in earth mode (the white top would vanish on light) */
+  html[data-theme="light"] .stat-num { background: linear-gradient(180deg, hsl(var(--text)) 0%, #4E85BF 100%); -webkit-background-clip: text; background-clip: text; }
+
+  /* Halftone hero texture is black dots on multiply, keep it whisper-quiet on light */
+  html[data-theme="light"] .halftone { opacity: 0.08 !important; }
+  /* Lite-YouTube + full-bleed surfaces */
+  html[data-theme="light"] .yt-lite { background: #e9e4da; }
+  html[data-theme="light"] .cs-bleed { background: hsl(var(--surface)); }
+
+  /* ===== Command-palette nav trigger ===== */
+  .cmdk-btn { display: inline-flex; align-items: center; gap: 6px; border-radius: 9999px; padding: 7px 10px; cursor: pointer; background: hsl(var(--surface)); border: 1px solid hsl(var(--stroke)); color: hsl(var(--muted)); transition: color .2s ease, border-color .2s ease, background .2s ease; }
+  .cmdk-btn:hover { color: hsl(var(--text)); border-color: rgba(137,170,204,0.5); }
+  .cmdk-btn:focus-visible { outline: 2px solid #89AACC; outline-offset: 2px; }
+  .cmdk-btn svg { width: 15px; height: 15px; }
+  .cmdk-btn .cmdk-kbd { font-size: 11px; letter-spacing: .04em; }
+
+  /* ===== Earth / Space toggle button ===== */
+  #themeToggle {
+    position: relative; width: 32px; height: 32px; flex: none;
+    border-radius: 9999px; border: 0; cursor: pointer; background: transparent;
+    color: hsl(var(--text)); margin-left: 2px;
+    transition: background-color .25s ease, transform .35s cubic-bezier(.22,1,.36,1);
+  }
+  #themeToggle:hover { background: hsl(var(--stroke) / 0.6); transform: rotate(15deg); }
+  #themeToggle:focus-visible { outline: 2px solid #89AACC; outline-offset: 2px; }
+  #themeToggle svg {
+    position: absolute; inset: 0; margin: auto; width: 16px; height: 16px;
+    transition: opacity .4s ease, transform .55s cubic-bezier(.22,1,.36,1);
+  }
+  #themeToggle .ico-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+  #themeToggle .ico-moon { opacity: 0; transform: rotate(-90deg) scale(.5); }
+  html[data-theme="light"] #themeToggle .ico-sun  { opacity: 0; transform: rotate(90deg) scale(.5); }
+  html[data-theme="light"] #themeToggle .ico-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+  /* ============ COMMAND PALETTE (⌘K) ============ */
+  .cmdk-overlay { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-start; justify-content: center; padding-top: 14vh; background: rgba(8,8,10,0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  .cmdk-overlay.open { opacity: 1; pointer-events: auto; }
+  .cmdk { width: min(560px, calc(100vw - 32px)); background: rgba(22,22,25,0.86); backdrop-filter: blur(30px) saturate(1.5); -webkit-backdrop-filter: blur(30px) saturate(1.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; box-shadow: 0 40px 90px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.12); overflow: hidden; transform: scale(.96) translateY(-8px); transition: transform .22s cubic-bezier(.22,1,.36,1); }
+  .cmdk-overlay.open .cmdk { transform: scale(1) translateY(0); }
+  html[data-theme="light"] .cmdk { background: rgba(253,251,248,0.92); border-color: rgba(120,100,80,0.14); box-shadow: 0 40px 90px rgba(90,75,55,0.22), inset 0 1px 1px rgba(255,255,255,0.9); }
+  html[data-theme="light"] .cmdk-overlay { background: rgba(250,248,244,0.45); }
+  .cmdk-input { width: 100%; border: 0; outline: none; background: transparent; color: hsl(var(--text)); font-family: 'Inter', sans-serif; font-size: 17px; padding: 18px 20px; border-bottom: 1px solid hsl(var(--stroke)); }
+  .cmdk-input::placeholder { color: hsl(var(--muted)); }
+  .cmdk-input:focus, .cmdk-input:focus-visible { outline: none; }   /* auto-focused in a modal; ring is redundant */
+  .cmdk-list { max-height: 52vh; overflow-y: auto; padding: 8px; }
+  .cmdk-list::-webkit-scrollbar { width: 6px; }
+  .cmdk-list::-webkit-scrollbar-thumb { background: hsl(var(--stroke)); border-radius: 6px; }
+  .cmdk-empty { padding: 22px 20px; color: hsl(var(--muted)); font-size: 14px; }
+  .cmdk-item { display: flex; align-items: center; gap: 13px; padding: 11px 13px; border-radius: 11px; cursor: pointer; color: hsl(var(--text)); font-size: 14.5px; }
+  .cmdk-item .cmdk-ico { width: 20px; text-align: center; opacity: .8; font-size: 15px; flex: none; }
+  .cmdk-item .cmdk-sub { margin-left: auto; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: hsl(var(--muted)); }
+  .cmdk-item[aria-selected="true"], .cmdk-item:hover { background: hsl(var(--stroke) / 0.5); }
+  .cmdk-item[aria-selected="true"] { box-shadow: inset 0 0 0 1px rgba(137,170,204,0.4); }
+  .cmdk-hint { display: flex; gap: 14px; align-items: center; padding: 9px 16px; border-top: 1px solid hsl(var(--stroke)); font-size: 11px; color: hsl(var(--muted)); }
+  .cmdk-hint kbd { font-family: inherit; background: hsl(var(--stroke) / 0.6); border-radius: 5px; padding: 1px 6px; font-size: 10.5px; }
+
 </style>
 </head>
 <body class="font-body">
@@ -467,6 +614,15 @@
         Say hi <span aria-hidden="true" class="hidden sm:inline">↗</span>
       </span>
     </a>
+    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <button id="cmdkBtn" class="cmdk-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open quick navigation (Command K)" title="Quick nav (⌘K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span class="cmdk-kbd hidden md:inline">⌘K</span>
+    </button>
+    <button id="themeToggle" class="inline-flex" type="button" aria-label="Switch between Earth and Space themes" title="Earth / Space">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -497,12 +653,9 @@
     <div class="flex items-center gap-4 text-sm" style="color:hsl(var(--muted))">
       <a href="https://www.linkedin.com/in/jprim" class="hover:text-[color:hsl(var(--text))]">LinkedIn</a>
       <a href="https://x.com/jp" class="hover:text-[color:hsl(var(--text))]">x.com/jp</a>
+      <a href="https://instagram.com/officialjp" class="hover:text-[color:hsl(var(--text))]">Instagram</a>
       <a href="https://dribbble.com/jprimiani" class="hover:text-[color:hsl(var(--text))]">Dribbble</a>
       <a href="https://github.com/superfuture" class="hover:text-[color:hsl(var(--text))]">GitHub</a>
-    </div>
-    <div class="flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
-      <span class="pulse-dot relative inline-block w-2 h-2 rounded-full" style="background:#10b981"></span>
-      Available for select engagements
     </div>
     <div class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">© 2026 Joey Primiani</div>
   </div>
@@ -511,57 +664,66 @@
 <script>
 const CASES = {
   'linkedin-premium': {
-    name: 'LinkedIn Premium',
-    category: 'Mobile · 2022–Present',
+    name: 'LinkedIn × Calendly',
+    category: 'Mobile · Premium · 2024–Present',
     role: 'Design Lead, Premium Mobile',
-    team: 'Cross-functional pod: PM, eng, data science, research',
-    location: 'Sunnyvale, CA',
-    headline: 'Reimagining premium mobile at hundreds-of-millions scale in the AI era.',
-    hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
+    team: 'LinkedIn Premium × Calendly · PM, eng, partnerships',
+    location: 'Mountain View, CA',
+    headline: 'The profile, reimagined as a conversion surface for the professional world.',
+    hero: 'linkedin-calendly-demo-poster.jpg',
+    heroVideo: 'linkedin-calendly-demo.mp4',
+    heroFit: 'contain',
+    heroBg: '#ffffff',
+    noHalftone: true,
+    hideStats: true,
     stats: [
       { k: 'Members reached', v: '100M+' },
-      { k: 'AI-native concepts shipped to test', v: '20+' },
-      { k: 'Avg. concept-to-prototype', v: '< 24h' },
+      { k: 'Shipped integration', v: 'Calendly' },
+      { k: 'Concept → prototype', v: '< 24h' },
     ],
     sections: [
       {
         h: 'Context',
-        media: `<img loading="lazy" src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1600&q=85" alt="LinkedIn Premium"/>`,
-        mediaClass: 'kenburns cinema',
-        mediaCaption: 'LinkedIn Premium · Mobile',
-        body: `Premium is one of the largest subscription products in the world, with hundreds of millions of professionals. By 2023 the question wasn't whether AI would change Premium, but how to design a product where the most valuable feature might be a conversation, a coach, or a forecast, not a feed.`
+        body: `LinkedIn Premium reaches hundreds of millions of professionals, yet the profile was still mostly a <em>brochure</em>: it described you, but it didn't let someone <em>do business</em> with you. The highest-intent moment, "I want to talk to this person," leaked into email tag and dropped threads.`
       },
       {
-        h: 'LinkedIn × Calendly',
-        media: `<img loading="lazy" src="https://images.ctfassets.net/k0lk9kiuza3o/7heMHsZRy4PYeWnwwgTVev/6b7c2595a59e93b9d7bb3c40db67310e/LinkedIn-Blue-128_2x_1.svg" alt="LinkedIn × Calendly integration" style="background:#fff; padding:120px; object-fit:contain;"/>`,
-        mediaClass: 'wide',
-        mediaCaption: 'Calendly × LinkedIn · Shipped integration',
-        body: `<strong class="text-text-primary">Book an appointment, directly from a Premium profile.</strong> I partnered with Calendly on a shipped integration that turns a Premium profile into a real conversion surface, a "Book an appointment" button plus a browser extension that drops scheduling links into Messaging, Sales Navigator, and Recruiter without switching tabs.<br/><br/>The design problem: make a third-party action feel native to LinkedIn. Button reads as LinkedIn surface, booking flow reads as Calendly trust. <a href="https://calendly.com/integration/linkedin" target="_blank" rel="noopener" style="color:#89AACC; text-decoration:underline;">View the integration ↗</a>`
+        h: 'The integration',
+        body: `<strong class="text-text-primary">Book an appointment, right from the profile.</strong> I led design on the shipped <strong class="text-text-primary">LinkedIn × Calendly</strong> integration: a button that turns a Premium profile into a conversion surface across profiles, posts, messages, and search. A companion browser extension drops your scheduling link into Messaging, Sales Navigator, and Recruiter, so a rep can offer a time without switching tabs.`,
+        extra: `
+          <div style="margin-top:32px;">
+            <div style="font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:hsl(var(--muted)); margin-bottom:16px;">One pattern, three surfaces</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:12px;">
+              <div style="border:1px solid hsl(var(--stroke)); border-radius:14px; padding:16px 16px 18px;">
+                <div style="font-size:17px; color:hsl(var(--text)); margin-bottom:6px;">Profile</div>
+                <div style="font-size:13px; line-height:1.55; color:hsl(var(--text) / .65);">Book an appointment, right beneath the headline. The home base.</div>
+              </div>
+              <div style="border:1px solid hsl(var(--stroke)); border-radius:14px; padding:16px 16px 18px;">
+                <div style="font-size:17px; color:hsl(var(--text)); margin-bottom:6px;">Post</div>
+                <div style="font-size:13px; line-height:1.55; color:hsl(var(--text) / .65);">Booking surfaced inline, where attention already is.</div>
+              </div>
+              <div style="border:1px solid hsl(var(--stroke)); border-radius:14px; padding:16px 16px 18px;">
+                <div style="font-size:17px; color:hsl(var(--text)); margin-bottom:6px;">Message</div>
+                <div style="font-size:13px; line-height:1.55; color:hsl(var(--text) / .65);">A time offered without ever leaving the thread.</div>
+              </div>
+            </div>
+          </div>`
       },
       {
-        h: 'Process',
-        body: `<strong class="text-text-primary">Prototype before brief.</strong> Instead of starting with a doc and ending with a screen, I start with the screen. AI-native tooling lets me ship a clickable, opinionated artifact in hours, something the team can react to, not just read.<br/><br/><strong class="text-text-primary">Pressure-test in the wild.</strong> Concepts get tested with cross-functional partners, not socialized in slides. The bar is "would you use it" not "would you approve it."`
-      },
-      {
-        h: 'Key decisions',
-        body: `<strong class="text-text-primary">Design the value, not the wall.</strong> Premium products often optimize the paywall. I push the team to design what's behind it, the moment of help, first.<br/><br/><strong class="text-text-primary">AI as calm collaborator.</strong> Generative features can feel slot-machine-y. I design for predictable interactions where the AI's job is clearly scoped and its limits are honest.`
-      },
-      {
-        h: 'Outcomes',
-        body: `Premium concepts I led drove meaningful engagement and monetization lifts in shipped experiments. The prototyping rhythm I introduced is now used across the broader Premium design org. Faster decisions, higher craft, fewer slide reviews.`
+        h: 'Approach',
+        body: `<strong class="text-text-primary">Native everywhere.</strong> The booking affordance had to feel native to LinkedIn and unmistakably Calendly at once, and flex across every surface without feeling bolted on. The real win wasn't a link; it was deleting the "what time works for you?" thread entirely.<br/><br/><strong class="text-text-primary">Prototype before brief.</strong> I start with the screen, not the doc, shipping a clickable, opinionated artifact in hours that a PM, partner, or exec can steer in the same meeting. That rhythm is now how the broader Premium design org moves.`
       }
     ],
-    quote: 'Prototype before brief.',
+    quote: 'A profile should book the meeting, not just describe the person.',
+    gateAtEnd: true,
+    gateIntro: "Thanks for your interest. If you'd like to view it, share your name and email and I'll happily provide access.",
     next: 'wing',
-    appUrl: 'https://www.linkedin.com/premium/',
-    appLabel: 'Try LinkedIn Premium',
-    gated: true,
-    gatedIntro: `Thanks for your interest. If you'd like to view it, share your name and email and I'll happily provide access.`,
+    appUrl: 'https://calendly.com/integration/linkedin',
+    appLabel: 'Try it now',
   },
 
   'wing': {
     name: 'Wing @ Google X',
-    category: 'Mobile · Moonshot · 2017–2022',
+    category: 'Mobile · Moonshot · 2018–2023',
     role: 'Lead Product Designer, Consumer Mobile Experience',
     team: 'Wing consumer team, PM, eng, hardware, regulatory, operations',
     location: 'Mountain View / SF',
@@ -569,43 +731,62 @@ const CASES = {
     hero: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
     heroVideo: 'opensky.mp4',
     stats: [
+      { k: 'OpenSky · 782 App Store ratings', v: '4.8★' },
       { k: 'FAA-approved deployments', v: 'First in the U.S.' },
-      { k: 'New consumer behavior', v: 'From scratch' },
-      { k: 'Disciplines coordinated', v: 'HW × SW × Regulatory' },
+      { k: 'Disciplines coordinated', v: 'Regulatory' },
     ],
     sections: [
       {
         h: 'The problem',
-        body: `By the time I joined Wing, the hardware worked: a fixed-wing drone could carry a small package, lower it on a tether at a doorstep, and return to base. The harder, unsolved problem was on the ground.<br/><br/>How do you ask a normal human to trust that a small autonomous aircraft is going to fly to their house, lower a package on a tether, and leave, without staying to talk? Drone delivery isn't a feature. It's a behavior <em>nobody had ever performed before</em>. There was no mental model to lean on, no existing affordance to extend, and no precedent for what "good" looked like.<br/><br/>And we couldn't ship until five very different stakeholders, the customer, the pilot, the Wing operations team, our regulatory counsel, and the FAA, all believed the same thing was happening at the same moment. The product had to be legible to all of them simultaneously.`
+        gallery: ['os-airspace-device.png', 'os-newflight-device.png', 'os-nofly-device.png'],
+        galleryClass: 'iphone',
+        body: `The hardware already worked: a drone could carry a package, lower it on a tether, and fly home. The unsolved problem was on the ground. How do you get a normal person to trust an autonomous aircraft that flies to their house, drops a package, and leaves without a word? It wasn't a feature, it was a behavior <em>nobody had performed before</em>, with no mental model and no precedent for "good", and it had to read the same way to the customer, the pilot, operations, regulatory, and the FAA, all at once.`
       },
       {
         h: 'My role',
-        body: `I led design for the consumer experience: the ordering flow, the wait state, the doorstep moment, and every recovery path when weather, wind, or wildlife intervened. My counterparts were a PM, a small consumer mobile eng team, the flight operations group, hardware, and regulatory counsel. I owned the consumer-facing decisions and was the design POC across all of them.<br/><br/>Concretely, I owned three things end to end:<br/>1. The customer experience from order to handoff, across iOS and Android<br/>2. The real-time visualization of the drone's intent (location, altitude, descent), shared with the FAA<br/>3. The failure-state taxonomy and the customer-facing language for every abort condition`
+        body: `I led the consumer experience end to end: ordering, the wait state, the doorstep moment, and every recovery path when weather, wind, or wildlife intervened. Across PM, mobile eng, flight operations, hardware, and regulatory, I owned three things: the order-to-handoff flow on iOS and Android, the real-time visualization of the drone's intent shared with the FAA, and the failure-state language for every abort.`
+      },
+      {
+        h: 'Precise paths, simple UI',
+        media: `<video src="wing-polygon.mp4" autoplay muted loop playsinline preload="auto" poster="wing-polygon-poster.jpg"></video>`,
+        mediaClass: 'poly',
+        body: `Drones don't fly in tidy rectangles. A delivery zone is a complex polygon shaped by no-fly areas, terrain, and altitude. I designed the planner so the complexity stays under the hood: sketch the boundary, and it generates the optimized, lane-by-lane path, color-coded by altitude. The hard math happens automatically; the interface stays a simple map anyone can read at a glance.`
+      },
+      {
+        h: 'Altitude becomes a lane',
+        media: `<img loading="lazy" src="wing-flightplan.jpg" alt="An OpenSky drone delivery flight plan: a serpentine, lane-by-lane path color-coded by altitude from lowest to highest across a rural delivery zone"/>`,
+        mediaClass: 'flightplan',
+        body: `Behind that simple map, OpenSky packs the zone with parallel lanes and stacks them by altitude, lowest to highest, so the drone climbs and descends along a safe, predictable score instead of a tangle of crossings. The operator only sets the start and the end; the system choreographs every turn, every height change, and every meter in between.`
+      },
+      {
+        h: 'How we worked',
+        body: `A Double Diamond: a wide discovery phase (diary studies, doorstep observation, regulatory mapping) to find the <em>right</em> problem, then a focused phase to build it <em>right</em>. The unglamorous whiteboard weeks, mapping every order state, abort path, and actor, are what made the doorstep moment feel effortless.`
       },
       {
         h: 'Constraints',
-        body: `Constraints shaped every design call.<br/><br/><strong class="text-text-primary">Regulatory.</strong> The FAA had to be able to read what the customer was being shown. That ruled out any UI that anthropomorphized the drone or implied autonomy beyond what was approved. Words like "your drone" were OK; words like "she's on her way" were not.<br/><br/><strong class="text-text-primary">Hardware.</strong> The drone's behavior was deterministic but constrained. It couldn't hover indefinitely. It couldn't re-attempt a delivery after a certain wind speed. We couldn't ask the customer to "wait a few more minutes", the aircraft had to leave.<br/><br/><strong class="text-text-primary">Mental model.</strong> Most people had never looked up at the sky in a delivery context. Diary studies showed customers expected the drone to behave like a courier (drives, waits, knocks). We had to teach a new metaphor without making the product feel weird.<br/><br/><strong class="text-text-primary">Trust ceiling.</strong> An anxious user wants to know what's happening overhead. Hide the drone, and the customer panics. Show too much, and they don't understand what they're seeing. We had to draw a line in the middle.`
+        body: `<strong class="text-text-primary">Regulatory.</strong> The FAA had to read what the customer saw, so no UI could anthropomorphize the drone ("your drone" was fine, "she's on her way" was not).<br/><br/><strong class="text-text-primary">Hardware.</strong> The aircraft couldn't hover indefinitely or wait out wind, so "give us a few minutes" was never an option.<br/><br/><strong class="text-text-primary">Mental model.</strong> People expected a drone to behave like a courier. We had to teach a new metaphor without making it feel weird.<br/><br/><strong class="text-text-primary">Trust ceiling.</strong> Hide the drone and people panic; show too much and they are confused. We had to find the line.`
       },
       {
         h: 'Show the drone, always',
-        media: `<iframe class="yt-bg" src="https://www.youtube.com/embed/AmO4HU-V1pM?autoplay=1&mute=1&loop=1&playlist=AmO4HU-V1pM&controls=0&modestbranding=1&rel=0&playsinline=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0" title="OpenSky" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>`,
-        mediaClass: 'wide',
-        mediaCaption: 'OpenSky · Real-time drone view',
-        body: `<strong class="text-text-primary">Decision:</strong> a real-time live view of the drone's position and intent, visible to the customer from order through handoff.<br/><br/><strong class="text-text-primary">The trade-off.</strong> Showing the drone increased load on the mobile client, exposed flight-path details that regulatory had a strong opinion on, and risked confusing customers who didn't know how to "read" an aerial view. The alternative, a simple "your order is on the way" status, would have been simpler to build and easier to approve internally.<br/><br/><strong class="text-text-primary">Why we shipped the live view anyway.</strong> Diary studies were unambiguous: customers who couldn't see the drone walked outside to find it, which created safety risk and broke the operation. The map view was the cheapest behavior change we could make. We worked with regulatory to design a view that showed enough to calm the customer (position, altitude band, descent state) without revealing operationally sensitive flight-path data.<br/><br/><strong class="text-text-primary">Motion is the trust signal.</strong> Every easing curve, every transition, was tuned for "calm and predictable" over "exciting." A drone overhead is already novel; the UI's job was to make it boring in the best possible way.`
+        media: `<img loading="lazy" src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22691068/See_Where_You_Can_and_Cannot_Fly.jpg?quality=90&strip=all&crop=0,0,100,100" alt="Wing × Alphabet · OpenSky coverage on The Verge"/>`,
+        mediaClass: 'kenburns wide',
+        mediaCaption: 'OpenSky · where you can fly',
+        body: `<strong class="text-text-primary">Decision:</strong> a real-time live view of the drone's position and intent, from order to handoff. It cost more client load and exposed flight-path detail regulatory cared about, but diary studies were clear: customers who couldn't see the drone walked outside to find it, creating real safety risk. So we showed just enough to stay calm, position, altitude band, descent, and tuned every transition for "calm and predictable." The job was to make a drone overhead feel boring, in the best way.`
       },
       {
         h: 'Design the failure path first',
-        media: `<img loading="lazy" src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22691068/See_Where_You_Can_and_Cannot_Fly.jpg?quality=90&strip=all&crop=0,0,100,100" alt="Wing × Alphabet · OpenSky coverage on The Verge"/>`,
-        mediaClass: 'kenburns wide',
-        body: `<strong class="text-text-primary">Decision:</strong> design the abort states before designing the happy path.<br/><br/><strong class="text-text-primary">Why.</strong> A drone delivery has more abort states than a normal order: weather aborts, wind aborts, payload-attachment failures, late tether captures, regulatory holds, returns. In early prototypes, the abort copy was added as an afterthought. Customer trust collapsed every time. People interpreted any abort as "the drone is broken and might be over my house."<br/><br/><strong class="text-text-primary">What we changed.</strong> We rewrote every abort state into the customer's frame, not the operator's. "Your order is delayed because of wind. We'll return it to the store and reorder for you" instead of "Aborted: wind speed exceeded threshold." We added a refund or rebook action in the same screen, so the abort didn't feel like a dead end. Trust scores in user testing went from "I'm nervous" to "OK, that makes sense" within one design round.<br/><br/><strong class="text-text-primary">Trade-off.</strong> This meant slowing down the happy-path polish for a quarter. It paid off; we spent the saved time on the doorstep moment, which became the product's signature.`
+        media: `<img loading="lazy" src="https://framerusercontent.com/images/2qRAPflcqUTciuwH2uOygN9PEQc.jpg?width=1600" alt="Wing delivery drone in flight"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Wing · in flight',
+        body: `<strong class="text-text-primary">Decision:</strong> design the abort states before the happy path. Drone delivery has far more failure modes than a normal order, and early on abort copy was an afterthought, so trust collapsed every time: people read any abort as "the drone is broken and might be over my house." We rewrote every abort in the customer's frame ("Your order is delayed because of wind. We'll reorder for you") with a refund or rebook in the same screen. Test sentiment moved from "I'm nervous" to "OK, that makes sense" in one round.`
       },
       {
         h: 'Lean on the courier metaphor',
-        body: `<strong class="text-text-primary">Decision:</strong> frame the drone in the customer's existing food-delivery mental model rather than teach a new one.<br/><br/><strong class="text-text-primary">The trade-off.</strong> This conflicted with the marketing instinct to lead with "futuristic autonomous aircraft." But customers already had a clean mental model: "your courier is on the way, they're nearby, they're at the door." Forcing a new model in the consumer surface would have cost weeks of confusion.<br/><br/>So we kept the language pedestrian, then earned the magic on the doorstep itself. The drone descending on its tether, paired with a calm audio + on-screen cue, became the moment that did the heavy lifting. We let the metaphor do the cognitive work, and saved the wow for the actual moment of arrival.`
+        body: `<strong class="text-text-primary">Decision:</strong> frame the drone in the food-delivery model people already had, instead of teaching a new one. It fought the instinct to lead with "futuristic autonomous aircraft," but "your courier is nearby, at the door" needed no explanation. We kept the language pedestrian and saved the wow for the doorstep, where the drone descending on its tether did the heavy lifting.`
       },
       {
         h: 'Outcomes',
-        body: `<strong class="text-text-primary">Shipped to first FAA-approved drone delivery in the United States.</strong> Live commercial deployments serving real customers, real food orders, real medications, in real neighborhoods.<br/><br/><strong class="text-text-primary">Customer trust signals.</strong> The "show the drone" live view became the most-used screen in the app; abort flows that previously generated support tickets stopped doing so within the first design round of revisions. Re-order rates after a successful delivery were higher than equivalent ground-courier baselines from the partner teams.<br/><br/><strong class="text-text-primary">Internal reuse.</strong> The consumer-trust model became a reference for adjacent Alphabet aerial-delivery work and was reused by later teams without major changes.`
+        body: `<strong class="text-text-primary">Shipped to the first FAA-approved drone delivery in the U.S.</strong>, live deployments serving real food and medications in real neighborhoods. The "show the drone" live view became the most-used screen, and abort flows stopped generating support tickets within a design round. The consumer-trust model became a reference for later Alphabet aerial-delivery work.`
       }
     ],
     quote: 'Airspace for everyone.',
@@ -630,33 +811,181 @@ const CASES = {
     sections: [
       {
         h: 'Context',
-        body: `January AI is a clinical-grade AI nutrition platform. The thesis: most people change their eating only when they can <em>see</em> a food&rsquo;s impact before they take a bite, and most can&rsquo;t afford a continuous glucose monitor to find out. So January built an AI that predicts the spike from a photo, then shipped it as an iOS app accessible to anyone with a phone.<br/><br/>My job: design the consumer surface where AI, behavior change, and clinical rigor have to feel like one calm app.`
+        body: `January predicts your glucose response to a meal from a single photo, no sensor, on any phone. The whole design problem in one line: the model is <strong class="text-text-primary">sometimes wrong, never instant, and always probabilistic.</strong> Everything below is how I designed around those three truths without losing a normal person&rsquo;s trust.`
       },
       {
-        h: 'The headline feature: AI food scanning',
-        body: `<strong class="text-text-primary">Point. Shoot. Predict.</strong> The photo logger is the front door of the product. A user opens the camera, captures their plate, and the app returns an identified meal, macros, calories, and a predicted glucose spike, all in a couple of seconds.<div class="cs-media-row"><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e44f8da9a21476fe6f19a3_Device3.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png" alt="January AI device"/><img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/663a87fc761f0fddb2acc445_Screen%205.png" alt="January AI device"/></div><br/>The design challenge: make multi-second AI inference feel like magic, not waiting. I designed the scanning animation as a calm sequence with three intentional beats: capture, recognize, predict. Each beat has its own motion vocabulary. By the time the spike chart resolves, the user has been quietly told a story about what the AI is doing. The animation hides the latency by giving it meaning.<br/><br/>Database: 54 million foods. Logger accuracy: highest on the market. None of which matters without a delightful first-touch interaction.`
+        h: 'Designing for latency',
+        media: `<img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/6a188d29045427f8d287a9fb_foodlog%202.png" alt="January AI, predicted glucose curve, on a phone"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Predicted response · everyday logging',
+        body: `<strong class="text-text-primary">The model isn&rsquo;t instant, so the wait means something.</strong> I designed the scan as three beats, <em>capture → recognize → predict</em>, each revealing the next thing the AI actually knows. Latency you can&rsquo;t remove, you narrate.`
       },
       {
-        h: 'Glucose predictions, without a sensor',
-        body: `January&rsquo;s breakthrough is predicting glycemic response from a photo, no CGM required. Designing for this is unusual: we&rsquo;re showing a clinically meaningful chart to a consumer who likely doesn&rsquo;t know what an AUC is.<br/><br/>The decisions: a single readable spike curve, no medical jargon at first surface, color encoded so a glance tells you "yes" or "swap." The full clinical detail is one tap away for the curious. Calm at default, deep on demand.`
+        h: 'Designing for when the model is wrong',
+        body: `<strong class="text-text-primary">It will guess wrong, so correction is the happy path, not an error.</strong> The AI returns an editable best-guess you fix in a tap. It proposes; you decide, a confident drafter, never an oracle. That&rsquo;s what lets it be wrong without being untrustworthy.`
       },
       {
-        h: 'Jan, the AI coach',
-        body: `Jan is the in-app AI coach. Conversational, personalized to your goals, present without being noisy. Designing for an AI coach meant designing for trust: when does Jan speak, when does Jan stay quiet, and how does the app make clear that this is an assistant, not a doctor.<br/><br/>The interaction model treats Jan as a layer that <em>understands</em> the rest of the app, not a separate chat island. You can ask Jan from anywhere. The answer lands in context, right where the question came from.`
+        h: 'The prediction, not a measurement',
+        body: `<strong class="text-text-primary">It&rsquo;s a forecast, not a fact, so I refused false precision.</strong> Lead with an honest signal, <em>Likely spike · High / Moderate / Low</em> and one readable curve, never a fake exact number. Calm for the user, clinical-grade underneath. Confidence, without implying certainty.`
       },
       {
-        h: 'Mobile craft',
-        body: `Senior mobile design at this product means owning the texture: scanning motion, haptics on a confirmed log, the easing on a spike chart, the gesture for swapping a food, the empty states, the accessibility pass. Every detail is the product when the product is asking people to change a habit.<br/><br/>Built native iOS, with a design system tuned for clinical readability in dark + light, and motion designed to feel like the app is paying attention to you, not the other way around.`
+        h: 'Jan, the coach',
+        media: `<img loading="lazy" src="https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/6a18be6aa5c52d9ec75ae70f_ChatGPT%20Image%20May%2028%2C%202026%2C%2004_14_42%20PM.png" alt="January AI, Jan coach and goals, on a phone"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Jan · your in-app coach',
+        body: `<strong class="text-text-primary">Designing an agent is mostly designing its restraint.</strong> Jan speaks at the right moment and stays quiet otherwise, a coach, never a doctor. When the model is unsure, it asks instead of asserting.`
+      },
+      {
+        h: 'Closing the loop',
+        body: `<strong class="text-text-primary">Every correction is an eval.</strong> The same tap that fixes your result trains the next person&rsquo;s, the feedback loop is the interface. (And the craft underneath: haptics, curve easing, dark/light clinical readability, a full accessibility pass.)`
       },
       {
         h: 'Reflection',
-        body: `Designing clinical-grade AI for everyday humans is a different bar than designing for power users. The audience is anyone with a phone and a reason to change. The product has to feel calm, trustworthy, and a little bit magical at the moment of truth, then get out of the way.`
+        media: `<video src="january-app.mp4" autoplay muted loop playsinline preload="auto" poster="january-app-poster.jpg" style="object-fit:contain; background:hsl(var(--surface))"></video>`,
+        mediaClass: 'tall',
+        mediaCaption: 'January AI · the app in motion',
+        body: `Make a model that&rsquo;s wrong, slow, and probabilistic feel calm, honest, and a little magical, then disappear into a habit. That&rsquo;s the whole job.`
       }
     ],
-    quote: "See a food's impact before you eat it.",
+    quote: "Design for when the model is wrong. That's where trust is won.",
     next: 'little-monsters',
     appUrl: 'https://apps.apple.com/us/app/january-ai-health-tracker/id6470235391',
     appLabel: 'Download January AI',
+  },
+
+  'cortex': {
+    name: 'Cortex',
+    category: 'Founder · Radial Sharing · 2010–2011',
+    role: 'Founder & Designer',
+    team: 'Joey Primiani (Founder, Designer) · Eric Wolf (Co-Founder, Engineer) · i/o Ventures',
+    location: 'San Francisco',
+    headline: 'Share fast.',
+    hero: 'cortex-poster.jpg',
+    heroVideo: 'cortex.mp4',
+    stats: [
+      { k: 'Fast Company Design', v: 'Top 12' },
+      { k: 'US Patent', v: '8,869,068' },
+      { k: 'Outcome', v: 'Acquired' },
+    ],
+    sections: [
+      {
+        h: 'The idea',
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/1000x0_p1bameh85m1mpk11ldr0ot4o1q0v3.png" alt="Cortex: share fast"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Cortex · share fast',
+        body: `Cortex was a free Chrome extension I founded and designed: an ingenious circular interface that let you post anything to Facebook, Twitter and Tumblr with a single click. No new tab, no copy-paste, no friction. Just point, flick, share.`
+      },
+      {
+        h: 'The radial menu',
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/1000x0_p1bamfjirj86j1gijh5qt7gta3.png" alt="Cortex early design variations, 2010"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Cortex · early design variations, 2010',
+        body: `The circular menu put every share target one gesture away: muscle memory instead of menus. The interaction was novel enough to earn a patent, <a href="https://patents.google.com/patent/US8869068B2/en" target="_blank" rel="noopener"><strong class="text-text-primary">US 8,869,068 B2</strong>, "Content sharing application utilizing radial menus"</a>. My philosophy then is the same as now: build products that are very simple, and do one thing very well.`
+      },
+      {
+        h: 'Recognition & exit',
+        body: `<strong class="text-text-primary">Fast Company Design</strong> named Cortex one of the <a href="https://www.fastcodesign.com/1662959/12-of-the-years-best-ideas-in-interface-design-slideshow/2" target="_blank" rel="noopener">Top 12 best ideas of the year in interface design</a>, and said it <a href="https://www.fastcompany.com/1662856/cortex-for-google-chrome-solves-one-of-social-medias-big-problems" target="_blank" rel="noopener">solved one of social media's biggest problems</a>. It was covered by <a href="https://mashable.com/2010/12/08/cortex/" target="_blank" rel="noopener">Mashable</a>, <a href="https://techcrunch.com/2010/12/15/cortex-chrome/" target="_blank" rel="noopener">TechCrunch</a>, <a href="https://lifehacker.com/5710155/cortex-makes-sharing-pages-images-and-videos-from-chrome-a-two-second-process" target="_blank" rel="noopener">Lifehacker</a>, <a href="https://readwrite.com/2010/12/14/3_new_browser_tools_you_should_know_about_embedly/" target="_blank" rel="noopener">ReadWriteWeb</a>, <a href="https://www.producthunt.com/posts/cortex" target="_blank" rel="noopener">Product Hunt</a>, <a href="https://designtaxi.com/news/33597/Cortex-A-Quick-Way-to-Share-Content-Online/" target="_blank" rel="noopener">DesignTaxi</a> and <a href="https://www.inquisitr.com/92583/a-true-killer-extension-for-chrome-cortex/" target="_blank" rel="noopener">Inquisitr</a>, and demoed live by Leo Laporte on <a href="https://www.youtube.com/watch?v=Cyy0ooEie2Q" target="_blank" rel="noopener">TWiT</a> and on <a href="https://www.youtube.com/watch?v=zR6y9X-Meos" target="_blank" rel="noopener">Tekzilla</a>. It was backed by <a href="https://techcrunch.com/2011/06/28/meet-the-newest-startup-brood-from-io-ventures/" target="_blank" rel="noopener">i/o Ventures</a>. One usability tester put it best: "It makes sharing beautiful and simple. It is to sharing what Steve Jobs did to MP3 players."<br/><br/><strong class="text-text-primary">The exit.</strong> Cortex was <a href="https://techcrunch.com/2012/02/16/lady-gaga-backed-backplane-raises-over-4m-from-sequoia-more-acquires-sharing-platform-cortex/" target="_blank" rel="noopener">acquired by Backplane</a> in 2012, also reported by <a href="https://thenextweb.com/insider/2012/02/16/little-monsters-big-backers-social-media-startup-backplane-raises-funding-buys-cortex/" target="_blank" rel="noopener">The Next Web</a>, <a href="https://www.finsmes.com/2012/02/backplane-closes-series-financing-buys-cortex.html" target="_blank" rel="noopener">FinSMEs</a> and <a href="https://www.crunchbase.com/organization/cortex" target="_blank" rel="noopener">Crunchbase</a>.`
+      }
+    ],
+    quote: 'Build products that are very simple, and do one thing very well.',
+    appUrl: 'https://patents.google.com/patent/US8869068B2/en',
+    appLabel: 'View the patent',
+    next: 'little-monsters',
+  },
+
+  'entangled': {
+    name: 'Entangled',
+    category: 'Co-Founder · Consciousness Tech · 2016–2017',
+    role: 'Co-Founder, Designer & Product Lead',
+    team: 'Adam Curry (Founder) · Joey Primiani · Superfuture · with IONS & Princeton (PEAR)',
+    location: 'San Francisco',
+    headline: 'Explore the global consciousness.',
+    hero: 'https://assets.dunked.com/assets/prod/117833/1000x0_p1bavj26ikduq51fksq50m1bs3.png',
+    stats: [
+      { k: 'Collective consciousness study', v: "World's largest" },
+      { k: 'Research partners', v: 'IONS · Princeton' },
+      { k: 'FWA Awards', v: 'Nominated' },
+    ],
+    sections: [
+      {
+        h: 'The vision',
+        media: `<img loading="lazy" src="entangled-screens.png" alt="Entangled app screens: read your consciousness levels"/>`,
+        mediaClass: 'wide device-pad',
+        mediaCaption: 'Entangled · touch and hold to read your consciousness',
+        body: `A radical new technology to explore the power of consciousness and the nature of reality. I co-founded Entangled to put the world's largest collective-consciousness research project into a free app, so anyone could take part in the science, not just the lab.`
+      },
+      {
+        h: 'The app',
+        gallery: [
+          'https://assets.dunked.com/assets/prod/117833/1000x0_p1b9s2mftp18ij1dio5njmon5p4.png',
+          'https://assets.dunked.com/assets/prod/117833/1000x0_p1bavj5r531h3s10p31o691q72jtfr.png',
+          'https://assets.dunked.com/assets/prod/117833/1000x0_p1b9s2mftpihktdvakn4am1sjl6.png'
+        ],
+        body: `I designed the experience around a single, almost meditative gesture: <strong class="text-text-primary">touch and hold</strong> to read your consciousness levels. Color, motion and gradient did the heavy lifting, turning abstract data from a random-number generator into something you could feel, not just read.`
+      },
+      {
+        h: 'Entangled Pods',
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/1000x0_p1bavj425h151690s8gvg54edqf.png" alt="Entangled Pods · color experiment"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Entangled Pods · a public color experiment',
+        body: `Entangled Pods was a public social experiment built on random-number generators (RNGs). It explored the relationship between a group of people and the color shown, and whether we might unconsciously influence the colored-light outcomes together. A playful, tangible way to feel an invisible question.`
+      },
+      {
+        h: 'Built with the science',
+        body: `Designed in collaboration with the <strong class="text-text-primary">Institute of Noetic Sciences (IONS)</strong> and <strong class="text-text-primary">Princeton Engineering Anomalies Research (PEAR)</strong>. The hard part was the translation: take decades of rigorous, esoteric research and make it legible, trustworthy and genuinely usable for a mainstream audience on a phone.`
+      },
+      {
+        h: 'Press & recognition',
+        body: `Covered by <strong class="text-text-primary">PC Magazine</strong>, <strong class="text-text-primary">The Huffington Post</strong>, Collective Evolution, Reality Sandwich and more, and nominated for an <strong class="text-text-primary">FWA</strong>. A crowdfunded launch on Indiegogo invited the world to explore the nature of reality together.`
+      }
+    ],
+    quote: 'A radical new technology to explore the nature of reality.',
+    next: 'studio-xo',
+  },
+
+  'studio-xo': {
+    name: 'Studio XO',
+    category: 'Wearable Tech · Couture · 2014–2017',
+    role: 'App Creator, Product Lead & Board Advisor · Superfuture',
+    team: 'Studio XO (Benjamin Males, Nancy Tilbury) · Superfuture · hardware + firmware partners',
+    location: 'London · San Francisco',
+    headline: 'The future of fashion technology.',
+    hero: 'studioxo-poster.jpg',
+    heroVideo: 'studioxo.mp4',
+    stats: [
+      { k: 'Cannes Lions', v: 'Gold' },
+      { k: 'Webby Awards', v: 'Winner' },
+      { k: "Lady Gaga's flying dress", v: 'VOLANTIS' },
+    ],
+    sections: [
+      {
+        h: 'The brand',
+        media: `<img loading="lazy" src="studioxo-hero.jpg" alt="XO app-connected fashion technology"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'XO · app-connected couture',
+        body: `XO is a London-based, app-connected cult fashion-technology brand for Generation Z, the 10 to 25 year-old consumers who live for fashion, music and gaming. XO is short for <em>exoskeleton</em>: what you wear on the exterior to personalize, customize and express yourself. It also stands for love and kisses, a nod to the emotional bond people have with their clothing and the humanization of technology.`
+      },
+      {
+        h: 'The app',
+        media: `<video src="studioxo-brand.mp4" autoplay muted loop playsinline preload="auto" poster="studioxo-poster.jpg"></video>`,
+        mediaClass: 'wide',
+        mediaCaption: 'XO · the connected app',
+        body: `I created and led the XO app: the control surface for app-connected garments and the social home of the brand. It paired with the wearables over Bluetooth LE, let people customize what their clothing displayed, and turned getting dressed into an act of self-expression and play.`
+      },
+      {
+        h: 'Couture, engineered',
+        media: `<video src="studioxo-infiniti.mp4" autoplay muted loop playsinline preload="auto"></video>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Studio XO · from sketch to runway',
+        body: `Studio XO was the experimental design house behind some of the most ambitious wearable technology ever made, including Lady Gaga's <strong class="text-text-primary">VOLANTIS</strong>, the world's first flying dress. Every piece began on paper and ended as a working garment: a rare fusion of couture craft, software, and hardware.`
+      },
+      {
+        h: 'Recognition',
+        body: `<strong class="text-text-primary">Cannes Lions Gold</strong> and a <strong class="text-text-primary">Webby Award</strong>, plus a place on Wearable's Top 50 Wearable Tech Gamechangers.<br/><br/>Featured by <strong class="text-text-primary">WIRED, Forbes, TechCrunch, Mashable</strong> and <strong class="text-text-primary">WWD</strong>, and the subject of <em>The Next Black</em> documentary on the future of wearable technology. Brand films for Infiniti and Absolut, and a sold-out first collection out of Highway1's San Francisco hardware accelerator.`
+      }
+    ],
+    quote: 'Humanizing technology through what you wear.',
+    next: 'little-monsters',
   },
 
   'little-monsters': {
@@ -713,17 +1042,183 @@ const CASES = {
       }
     ],
     quote: "This isn't a social network. It's a place of love and acceptance where every fan is also a creator, and every creation matters.",
-    next: 'linkedin-premium',
+    next: 'flow-wallet',
     appUrl: 'https://apps.apple.com/us/app/little-monsters/id1201501007',
     appLabel: 'Download Little Monsters',
+  },
+
+  'flow-wallet': {
+    name: 'Flow Wallet',
+    category: 'Mobile · Web3 Wallet · Self-Custody',
+    role: 'Product Designer · Mobile',
+    team: 'Cross-functional: design, mobile eng, blockchain, security',
+    location: 'Remote',
+    headline: 'A self-custody crypto wallet built for everyone, hardware-grade security, with none of the crypto jargon.',
+    hero: 'flow-wallet-hero.jpg',
+    stats: [
+      { k: 'Custody model', v: 'Self-custody' },
+      { k: 'Transactions on Flow', v: 'Gas-free' },
+      { k: 'Runtimes supported', v: 'Cadence + EVM' },
+    ],
+    sections: [
+      {
+        h: 'Context',
+        body: `Flow Wallet is the reference wallet for the Flow blockchain, open-source, battle-tested, and designed for one audience the rest of crypto had ignored: <em>everyone.</em> Tokens, NFTs, DeFi, and a whole ecosystem of apps (NFL All Day, NBA Top Shot, Flovatar, Flunks), in one place that feels like a consumer app, not a developer tool.<br/><br/>My job was the consumer surface: take the genuinely hard parts of self-custody, keys, backups, signing, gas, and make them feel effortless enough that a first-time user never has to know the words.`
+      },
+      {
+        h: 'The problem',
+        body: `<strong class="text-text-primary">Crypto wallets are hostile to normal people.</strong> The category onboards you with a twelve-word seed phrase you must never lose, charges an unpredictable "gas" fee to do anything, and buries your assets behind language no consumer asked for. Every screen assumes you already think like a crypto-native.<br/><br/>The design challenge wasn't to add features. It was to <em>remove fear</em>, to make taking real ownership of your assets feel as safe and familiar as opening a banking app, without quietly handing custody to a third party to get there.`
+      },
+      {
+        h: 'Hardware-grade security, made invisible',
+        media: `<img loading="lazy" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/1d/af/30/1daf3056-cb36-b7c8-6af4-4b6e2e88b696/Slice_5@5.5.jpg/900x1948bb.jpg" alt="Flow Wallet, account backup and secure transaction approval"/>`,
+        mediaClass: 'tall',
+        mediaCaption: 'Safe & secure · Approve with a tap',
+        body: `<strong class="text-text-primary">Decision:</strong> turn the phone itself into the hardware wallet. Flow Wallet derives and stores the cryptographic keys in the device's <strong class="text-text-primary">Secure Enclave</strong>, so you get hardware-level security without carrying a separate device, and no one can move your assets without your explicit approval.<br/><br/>The design work was making that power legible. Backups offered in plain language (cloud <em>and</em> device), transaction approval reduced to a single deliberate gesture, and a security model the user can actually feel. The hardest engineering guarantee in the product had to read as the calmest screen.`
+      },
+      {
+        h: 'All your assets in one place',
+        body: `The wallet home leads with what you own and what you can do, Send, Receive, Swap, Buy, not with a market ticker. Tokens, DeFi positions, and NFTs live under one roof, across both of Flow's runtimes (Cadence and EVM), so a newcomer never has to understand the plumbing to use it.<div class="cs-media-row"><img loading="lazy" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/4f/60/c8/4f60c849-1b05-3ee2-008d-bed477a92dab/Slice_1@5.5.jpg/900x1948bb.jpg" alt="Flow Wallet home, balance and core actions"/><img loading="lazy" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/11/c6/97/11c69796-a41b-9cbc-de5e-ed8c9a93bb88/Slice_2@5.5.jpg/900x1948bb.jpg" alt="Flow Wallet, NFT detail, real ownership"/><img loading="lazy" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/55/5b/38/555b3845-31e1-5cb4-1fff-179cf2f4d62b/Slice_3@5.5.jpg/900x1948bb.jpg" alt="Flow Wallet, collections in one place"/></div>`
+      },
+      {
+        h: 'A passport to the ecosystem',
+        media: `<img loading="lazy" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e7/fe/1b/e7fe1bdd-c5a1-c1a4-60bd-0b66f7c5ce3f/Slice_4@5.5.jpg/900x1948bb.jpg" alt="Flow Wallet, unlock your favorite apps"/>`,
+        mediaClass: 'tall',
+        mediaCaption: 'Unlock your favorite apps',
+        body: `Flow covers the gas fee on its transactions, so the wallet could make a promise almost no other could: <strong class="text-text-primary">tap, and it just happens</strong>, no fee prompt, no balance-for-gas dance. That single removed friction reframed the wallet from a vault you guard into a <em>passport</em> you carry into the apps you actually love. Discovery, in-app staking, and one-tap connect were designed so the wallet recedes and the app you came for takes the stage.`
+      },
+      {
+        h: 'Outcome',
+        body: `Flow Wallet shipped as the blockchain's flagship self-custody app and its <strong class="text-text-primary">open-source reference implementation</strong>, the wallet other Flow teams build against. <em>Trusted. Battle-tested. Beautifully designed.</em><br/><br/>The throughline of the work: the most advanced security in the product should produce the calmest, most ordinary-feeling experience. Get self-custody to feel like a consumer app, and crypto finally becomes usable by everyone, which was the entire point.`
+      }
+    ],
+    quote: 'Self-custody, without the jargon.',
+    next: 'folio',
+    appUrl: 'https://apps.apple.com/us/app/flow-wallet-nfts-and-crypto/id6478996750',
+    appLabel: 'Download Flow Wallet',
+  },
+
+  'folio': {
+    name: 'Folio',
+    category: 'Web3 · Social · 2021',
+    role: 'Creator & Product Designer',
+    team: 'Founding team · Launch House Web3 LA',
+    location: 'Los Angeles',
+    headline: 'A community-first social network that gives creative power back to artists, and makes collecting simple for everyone.',
+    hero: 'folio-frame.png',
+    heroVideo: 'folio.mp4',
+    stats: [
+      { k: 'Launch House Web3 LA', v: "Winter '21" },
+      { k: 'Built for', v: 'Artists first' },
+      { k: 'Featured digital twin', v: 'Formichetti' },
+    ],
+    sections: [
+      {
+        h: 'Context',
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1h0ba4j2vih2td75cfttr1ms5.png" alt="Folio, Community for Artists landing page"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'folio · Community for Artists',
+        body: `Folio is a community-of-artists social network I created in 2021. The thesis was simple and, at the time, contrarian: <em>give the power back to the creators.</em> Where the Web3 art world was being defined by speculative marketplaces and gas-fee mechanics, Folio was designed as a creative home first and a market second, a place where artists owned their identity and collecting felt as easy as following someone you love.<br/><br/>The work was accepted into the <strong class="text-text-primary">Launch House Web3 LA cohort, Winter '21</strong>, alongside a community of artists, founders, and collectors.`
+      },
+      {
+        h: 'The problem',
+        body: `<strong class="text-text-primary">Creators were the product, never the owner.</strong> On the platforms artists actually lived on, they built the audience and the culture, then handed the leverage to the platform and the marketplace. In 2021 the Web3 promise of "ownership" mostly meant intimidating wallets, opaque fees, and feeds optimized for flipping, not for art.<br/><br/><strong class="text-text-primary">And collecting was hard.</strong> For an everyday person who simply loved a piece, the on-ramp was a wall of jargon. The design problem was to make a creator-first network that felt like a beautiful place to <em>be</em>, while quietly making the act of collecting feel as native as a tap.`
+      },
+      {
+        h: 'The product on mobile',
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1gvfd2sunlmhh2u1lmuf7ufpu3.png" alt="Folio iOS, splash, invite, artist profile, and discovery feed"/>`,
+        mediaClass: 'cinema',
+        mediaCaption: 'folio · iOS',
+        body: `On mobile, Folio leads with the work, not the wallet. A full-bleed artist splash, an invite-only "secret code" entry that made joining feel like being let into a scene, an artist profile where the piece is the hero and the price is a quiet line of metadata, and a <em>For You / Following</em> discovery feed built like a gallery wall.<br/><br/>Every screen makes the same argument: the artist and their work come first, and the commerce gets out of the way.`
+      },
+      {
+        h: 'Designing the artist home',
+        body: `On the web, the artist profile was the centerpiece, a portfolio that doubled as a storefront without ever feeling like one. I treated artwork with the reverence of a gallery print and let the collecting actions recede until the moment a visitor wanted them.<div class="cs-media-row"><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1gvf2mpmg11na1rr91ooip0cc8q5.jpg" alt="Folio artist profile"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1gvfd33a614cmdq717855tsj7i5.png" alt="Folio LA Web3 artist community"/></div>`
+      },
+      {
+        h: 'A frictionless on-ramp',
+        body: `To bring everyday collectors in, the entire pre-launch funnel was designed as one calm, legible flow: a pre-sale waitlist, a one-field request-an-invite, and a success state that made you feel like you belonged before you ever saw the product. No seed phrases on the front step, just an invitation.<div class="cs-media-row"><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1gvf2mvda909hg1ik0o2i1i9c6.png" alt="Folio pre-sale waitlist"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1h0ba4cdq1k0u13q71iug76hkf03.png" alt="Folio easy signup / request invite"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1gvf2mvdboahg6lovqbsl14489.png" alt="Folio success page"/></div>`
+      },
+      {
+        h: 'Bringing real artists in',
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1h06dl4071bfp1qrj14ts15g3jlv3.png" alt="Nicola Formichetti, volumetric capture and digital twin avatar"/>`,
+        mediaClass: 'wide',
+        mediaCaption: 'Nicola Formichetti · Always what’s next',
+        body: `A creator-first network is only as credible as the creators on it. I worked with <strong class="text-text-primary">Nicola Formichetti</strong>, the fashion director behind Lady Gaga's most iconic looks, to bring his work into Folio as a digital avatar NFT and a volumetric "digital twin."<br/><br/>We captured Nicola in a full volumetric rig and turned the scan into a collectible avatar, then ran a Web3 avatar scan through his Instagram. <strong class="text-text-primary">Lady Gaga and Paris Hilton both liked it.</strong> Exactly the artist-to-fan signal Folio was built to carry.<div class="cs-media-row"><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1h06dl4081pa812g125m1kchmac4.png" alt="Nicola's digital twin avatar"/><img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1h06dnrnbqjr1aje10nain7159o3.png" alt="Web3 avatar scan via Nicola's Instagram"/></div>`
+      },
+      {
+        h: 'Reflection',
+        body: `Folio bet on a creator-first, community-before-commerce model before the market was ready to reward it, the same instinct the best creative platforms have eventually circled back to. Getting into Launch House's Web3 cohort and earning real artists like Nicola validated the thesis early: design the home people want to belong to, and the economics follow. It's the throughline from <em class="font-display italic">Little Monsters</em> a decade earlier, treat fans as creators, and make belonging the product.`
+      }
+    ],
+    quote: 'Give the power back to the creators.',
+    next: 'linkedin-premium',
+    appUrl: 'https://apps.apple.com/us/app/folio-nft-browser/id1564799115',
+    appLabel: 'Download Folio',
   }
 };
 
 function render(slug) {
   const c = CASES[slug];
   if (!c) { location.hash = '#linkedin-premium'; return; }
-  document.title = `${c.name}, Joey Primiani`;
+  document.title = `${c.name} · ${c.headline.replace(/<[^>]+>/g,'')} | Joey Primiani`;
   document.getElementById('csChip').textContent = c.name;
+  // Reflect the active case in meta + canonical (helps crawlers / shares land on the right context)
+  (function(meta){
+    const desc = `${c.role}. ${c.headline.replace(/<[^>]+>/g,'')} A case study by Joey Primiani.`;
+    const url = 'https://www.officialjp.com/case-study.html#' + slug;
+    const set = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+    set('meta[name="description"]', 'content', desc);
+    set('meta[property="og:title"]', 'content', `${c.name} · Joey Primiani`);
+    set('meta[property="og:description"]', 'content', desc);
+    set('meta[property="og:url"]', 'content', url);
+    set('meta[name="twitter:title"]', 'content', `${c.name} · Joey Primiani`);
+    set('meta[name="twitter:description"]', 'content', desc);
+    set('link[rel="canonical"]', 'href', url);
+  })();
+
+  // Reusable request-access gate (used full-page when c.gated, or appended at the end when c.gateAtEnd)
+  const gateBlock = (heading, intro, topBorder) => `
+    <section class="reveal grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 ${topBorder ? 'border-t pt-16 md:pt-24' : ''}" style="${topBorder ? 'border-color:hsl(var(--stroke))' : ''}">
+      <div class="md:col-span-5">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight" style="color:hsl(var(--text))">${heading}</h2>
+        <p class="text-base md:text-lg mt-6 leading-relaxed" style="color:hsl(var(--text) / .8)">${intro}</p>
+        <div class="mt-8 flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
+          <span class="relative inline-block w-2 h-2 rounded-full" style="background:#10b981; box-shadow:0 0 12px #10b981;"></span>
+          Typically replies within a day
+        </div>
+      </div>
+      <form id="caseStudyRequest" class="md:col-span-7 cs-gate-form" novalidate>
+        <input type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"/>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+          <label class="cs-gate-field">
+            <span class="cs-gate-label">First name <em>(Required)</em></span>
+            <input required name="firstName" type="text" autocomplete="given-name"/>
+          </label>
+          <label class="cs-gate-field">
+            <span class="cs-gate-label">Last name <em>(Required)</em></span>
+            <input required name="lastName" type="text" autocomplete="family-name"/>
+          </label>
+        </div>
+        <label class="cs-gate-field mt-4 md:mt-5 block">
+          <span class="cs-gate-label">Email <em>(Required)</em></span>
+          <input required name="email" type="email" autocomplete="email"/>
+        </label>
+        <label class="cs-gate-field mt-4 md:mt-5 block">
+          <span class="cs-gate-label">Company</span>
+          <input name="company" type="text" autocomplete="organization"/>
+        </label>
+        <label class="cs-gate-field mt-4 md:mt-5 block">
+          <span class="cs-gate-label">Note</span>
+          <textarea name="note" rows="3" placeholder="What about the work caught your eye?"></textarea>
+        </label>
+        <button type="submit" class="cs-gate-submit mt-7 md:mt-8">
+          Send request <span aria-hidden="true">↗</span>
+        </button>
+        <p class="cs-gate-success" hidden>Thanks for reaching out, I'll be in touch shortly.</p>
+        <p class="cs-gate-error" hidden style="color:#ef4444; margin-top:0.75rem">Something went wrong sending your request, please email <a href="mailto:jprimiani@gmail.com" style="text-decoration:underline">jprimiani@gmail.com</a> directly.</p>
+      </form>
+    </section>`;
 
   const root = document.getElementById('csRoot');
   root.innerHTML = `
@@ -764,70 +1259,28 @@ function render(slug) {
         </header>
 
         <!-- Hero image -->
-        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9;">
+        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9; view-transition-name: vt-${slug};${c.heroBg ? ` background:${c.heroBg};` : ''}">
           ${c.heroVideo
-            ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full object-cover"></video>`
-            : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full object-cover" loading="eager"/>`}
-          <div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>
+            ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain' : 'object-cover'}"></video>`
+            : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain' : 'object-cover'}" loading="eager"/>`}
+          ${c.noHalftone ? '' : `<div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>`}
         </div>
 
         <!-- Stats strip -->
+        ${c.hideStats ? '' : `
         <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-20 md:mb-28">
           ${c.stats.map(s => `
             <div class="border-t pt-6" style="border-color:hsl(var(--stroke))">
               <div class="stat-num text-5xl md:text-6xl font-display italic leading-none mb-3">${s.v}</div>
               <div class="text-xs uppercase tracking-[0.25em]" style="color:hsl(var(--muted))">${s.k}</div>
             </div>`).join('')}
-        </div>
+        </div>`}
       `}
 
       <!-- Sections -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div class="md:col-span-12 space-y-20 md:space-y-28">
-          ${c.gated ? `
-            <section class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-              <div class="md:col-span-5">
-                <h2 class="text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight" style="color:hsl(var(--text))">
-                  Request <span class="font-display italic">Case Study</span>
-                </h2>
-                <p class="text-base md:text-lg mt-6 leading-relaxed" style="color:hsl(var(--text) / .8)">${c.gatedIntro || `Thanks for your interest. Share your name and email and I'll happily provide access.`}</p>
-                <div class="mt-8 flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
-                  <span class="relative inline-block w-2 h-2 rounded-full" style="background:#10b981; box-shadow:0 0 12px #10b981;"></span>
-                  Typically replies within a day
-                </div>
-              </div>
-              <form id="caseStudyRequest" class="md:col-span-7 cs-gate-form" novalidate>
-                <input type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"/>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-                  <label class="cs-gate-field">
-                    <span class="cs-gate-label">First name <em>(Required)</em></span>
-                    <input required name="firstName" type="text" autocomplete="given-name"/>
-                  </label>
-                  <label class="cs-gate-field">
-                    <span class="cs-gate-label">Last name <em>(Required)</em></span>
-                    <input required name="lastName" type="text" autocomplete="family-name"/>
-                  </label>
-                </div>
-                <label class="cs-gate-field mt-4 md:mt-5 block">
-                  <span class="cs-gate-label">Email <em>(Required)</em></span>
-                  <input required name="email" type="email" autocomplete="email"/>
-                </label>
-                <label class="cs-gate-field mt-4 md:mt-5 block">
-                  <span class="cs-gate-label">Company</span>
-                  <input name="company" type="text" autocomplete="organization"/>
-                </label>
-                <label class="cs-gate-field mt-4 md:mt-5 block">
-                  <span class="cs-gate-label">Note</span>
-                  <textarea name="note" rows="3" placeholder="What about the work caught your eye?"></textarea>
-                </label>
-                <button type="submit" class="cs-gate-submit mt-7 md:mt-8">
-                  Send request <span aria-hidden="true">↗</span>
-                </button>
-                <p class="cs-gate-success" hidden>Thanks for reaching out, I'll be in touch shortly.</p>
-                <p class="cs-gate-error" hidden style="color:#ef4444; margin-top:0.75rem">Something went wrong sending your request — please email <a href="mailto:jprimiani@gmail.com" style="text-decoration:underline">jprimiani@gmail.com</a> directly.</p>
-              </form>
-            </section>
-          ` : `
+          ${c.gated ? gateBlock('Request <span class="font-display italic">Case Study</span>', c.gatedIntro || "Thanks for your interest. Share your name and email and I'll happily provide access.", false) : `
             ${c.sections.map((s, i) => `
               <section class="reveal cs-section">
                 ${s.media ? `
@@ -852,6 +1305,7 @@ function render(slug) {
                   </div>
                   <div class="md:col-span-9">
                     <p class="text-base md:text-lg leading-relaxed" style="color:hsl(var(--text) / .85)">${s.body}</p>
+                    ${s.extra || ''}
                   </div>
                 </div>
               </section>
@@ -871,6 +1325,8 @@ function render(slug) {
                 ${c.quote}
               </p>
             </section>
+
+            ${c.gateAtEnd ? gateBlock('See <span class="font-display italic">more</span>', c.gateIntro || "Much of this work is detailed, confidential, or under NDA. Share your name and email and I'll walk you through the full case study, process, and outcomes.", true) : ''}
           `}
         </div>
       </div>
@@ -908,7 +1364,7 @@ function render(slug) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             firstName, lastName, email, company, note,
-            company_url: honeypot,                          // spam honeypot — must stay empty
+            company_url: honeypot,                          // spam honeypot, must stay empty
             caseStudy: c.name,
             slug: location.hash.replace('#', ''),
           }),
@@ -924,8 +1380,11 @@ function render(slug) {
     });
   }
 
-  // skeleton loaders — rainbow shimmer over images until they load
+  // skeleton loaders, rainbow shimmer over images until they load
   setupSkeletons(root);
+
+  // animate numeric stats counting up when they enter view
+  setupCountUp(root);
 
   // reveal animations
   requestAnimationFrame(() => {
@@ -965,8 +1424,42 @@ function wireSkel(el){
   el.addEventListener('error', done, { once: true });  // never trap on a broken src
   setTimeout(done, isVideo ? 2500 : 4000);             // safety net: never stay hidden
 }
+function setupCountUp(root){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nums = root.querySelectorAll('.stat-num');
+  nums.forEach(el => {
+    const raw = el.textContent.trim();
+    // Parse a leading number (with optional decimal/comma); keep any prefix/suffix (e.g. $, M+, ★).
+    const m = raw.match(/^([^\d]*)([\d.,]+)(.*)$/);
+    if (!m) return;                       // text-only stat (e.g. "First in the U.S."), leave as is
+    const pre = m[1], numStr = m[2], suf = m[3];
+    const target = parseFloat(numStr.replace(/,/g, ''));
+    if (!isFinite(target)) return;
+    const decimals = (numStr.split('.')[1] || '').length;
+    if (reduce) return;
+    el.dataset.final = raw;
+    el.textContent = pre + (decimals ? (0).toFixed(decimals) : '0') + suf;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        const dur = 1100, t0 = performance.now();
+        const fmt = v => v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        function frame(t){
+          const p = Math.min(1, (t - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);   // ease-out cubic
+          el.textContent = pre + fmt(target * eased) + suf;
+          if (p < 1) requestAnimationFrame(frame);
+          else el.textContent = el.dataset.final;  // restore exact original string
+        }
+        requestAnimationFrame(frame);
+      });
+    }, { threshold: 0.6 });
+    io.observe(el);
+  });
+}
 function setupSkeletons(root){
-  // Only IMAGE media gets the skeleton — videos render normally (poster +
+  // Only IMAGE media gets the skeleton, videos render normally (poster +
   // autoplay), so the shimmer can never hide a video, even if JS is flaky.
   const host = el => el.classList.add('skel');
   const heroMedia = root.querySelector('.cs-hero-media');
@@ -995,6 +1488,80 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 route();
+</script>
+<script>
+/* ============ THEME TOGGLE, shares jp-theme with the home page ============ */
+(function themeToggle(){
+  const root = document.documentElement;
+  const btn  = document.getElementById('themeToggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const light = root.getAttribute('data-theme') === 'light';
+    if (light) root.removeAttribute('data-theme'); else root.setAttribute('data-theme','light');
+    try { localStorage.setItem('jp-theme', light ? 'dark' : 'light'); } catch(e){}
+  });
+})();
+</script>
+
+<script>
+/* ============ COMMAND PALETTE (⌘K) ============ */
+(function commandPalette(){
+  const CASES = [
+    ['LinkedIn Premium','linkedin-premium'], ['Wing @ Google X','wing'], ['January AI','january-ai'],
+    ['Flow Wallet','flow-wallet'], ['Folio','folio'], ['Lady Gaga','little-monsters'],
+  ];
+  const COMMANDS = [
+    ...CASES.map(([label, slug]) => ({ ico: '◆', label, sub: 'Case study', run: () => { location.hash = '#' + slug; window.scrollTo({ top: 0, behavior: 'smooth' }); } })),
+    { ico: '↩', label: 'Back to home',  sub: 'Page',  run: () => go('joey-portfolio.html') },
+    { ico: '▢', label: 'Selected work', sub: 'Home',  run: () => go('joey-portfolio.html#work') },
+    { ico: '✦', label: 'Think. Prompt. Create.', sub: 'Book', run: () => go('joey-portfolio.html#book') },
+    { ico: '✉', label: 'Contact',       sub: 'Home',  run: () => go('joey-portfolio.html#contact') },
+    { ico: '📄', label: 'Résumé',        sub: 'Page',  run: () => go('resume.html') },
+    { ico: '◐', label: 'Toggle Earth / Space', sub: 'Theme', run: () => document.getElementById('themeToggle')?.click() },
+    { ico: '✉', label: 'Copy email',    sub: 'jprimiani@gmail.com', run: () => navigator.clipboard && navigator.clipboard.writeText('jprimiani@gmail.com') },
+  ];
+  function go(url){ location.href = url; }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cmdk-overlay';
+  overlay.innerHTML = `
+    <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+      <input class="cmdk-input" type="text" placeholder="Jump to a case study, section, or action..." aria-label="Command palette search" autocomplete="off"/>
+      <div class="cmdk-list" role="listbox"></div>
+      <div class="cmdk-hint"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const input = overlay.querySelector('.cmdk-input');
+  const list = overlay.querySelector('.cmdk-list');
+  let filtered = COMMANDS, sel = 0;
+
+  function fuzzy(q, s){ q = q.toLowerCase(); s = s.toLowerCase(); if (!q) return true; let i = 0; for (const c of s){ if (c === q[i]) i++; if (i === q.length) return true; } return false; }
+  function render(){
+    if (!filtered.length){ list.innerHTML = '<div class="cmdk-empty">No matches.</div>'; return; }
+    list.innerHTML = filtered.map((c, i) => `<div class="cmdk-item" role="option" data-i="${i}" aria-selected="${i === sel}"><span class="cmdk-ico">${c.ico}</span><span>${c.label}</span><span class="cmdk-sub">${c.sub}</span></div>`).join('');
+    const cur = list.querySelector('[aria-selected="true"]'); if (cur) cur.scrollIntoView({ block: 'nearest' });
+  }
+  function filterFn(){ const q = input.value.trim(); filtered = COMMANDS.filter(c => fuzzy(q, c.label) || fuzzy(q, c.sub)); sel = 0; render(); }
+  let lastFocus = null;
+  const trigger = () => document.getElementById('cmdkBtn');
+  function open(){ lastFocus = document.activeElement; overlay.classList.add('open'); trigger()?.setAttribute('aria-expanded', 'true'); input.value = ''; filtered = COMMANDS; sel = 0; render(); setTimeout(() => input.focus(), 30); }
+  function close(){ overlay.classList.remove('open'); trigger()?.setAttribute('aria-expanded', 'false'); if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch(e){} } }
+  function run(i){ const c = filtered[i]; if (!c) return; close(); setTimeout(() => c.run(), 120); }
+
+  input.addEventListener('input', filterFn);
+  list.addEventListener('click', (e) => { const it = e.target.closest('.cmdk-item'); if (it) run(+it.dataset.i); });
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  document.getElementById('cmdkBtn')?.addEventListener('click', open);
+  addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); overlay.classList.contains('open') ? close() : open(); return; }
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape'){ e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown'){ e.preventDefault(); sel = Math.min(sel + 1, filtered.length - 1); render(); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); sel = Math.max(sel - 1, 0); render(); }
+    else if (e.key === 'Enter'){ e.preventDefault(); run(sel); }
+    else if (e.key === 'Tab'){ e.preventDefault(); input.focus(); }
+  });
+})();
 </script>
 </body>
 </html>

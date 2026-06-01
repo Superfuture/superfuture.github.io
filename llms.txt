@@ -1,0 +1,43 @@
+# Joey Primiani
+
+> Joey Primiani is an award-winning AI product designer and creative entrepreneur with 15+ years designing AI-native and mobile systems. He is a Senior Product Designer at LinkedIn, a Forbes 30 Under 30 honoree and Cannes Gold Lion winner, a named inventor on US Patent 8,869,068, and the author of the book "Think. Prompt. Create." He is based in the San Francisco Bay Area.
+
+Joey designs human-centered AI and mobile experiences with exceptional craft, product judgment, and systems thinking. He works AI-natively: prototyping real, opinionated product surfaces with Claude Code in hours rather than weeks. His portfolio site (officialjp.com) was itself vibe-coded with Claude Code. He is open to Senior through Principal product design roles at AI-first companies, and is especially drawn to frontier AI work where design makes powerful models genuinely useful and human.
+
+## Current role
+- Senior Product Designer at LinkedIn, leading design for Premium product experiences shipped to hundreds of millions of professionals. Recent shipped work: the LinkedIn x Calendly integration (a "Book an appointment" button on Premium profiles, plus a browser extension for Messaging, Sales Navigator, and Recruiter). Pushing AI-native prototyping across the org.
+
+## Case studies (officialjp.com/case-study.html)
+- LinkedIn Premium: leading mobile design for Premium and AI at hundreds-of-millions scale; the LinkedIn x Calendly integration.
+- Wing @ Google X (OpenSky): Lead Product Designer for the consumer mobile experience of Alphabet's drone-delivery moonshot; contributed to one of the first FAA-approved drone delivery experiences in the US.
+- January AI: designed iOS for clinical-grade AI nutrition, including photo-based food scanning that predicts glucose response before you eat, and "Jan", the in-app AI coach. 54M+ foods, 4.5 stars.
+- Flow Wallet: a self-custody crypto wallet built for everyone, with Secure Enclave security, gas-free, and no jargon.
+- Folio: co-created a community-first social network that gives creative power back to artists.
+- Little Monsters: co-founded a creative social platform with Lady Gaga (Backplane) before fan platforms were a category.
+- Studio XO: app-connected fashion technology brand; the team behind Lady Gaga's flying dress (VOLANTIS). Cannes Gold Lion and Webby winner.
+- Entangled: co-founded a collective-consciousness research app, built with the Institute of Noetic Sciences (IONS) and Princeton (PEAR).
+- Cortex: founded and designed a Chrome extension with a patented radial menu for one-click social sharing (US Patent 8,869,068). Fast Company Top 12 interface designs of the year. Later acquired by Backplane.
+
+## Recognition
+- Forbes 30 Under 30
+- Cannes Lions Gold Lion
+- Webby Award
+- US Patent 8,869,068 (Content sharing application utilizing radial menus)
+- Fast Company Design Top 12 Interface Designs of the Year
+
+## Book
+- "Think. Prompt. Create." (out April 2026): AI amplifies human creativity rather than replacing it. A playbook for anyone with an idea and the drive to build it. https://www.amazon.com/dp/B0GWN497PW
+
+## Background
+- Stanford d.school alum and guest lecturer; speaks at the AI UX Summit.
+- Founding-era LinkedIn iOS (2010 to 2012); re-architected LinkedIn for the touch era, scaled to 200M+ members.
+- Founder of Superfuture mobile studios.
+
+## Contact and links
+- Email: jprimiani@gmail.com
+- Website: https://www.officialjp.com
+- Resume: https://www.officialjp.com/resume.html
+- LinkedIn: https://www.linkedin.com/in/jprim
+- X (Twitter): https://x.com/jp
+- Instagram: https://instagram.com/officialjp
+- Dribbble: https://dribbble.com/jprimiani

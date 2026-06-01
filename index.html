@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<script>
+  /* Theme before first paint: saved choice wins; default is dark/space. */
+  try { if (localStorage.getItem('jp-theme') === 'light') document.documentElement.setAttribute('data-theme','light'); } catch(e){}
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Joey Primiani • Design Leader and AI creator</title>
 <meta name="description" content="Joey Primiani — Senior AI Product Designer at LinkedIn. 15+ years designing AI-native mobile systems. Hire a top AI designer with experience at LinkedIn Premium, Wing @ Google X, Studio XO, and Lady Gaga's Little Monsters. Forbes 30 Under 30. Cannes Gold Lion. Author of Think. Prompt. Create. Specializes in Claude Code, multi-modal AI, vibe-coding, and AI-native prototyping for frontier-tech companies.">
@@ -19,7 +23,8 @@
 <meta property="og:title" content="Joey Primiani, Portfolio '26">
 <meta property="og:description" content="Senior Product Designer at LinkedIn. 15+ years building mobile systems at LinkedIn, Wing @ Google X, and Studio XO. Author of Think. Prompt. Create.">
 <meta property="og:url" content="https://www.officialjp.com/">
-<meta property="og:image" content="og-image.png">
+<meta property="og:image" content="https://www.officialjp.com/og-image.png">
+<meta property="og:image:alt" content="Joey Primiani, AI product designer portfolio">
 <meta property="og:site_name" content="Joey Primiani">
 
 <!-- Twitter Card -->
@@ -28,11 +33,37 @@
 <meta name="twitter:creator" content="@jp">
 <meta name="twitter:title" content="Joey Primiani, Portfolio '26">
 <meta name="twitter:description" content="Senior Product Designer at LinkedIn. 15+ years of frontier mobile systems. Author of Think. Prompt. Create.">
-<meta name="twitter:image" content="og-image.png">
+<meta name="twitter:image" content="https://www.officialjp.com/og-image.png">
 
 <link rel="canonical" href="https://www.officialjp.com/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
+
+<!-- Structured data: helps Google + AI/LLM answer engines understand who Joey is -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.officialjp.com/#website",
+      "url": "https://www.officialjp.com/",
+      "name": "Joey Primiani",
+      "description": "Portfolio of Joey Primiani, AI product designer.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://www.officialjp.com/#joey" }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://www.officialjp.com/#profile",
+      "url": "https://www.officialjp.com/",
+      "name": "Joey Primiani, AI Product Designer",
+      "isPartOf": { "@id": "https://www.officialjp.com/#website" },
+      "about": { "@id": "https://www.officialjp.com/#joey" }
+    }
+  ]
+}
+</script>
 
 <!-- Performance hints -->
 <link rel="preconnect" href="https://images.higgs.ai" crossorigin>
@@ -48,16 +79,20 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": "https://www.officialjp.com/#joey",
   "name": "Joey Primiani",
   "jobTitle": "Senior Product Designer",
+  "description": "AI product designer with 15+ years designing AI-native and mobile systems at LinkedIn, Wing @ Google X, Studio XO and beyond. Forbes 30 Under 30 and Cannes Gold Lion winner, named inventor on US Patent 8,869,068, and author of Think. Prompt. Create.",
   "url": "https://www.officialjp.com/",
   "email": "mailto:jprimiani@gmail.com",
-  "image": "favicon.svg",
+  "image": "https://www.officialjp.com/joey-headshot.png",
+  "homeLocation": { "@type": "Place", "name": "San Francisco Bay Area, California, USA" },
   "worksFor": { "@type": "Organization", "name": "LinkedIn" },
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "Stanford University" },
   "sameAs": [
     "https://www.linkedin.com/in/jprim",
     "https://x.com/jp",
+    "https://instagram.com/officialjp",
     "https://dribbble.com/jprimiani",
     "https://github.com/superfuture"
   ],
@@ -130,6 +165,39 @@
   }
 </script>
 <style>
+  /* Smooth cross-document navigations (home <-> case studies). Ignored where unsupported. */
+  @view-transition { navigation: auto; }
+  @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+  /* The thumbnail->hero morph: a deliberate spring; the root crossfade is a touch quicker
+     so the morphing device leads the eye instead of a flat dissolve. */
+  ::view-transition-group(*) { animation-duration: .52s; animation-timing-function: cubic-bezier(.5, 0, .12, 1); }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .4s; animation-timing-function: ease-in-out; }
+
+  /* Consistent, branded keyboard focus ring (mouse users unaffected via :focus-visible) */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
+  select:focus-visible, [tabindex="0"]:focus-visible {
+    outline: 2px solid #89AACC; outline-offset: 2px; border-radius: 3px;
+  }
+
+  /* Skip-to-content link (keyboard/screen-reader users) */
+  .skip-link {
+    position: fixed; top: 10px; left: 10px; z-index: 10000;
+    background: hsl(var(--surface)); color: hsl(var(--text));
+    padding: 10px 16px; border-radius: 10px; border: 1px solid hsl(var(--stroke));
+    font-size: 13px; text-decoration: none;
+    transform: translateY(-160%); transition: transform .2s ease;
+  }
+  .skip-link:focus { transform: translateY(0); outline: 2px solid #89AACC; outline-offset: 2px; }
+
+  /* Loader: soft accent glow behind the wordmark for a cinematic intro beat */
+  .loader-glow {
+    position: absolute; width: 62vw; max-width: 720px; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle, rgba(137,170,204,0.16), rgba(137,170,204,0) 64%);
+    animation: loaderGlowPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes loaderGlowPulse { 0%,100% { opacity: .45; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.05); } }
+  @media (prefers-reduced-motion: reduce) { .loader-glow { animation: none; opacity: .6; } }
+
   :root {
     --bg: 0 0% 4%;
     --surface: 0 0% 8%;
@@ -152,6 +220,12 @@
   @supports (height: 100dvh) {
     #playPin { height: 100dvh; }
     .h-screen { height: 100dvh !important; }
+    /* Hero is intentionally < full height so the Work section peeks above
+       the fold — a quieter scroll affordance than an explicit indicator. */
+    #top { height: 76dvh; }
+  }
+  @media (min-width: 768px) {
+    @supports (height: 100dvh) { #top { height: 66dvh; } }
   }
   /* Lighter blur on mobile for smooth scroll perf */
   @media (max-width: 768px) {
@@ -367,6 +441,96 @@
   .bento-card { transition: transform .5s cubic-bezier(.22,1,.36,1), border-color .4s ease; }
   .bento-card:hover { transform: translateY(-4px); border-color: rgba(137,170,204,0.3) !important; }
   .testi-card:hover { transform: translateY(-3px); }
+
+  /* ===== Clean work grid — uniform cards, caption below, autoplay video ===== */
+  .work-card { display: block; text-decoration: none; perspective: 1100px; }
+  @media (prefers-reduced-motion: reduce) { .work-card { perspective: none; } }
+
+  /* Extra case studies, revealed by the "See more" button */
+  .work-extra { display: none; }
+  #bento.expanded .work-extra { display: block; }
+
+  /* See more button */
+  .see-more-btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 12px 22px; border-radius: 9999px; cursor: pointer;
+    background: hsl(var(--surface)); border: 1px solid hsl(var(--stroke));
+    color: hsl(var(--text)); font-size: 14px; letter-spacing: 0.02em;
+    transition: border-color .25s ease, background .25s ease, transform .25s ease;
+  }
+  .see-more-btn:hover { border-color: rgba(137,170,204,0.55); transform: translateY(-2px); }
+  .see-more-btn:focus-visible { outline: 2px solid #89AACC; outline-offset: 2px; }
+  .see-more-btn .sm-chev { width: 16px; height: 16px; transition: transform .3s cubic-bezier(.22,1,.36,1); }
+  .see-more-btn[aria-expanded="true"] .sm-chev { transform: rotate(180deg); }
+  .work-media {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid hsl(var(--stroke));
+    background: hsl(var(--surface));
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    transition: border-color .4s ease, box-shadow .4s ease, transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  .work-card:hover .work-media {
+    border-color: rgba(137,170,204,0.4);
+    box-shadow: 0 28px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(137,170,204,0.12);
+    transform: translateY(-4px);
+  }
+  .work-media .img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .9s cubic-bezier(.22,1,.36,1);
+  }
+  .work-card:hover .work-media .img { transform: scale(1.05); }
+  /* Transparent device/app renders sit centered on the surface, never cropped */
+  .work-media.contain .img { object-fit: contain; padding: 11% 15%; }
+  /* Transparent device tiles float on the card's themed background; gentle Ken Burns keeps them alive.
+     (Images only — contained videos animate themselves.) */
+  .work-media.contain img.img { animation: gridKenburns 17s ease-in-out infinite; }
+  @keyframes gridKenburns {
+    0%   { transform: scale(1.02) translateY(0); }
+    50%  { transform: scale(1.06) translateY(-1.5%); }
+    100% { transform: scale(1.02) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .work-media.contain .img { animation: none; } }
+  /* LinkedIn "launch" tile: a fuller multi-device composition with a soft spotlight so it reads
+     as a composed flagship tile (paired with Flow Wallet), not a render floating in the void. */
+  .work-media.li-fill { background-image: radial-gradient(95% 78% at 50% 34%, rgba(255,255,255,0.06), rgba(255,255,255,0) 68%); }
+  .work-media.li-fill .img { padding: 4% 7%; }
+  html[data-theme="light"] .work-media.li-fill { background-image: radial-gradient(95% 78% at 50% 34%, rgba(120,140,170,0.12), rgba(0,0,0,0) 68%); }
+  /* Framed-video tile: an app-screen video behind the transparent iPhone 17 Pro bezel.
+     Card background follows the theme, so the framed device floats in both modes. */
+  .work-media.frame-video { background: hsl(var(--surface)); display: flex; align-items: center; justify-content: center; }
+  .work-media.frame-video .fv-wrap { position: relative; height: 90%; aspect-ratio: 1752 / 3616; }
+  .work-media.frame-video .fv-clip {
+    position: absolute; left: 4.17%; top: 1.74%; width: 91.6%; height: 96.5%;
+    border-radius: 9% / 4.4%; overflow: hidden; z-index: 1;
+  }
+  .work-media.frame-video .fv-screen { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .work-media.frame-video .fv-screen.fv-nudge { transform: scale(1.08) translate(-1.8%, -4%); transform-origin: center; }
+  .work-media.frame-video .fv-bezel { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+  .work-meta { margin-top: 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .work-title { font-size: 1.05rem; line-height: 1.25; color: hsl(var(--text)); }
+  @media (min-width: 768px) { .work-title { font-size: 1.2rem; } }
+  .work-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.22em; color: hsl(var(--muted)); margin-top: 6px; }
+  .work-arrow {
+    flex: none; color: hsl(var(--muted)); margin-top: 2px;
+    transition: transform .35s ease, color .35s ease;
+  }
+  .work-card:hover .work-arrow { color: #89AACC; transform: translate(3px, -3px); }
+  /* Placeholder tile for case studies whose art isn't in yet */
+  .work-media.work-wip {
+    display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(137,170,204,0.22), transparent 60%),
+      radial-gradient(circle at 72% 70%, rgba(78,133,191,0.22), transparent 60%),
+      hsl(var(--surface));
+  }
+  .work-wip .work-wip-inner { text-align: center; padding: 24px; }
+  .work-wip .work-wip-name { display: block; font-family: 'Instrument Serif', serif; font-style: italic; font-size: 2rem; color: hsl(var(--text) / 0.92); line-height: 1; }
+  .work-wip .work-wip-tag { display: block; margin-top: 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.26em; color: hsl(var(--muted)); }
 
   /* Recognition row hover */
   .reco-row { transition: background-color .3s ease, padding .3s ease; }
@@ -732,6 +896,87 @@
   }
   .ask-send:hover { transform: translateY(-1px); filter: brightness(1.08); }
   .ask-send:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* Agent "thinking" dots (shown while Claude responds) */
+  .ask-thinking { padding: 14px 16px; }
+  .ask-dots { display: inline-flex; gap: 5px; align-items: center; }
+  .ask-dots i { width: 6px; height: 6px; border-radius: 50%; background: hsl(var(--muted)); display: inline-block; animation: askBounce 1.2s ease-in-out infinite; }
+  .ask-dots i:nth-child(2) { animation-delay: .18s; }
+  .ask-dots i:nth-child(3) { animation-delay: .36s; }
+  @keyframes askBounce { 0%,80%,100% { transform: translateY(0); opacity: .45; } 40% { transform: translateY(-4px); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .ask-dots i { animation: none; } }
+
+  /* Easter egg: pill wink when someone types "claude" */
+  .joey-pill.winking .joey-avatar { animation: joeyWink .9s ease; }
+  @keyframes joeyWink { 0%,100% { transform: scaleY(1); } 45%,55% { transform: scaleY(.12); } }
+
+  /* One-time idle nudge bubble above the agent pill */
+  .joey-nudge {
+    position: absolute; bottom: 60px; right: 0; max-width: 220px;
+    background: rgba(22,22,25,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08); color: hsl(var(--text));
+    font-size: 13px; line-height: 1.4; padding: 10px 13px;
+    border-radius: 14px; border-bottom-right-radius: 4px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+    opacity: 0; transform: translateY(8px) scale(.96); transform-origin: bottom right;
+    transition: opacity .35s ease, transform .35s cubic-bezier(.22,1,.36,1); pointer-events: none;
+  }
+  .joey-nudge.show { opacity: 1; transform: translateY(0) scale(1); }
+  html[data-theme="light"] .joey-nudge { background: rgba(253,251,248,0.94); border-color: rgba(120,100,80,0.14); box-shadow: 0 18px 40px rgba(90,75,55,0.18); }
+  @media (prefers-reduced-motion: reduce) { .joey-nudge { transition: opacity .35s ease; transform: none; } }
+
+  /* ============ COMMAND PALETTE (⌘K) ============ */
+  .cmdk-overlay {
+    position: fixed; inset: 0; z-index: 120;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 14vh;
+    background: rgba(8,8,10,0.5);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  }
+  .cmdk-overlay.open { opacity: 1; pointer-events: auto; }
+  .cmdk {
+    width: min(560px, calc(100vw - 32px));
+    background: rgba(22,22,25,0.86);
+    backdrop-filter: blur(30px) saturate(1.5); -webkit-backdrop-filter: blur(30px) saturate(1.5);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    box-shadow: 0 40px 90px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.12);
+    overflow: hidden;
+    transform: scale(.96) translateY(-8px); transition: transform .22s cubic-bezier(.22,1,.36,1);
+  }
+  .cmdk-overlay.open .cmdk { transform: scale(1) translateY(0); }
+  html[data-theme="light"] .cmdk { background: rgba(253,251,248,0.92); border-color: rgba(120,100,80,0.14); box-shadow: 0 40px 90px rgba(90,75,55,0.22), inset 0 1px 1px rgba(255,255,255,0.9); }
+  html[data-theme="light"] .cmdk-overlay { background: rgba(250,248,244,0.45); }
+  .cmdk-input {
+    width: 100%; border: 0; outline: none; background: transparent;
+    color: hsl(var(--text)); font-family: 'Inter', sans-serif; font-size: 17px;
+    padding: 18px 20px; border-bottom: 1px solid hsl(var(--stroke));
+  }
+  .cmdk-input::placeholder { color: hsl(var(--muted)); }
+  .cmdk-input:focus, .cmdk-input:focus-visible { outline: none; }   /* auto-focused in a modal; ring is redundant */
+  .cmdk-list { max-height: 52vh; overflow-y: auto; padding: 8px; }
+  .cmdk-list::-webkit-scrollbar { width: 6px; }
+  .cmdk-list::-webkit-scrollbar-thumb { background: hsl(var(--stroke)); border-radius: 6px; }
+  .cmdk-empty { padding: 22px 20px; color: hsl(var(--muted)); font-size: 14px; }
+  .cmdk-item {
+    display: flex; align-items: center; gap: 13px;
+    padding: 11px 13px; border-radius: 11px; cursor: pointer;
+    color: hsl(var(--text)); font-size: 14.5px;
+  }
+  .cmdk-item .cmdk-ico { width: 20px; text-align: center; opacity: .8; font-size: 15px; flex: none; }
+  .cmdk-item .cmdk-sub { margin-left: auto; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: hsl(var(--muted)); }
+  .cmdk-item[aria-selected="true"], .cmdk-item:hover { background: hsl(var(--stroke) / 0.5); }
+  .cmdk-item[aria-selected="true"] { box-shadow: inset 0 0 0 1px rgba(137,170,204,0.4); }
+  .cmdk-hint {
+    display: flex; gap: 14px; align-items: center;
+    padding: 9px 16px; border-top: 1px solid hsl(var(--stroke));
+    font-size: 11px; color: hsl(var(--muted));
+  }
+  .cmdk-hint kbd {
+    font-family: inherit; background: hsl(var(--stroke) / 0.6); border-radius: 5px;
+    padding: 1px 6px; font-size: 10.5px;
+  }
 
   /* Playground parallax */
   #playPin {
@@ -1141,19 +1386,134 @@
   @media (prefers-reduced-motion: reduce) {
     .skel::before { animation: none; }
   }
+
+  /* ============ LIGHT / EARTH THEME ============ */
+  html[data-theme="light"] {
+    --bg: 40 33% 97%;      /* warm off-white paper */
+    --surface: 38 26% 93%;
+    --text: 28 12% 13%;    /* warm near-black */
+    --muted: 30 9% 30%;    /* darker warm gray — more legible over earth video */
+    --stroke: 38 18% 84%;
+    --accent: 212 45% 48%;
+  }
+  /* Glide the swap on the major color-bearing surfaces */
+  body, .work-media, .testi-card, .reco-tile, .play-tile,
+  .liquid-glass, .liquid-glass-strong, .joey-pill, .joey-panel,
+  #heroTint, #contactTint {
+    transition: background-color .6s ease, color .6s ease, border-color .5s ease, box-shadow .6s ease;
+  }
+  /* Footer hero: cross-fade space <-> earth */
+  #bgVideo2, #earthVideo2 { transition: opacity .9s ease; }
+  #earthVideo2 { opacity: 0; }
+  html[data-theme="light"] #bgVideo2 { opacity: 0; }
+  html[data-theme="light"] #earthVideo2 { opacity: 1; }
+
+  /* Top hero: cross-dissolve between space & earth with a gentle vertical drift —
+     reads as ascending to space / descending to earth, with no hard seam. */
+  #bgVideo, #earthVideo {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    min-width: 0; min-height: 0;
+    transform: translateY(0) scale(1.1);
+    transition: opacity 1.15s ease, transform 1.35s cubic-bezier(.5,0,.3,1);
+    will-change: opacity, transform;
+  }
+  /* Space video framed lower in the hero — smaller % moves it further down (50% = centered). */
+  #bgVideo { object-position: center 0%; }
+  #earthVideo { opacity: 0; transform: translateY(8%) scale(1.1); }                 /* earth waits just below */
+  html[data-theme="light"] #bgVideo    { opacity: 0; transform: translateY(-8%) scale(1.1); } /* space drifts up & away */
+  html[data-theme="light"] #earthVideo { opacity: 1; transform: translateY(0) scale(1.1); }   /* earth rises into place */
+  @media (prefers-reduced-motion: reduce) {
+    #bgVideo, #earthVideo { transition: opacity .25s ease; transform: scale(1.1) !important; }
+  }
+
+  /* Tints: dark scrim in space mode, soft light wash in earth mode */
+  html[data-theme="light"] #heroTint { background: radial-gradient(ellipse 85% 65% at 50% 44%, rgba(250,248,244,0.64), rgba(250,248,244,0.30)) !important; }
+  html[data-theme="light"] #contactTint { background: rgba(250,248,244,0.62) !important; }
+  /* Hero text legibility over the busy earth video */
+  html[data-theme="light"] #top { text-shadow: 0 1px 2px rgba(255,255,255,0.6), 0 2px 18px rgba(250,248,244,0.72); }
+  html[data-theme="light"] #top .logo-mark svg { filter: drop-shadow(0 1px 6px rgba(250,248,244,0.9)); }
+  /* Softer, warmer card shadows in earth mode */
+  html[data-theme="light"] .work-media { box-shadow: 0 12px 30px rgba(90,75,55,0.10); }
+  html[data-theme="light"] .work-card:hover .work-media { box-shadow: 0 20px 44px rgba(90,75,55,0.16), 0 0 0 1px rgba(137,170,204,0.12); }
+  html[data-theme="light"] .play-tile { box-shadow: 0 14px 36px rgba(90,75,55,0.10); }
+  html[data-theme="light"] .play-tile:hover { box-shadow: 0 26px 56px rgba(90,75,55,0.16), 0 0 0 1px rgba(137,170,204,0.22); }
+
+  /* Liquid glass: dark-on-light treatment in earth mode */
+  html[data-theme="light"] .liquid-glass {
+    background: rgba(255,255,255,0.55);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.85), inset 0 -1px 1px rgba(120,100,80,0.06), 0 10px 30px rgba(90,75,55,0.10);
+  }
+  html[data-theme="light"] .liquid-glass::before,
+  html[data-theme="light"] .liquid-glass-strong::before,
+  html[data-theme="light"] .joey-pill::before {
+    background: linear-gradient(170deg, rgba(120,100,80,0.20) 0%, rgba(120,100,80,0.06) 28%, rgba(120,100,80,0) 50%, rgba(120,100,80,0.06) 72%, rgba(120,100,80,0.20) 100%);
+  }
+  html[data-theme="light"] .liquid-glass-strong {
+    background: rgba(255,255,255,0.64);
+    box-shadow: 0 18px 50px rgba(90,75,55,0.14), inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1px 1px rgba(120,100,80,0.08);
+  }
+
+  /* Recognition + worked-with logos: dark ink in earth mode */
+  html[data-theme="light"] .reco-tile img { filter: brightness(0) saturate(0) opacity(0.6); }
+  html[data-theme="light"] .reco-tile:hover img { opacity: 0.95; }
+
+  /* Joey Agent widget in earth mode */
+  html[data-theme="light"] .joey-pill {
+    background: rgba(255,255,255,0.66);
+    box-shadow: 0 14px 40px rgba(90,75,55,0.18), 0 0 28px rgba(137,170,204,0.14), inset 0 1px 1px rgba(255,255,255,0.9);
+  }
+  html[data-theme="light"] .joey-panel { background: rgba(253,251,248,0.90); }
+  html[data-theme="light"] .ask-titlebar { background: rgba(255,255,255,0.5); }
+  html[data-theme="light"] .ask-input-wrap { background: rgba(255,255,255,0.5); border-top-color: rgba(120,100,80,0.12); }
+  html[data-theme="light"] .ask-msg.bot { background: hsl(var(--surface)); }
+  html[data-theme="light"] .joey-avatar::after,
+  html[data-theme="light"] .ask-dot { border-color: hsl(var(--surface)); }
+
+  /* ===== Command-palette nav trigger ===== */
+  .cmdk-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    border-radius: 9999px; padding: 7px 10px; cursor: pointer;
+    background: hsl(var(--surface)); border: 1px solid hsl(var(--stroke));
+    color: hsl(var(--muted)); transition: color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .cmdk-btn:hover { color: hsl(var(--text)); border-color: rgba(137,170,204,0.5); }
+  .cmdk-btn:focus-visible { outline: 2px solid #89AACC; outline-offset: 2px; }
+  .cmdk-btn svg { width: 15px; height: 15px; }
+  .cmdk-btn .cmdk-kbd { font-size: 11px; letter-spacing: .04em; }
+
+  /* ===== Earth / Space toggle button ===== */
+  #themeToggle {
+    position: relative; width: 34px; height: 34px; flex: none;
+    border-radius: 9999px; border: 0; cursor: pointer; background: transparent;
+    color: hsl(var(--text)); margin-left: 2px;
+    transition: background-color .25s ease, transform .35s cubic-bezier(.22,1,.36,1);
+  }
+  #themeToggle:hover { background: hsl(var(--stroke) / 0.6); transform: rotate(15deg); }
+  #themeToggle:focus-visible { outline: 2px solid #89AACC; outline-offset: 2px; }
+  #themeToggle svg {
+    position: absolute; inset: 0; margin: auto; width: 17px; height: 17px;
+    transition: opacity .4s ease, transform .55s cubic-bezier(.22,1,.36,1);
+  }
+  #themeToggle .ico-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+  #themeToggle .ico-moon { opacity: 0; transform: rotate(-90deg) scale(.5); }
+  html[data-theme="light"] #themeToggle .ico-sun  { opacity: 0; transform: rotate(90deg) scale(.5); }
+  html[data-theme="light"] #themeToggle .ico-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
 </style>
 </head>
 <body class="font-body">
+<a href="#maincontent" class="skip-link">Skip to content</a>
 <div class="grain-layer" aria-hidden="true"></div>
 
 <!-- ============ LOADING SCREEN ============ -->
-<div id="loader" class="fixed inset-0 z-[9999]" style="background:hsl(var(--bg))">
+<div id="loader" class="fixed inset-0 z-[9999]" aria-hidden="true" style="background:hsl(var(--bg))">
   <div class="absolute top-6 left-6 md:top-10 md:left-10 text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))" id="loadLabel">Portfolio</div>
 
   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <div class="loader-glow" aria-hidden="true"></div>
     <div id="loadWord" class="text-4xl md:text-6xl lg:text-7xl font-display italic"
-         style="color:hsl(var(--text) / 0.8); opacity:0; transform: translateY(20px); transition: opacity .35s ease, transform .35s ease;">
-      Design
+         style="color:hsl(var(--text) / 0.85); opacity:0; transform: translateY(20px); transition: opacity .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1);">
+      Think.
     </div>
   </div>
 
@@ -1178,55 +1538,52 @@
       </span>
     </a>
     <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
-    <a href="#top"  class="nav-link text-xs sm:text-sm rounded-full ml-2 sm:ml-0 px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="top">Home</a>
-    <a href="#work" class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="work">Work</a>
-    <a href="#about" class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="about">About</a>
-    <a href="resume.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">Résumé</a>
+    <a href="#top"  class="nav-link text-xs sm:text-sm rounded-full ml-2 sm:ml-0 px-3 sm:px-4 py-2.5 sm:py-2 transition-colors" data-section="top">Home</a>
+    <a href="#work" class="nav-link text-xs sm:text-sm rounded-full px-3 sm:px-4 py-2.5 sm:py-2 transition-colors" data-section="work">Work</a>
+    <a href="#about" class="nav-link hidden sm:inline-block text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" data-section="about">About</a>
+    <a href="resume.html" class="hidden sm:inline-block text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors" style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">Résumé</a>
     <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
     <a href="mailto:jprimiani@gmail.com" class="ring-btn text-xs sm:text-sm rounded-full">
-      <span class="relative inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md"
+      <span class="relative inline-flex items-center gap-1 px-3 sm:px-4 py-2.5 sm:py-2 rounded-full backdrop-blur-md"
             style="background:hsl(var(--surface)); color:hsl(var(--text))">
         Say hi <span aria-hidden="true" class="hidden sm:inline">↗</span>
       </span>
     </a>
+    <div class="w-px h-5 mx-1 hidden sm:block" style="background:hsl(var(--stroke))"></div>
+    <button id="cmdkBtn" class="cmdk-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open quick navigation (Command K)" title="Quick nav (⌘K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span class="cmdk-kbd hidden md:inline">⌘K</span>
+    </button>
+    <button id="themeToggle" class="inline-flex" type="button" aria-label="Switch between Earth and Space themes" title="Earth / Space">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
 </nav>
 
+<main id="maincontent" tabindex="-1">
+
 <!-- ============ HERO ============ -->
-<section id="top" class="relative h-screen w-full overflow-hidden">
-  <video id="bgVideo" autoplay muted loop playsinline
-         class="absolute top-1/2 left-1/2 min-w-full min-h-full object-cover -translate-x-1/2 -translate-y-1/2"></video>
-  <div class="absolute inset-0" style="background:rgba(0,0,0,0.35)"></div>
+<section id="top" class="relative h-[76vh] md:h-[66vh] w-full overflow-hidden">
+  <video id="bgVideo" autoplay muted loop playsinline></video>
+  <video id="earthVideo" muted loop playsinline poster="earth-poster.jpg"></video>
+  <div id="heroTint" class="absolute inset-0" style="background:rgba(0,0,0,0.35)"></div>
   <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t to-transparent" style="--tw-gradient-from:hsl(var(--bg)); --tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to,transparent); background:linear-gradient(to top, hsl(var(--bg)), transparent);"></div>
 
   <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
     <div class="blur-in text-xs uppercase tracking-[0.3em] mb-8" style="color:hsl(var(--muted))">Portfolio '26</div>
-    <h1 class="name-reveal text-[clamp(2.75rem,13vw,3.75rem)] md:text-8xl lg:text-9xl font-display italic tracking-tight mb-6" style="color:hsl(var(--text)); line-height:1.3; padding-bottom:0.18em">Joey Primiani</h1>
+    <h1 class="name-reveal text-[clamp(2.4rem,11.5vw,3.75rem)] md:text-8xl lg:text-9xl font-display italic tracking-tight mb-6" style="color:hsl(var(--text)); line-height:1.3; padding-bottom:0.18em">Joey Primiani</h1>
     <p class="blur-in text-base md:text-lg mb-4" style="color:hsl(var(--text) / .9)">
-      A <span id="roleWord" class="font-display italic animate-role-fade-in inline-block" style="color:hsl(var(--text))">Designer</span> based in the Bay Area.
+      <span id="roleArticle">A</span> <span id="roleWord" class="font-display italic animate-role-fade-in inline-block" style="color:hsl(var(--text))">Designer</span> based in the Bay Area.
     </p>
-    <p class="blur-in text-sm md:text-base max-w-xl mb-12" style="color:hsl(var(--muted))">
-      Designing human-centered AI &amp; mobile experiences with exceptional craft, thoughtful product judgment, and systems thinking.
+    <p class="blur-in text-sm md:text-base w-full max-w-xl mb-2" style="color:hsl(var(--muted))">
+      Designing human-centered AI &amp; mobile experiences with exceptional craft, thoughtful product judgment and systems thinking.
     </p>
-    <div class="blur-in inline-flex flex-wrap items-center justify-center gap-4">
-      <a href="#work" class="ring-btn rounded-full text-sm">
-        <span class="relative inline-flex items-center px-7 py-3.5 rounded-full transition-colors duration-200"
-              style="background:hsl(var(--text)); color:hsl(var(--bg))" onmouseover="this.style.background='hsl(var(--bg))';this.style.color='hsl(var(--text))'" onmouseout="this.style.background='hsl(var(--text))';this.style.color='hsl(var(--bg))'">
-          See Work
-        </span>
-      </a>
-      <a href="mailto:jprimiani@gmail.com" class="ring-btn rounded-full text-sm">
-        <span class="relative inline-flex items-center px-7 py-3.5 rounded-full border-2"
-              style="border-color:hsl(var(--stroke)); background:hsl(var(--bg)); color:hsl(var(--text))">
-          Reach out
-        </span>
-      </a>
-    </div>
 
     <!-- Worked-with logo strip -->
-    <div class="blur-in mt-14 md:mt-20 max-w-5xl">
-      <div class="text-xs uppercase tracking-[0.3em] mb-5 text-center" style="color:hsl(var(--muted))">Built products you love at scale</div>
-      <div class="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 md:gap-x-12 gap-y-4">
+    <div class="blur-in mt-10 md:mt-14 w-full max-w-5xl">
+      <div class="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.3em] mb-5 text-center" style="color:hsl(var(--muted))">Built products you love at scale</div>
+      <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-10 md:gap-x-12 gap-y-3">
         <span class="logo-mark" aria-label="LinkedIn" title="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -1250,39 +1607,33 @@
     </div>
   </div>
 
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
-    <span class="text-xs uppercase tracking-[0.2em]" style="color:hsl(var(--muted))">Scroll</span>
-    <div class="relative w-px h-10 overflow-hidden" style="background:hsl(var(--stroke))">
-      <div class="absolute top-0 left-0 w-full h-1/2 animate-scroll-down accent-gradient"></div>
-    </div>
-  </div>
 </section>
 
 <!-- ============ SELECTED WORK ============ -->
-<section id="work" class="py-12 md:py-16" style="background:hsl(var(--bg))">
+<section id="work" class="pt-5 md:pt-6 pb-12 md:pb-16" style="background:hsl(var(--bg))">
   <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
       <div>
-        <div class="flex items-center gap-3 mb-4">
+        <div class="flex items-center gap-3 mb-3">
           <span class="w-8 h-px" style="background:hsl(var(--stroke))"></span>
           <span class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">Selected Work</span>
         </div>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl mb-3" style="color:hsl(var(--text))">
+        <h2 class="text-2xl md:text-3xl lg:text-4xl mb-2" style="color:hsl(var(--text))">
           Featured <span class="font-display italic">case studies</span>
         </h2>
         <p class="text-sm md:text-base md:whitespace-nowrap hidden md:block" style="color:hsl(var(--muted))">
-          Frontier mobile systems shipped to hundreds of millions, from concept to launch.
+          Frontier web and mobile systems shipped to hundreds of millions from 0 &rarr; 1.
         </p>
       </div>
-      <a href="resume.html" class="ring-btn rounded-full text-sm hidden md:inline-flex self-end">
-        <span class="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
-              style="background:hsl(var(--surface)); color:hsl(var(--text))">
-          Full résumé <span aria-hidden="true">→</span>
-        </span>
-      </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6" id="bento"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-9 md:gap-x-6 md:gap-y-12" id="bento"></div>
+    <div class="reveal flex justify-center mt-10 md:mt-14" id="seeMoreWrap">
+      <button id="seeMoreBtn" type="button" class="see-more-btn" aria-expanded="false">
+        <span class="sm-label">See more</span>
+        <svg class="sm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -1545,7 +1896,7 @@
             I&rsquo;m a product design leader focused on building human-centered AI products that make frontier technology intuitive, useful and deeply delightful. Over the past 15+ years, I&rsquo;ve designed breakthrough consumer experiences at scale across Google X&rsquo;s Moonshot Factory, LinkedIn, Intuit and startups.
           </p>
           <p>
-            My superpower is translating frontier AI capabilities into clear, elegant product experiences with exceptional craft, speed and strategic clarity. I thrive in ambiguous, fast-moving environments where design shapes not just the interface, but the product direction itself.
+            My superpower is translating frontier AI capabilities into clear, elegant product experiences with exceptional craft, speed and strategic clarity. I thrive in ambiguous, fast-moving environments where beautiful design can make a positive impact for humanity.
           </p>
           <p>
             I&rsquo;m also the author of <em class="font-display italic">Think. Prompt. Create.</em>, a practical guide to building software with AI and a Forbes 30 Under 30 honoree.
@@ -1610,7 +1961,10 @@
   <video id="bgVideo2" autoplay muted loop playsinline
          class="absolute top-1/2 left-1/2 min-w-full min-h-full object-cover -translate-x-1/2 -translate-y-1/2"
          style="transform: translate(-50%, -50%) scaleY(-1);"></video>
-  <div class="absolute inset-0" style="background:rgba(0,0,0,0.65)"></div>
+  <video id="earthVideo2" muted loop playsinline poster="earth-poster.jpg"
+         class="absolute top-1/2 left-1/2 min-w-full min-h-full object-cover -translate-x-1/2 -translate-y-1/2"
+         style="transform: translate(-50%, -50%);"></video>
+  <div id="contactTint" class="absolute inset-0" style="background:rgba(0,0,0,0.65)"></div>
   <div class="absolute top-0 left-0 right-0 h-32" style="background:linear-gradient(to bottom, hsl(var(--bg)), transparent)"></div>
   <div class="absolute bottom-0 left-0 right-0 h-32" style="background:linear-gradient(to top, hsl(var(--bg)), transparent)"></div>
 
@@ -1638,44 +1992,106 @@
       <div class="flex items-center gap-4 text-sm" style="color:hsl(var(--muted))">
         <a href="https://www.linkedin.com/in/jprim" class="hover:text-[color:hsl(var(--text))] transition-colors">LinkedIn</a>
         <a href="https://x.com/jp" class="hover:text-[color:hsl(var(--text))] transition-colors">x.com/jp</a>
+        <a href="https://instagram.com/officialjp" class="hover:text-[color:hsl(var(--text))] transition-colors">Instagram</a>
         <a href="https://dribbble.com/jprimiani" class="hover:text-[color:hsl(var(--text))] transition-colors">Dribbble</a>
         <a href="https://github.com/superfuture" class="hover:text-[color:hsl(var(--text))] transition-colors">GitHub</a>
       </div>
-      <div class="flex items-center gap-3 text-sm" style="color:hsl(var(--muted))">
-        <span class="pulse-dot relative inline-block w-2 h-2 rounded-full" style="background:#10b981"></span>
-        Available for select engagements
-      </div>
-      <div class="text-xs uppercase tracking-[0.3em] flex flex-col md:items-end gap-1" style="color:hsl(var(--muted))">
-        <span>© 2026 Joey Primiani</span>
-        <span style="opacity:.75">Designed &amp; vibe-coded with Claude Code</span>
-      </div>
+      <div class="text-xs uppercase tracking-[0.3em] text-center" style="color:hsl(var(--muted)); opacity:.8">Designed &amp; vibe-coded with Claude Code</div>
+      <div class="text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))">© 2026 Joey Primiani</div>
     </div>
   </div>
 </section>
+
+</main>
+
+<script>
+/* ============ SCROLL MEMORY ============
+   Returning from a case study (e.g. the "All work" nav link) lands you back at the
+   exact spot in the grid you left from, not at the top. Restored during pagereveal so
+   the cross-document view-transition morph still aligns to the right tile. */
+(function homeScrollMemory(){
+  const POS = 'jp_home_scroll', FLAG = 'jp_restore_home';
+  const save = () => { try { sessionStorage.setItem(POS, String(Math.round(window.scrollY))); } catch(e){} };
+  addEventListener('pagehide', save);
+  addEventListener('beforeunload', save);
+
+  // Clicking into a case study from the grid flags an intent to restore on return.
+  // (An explicit flag is reliable; document.referrer is often empty under file:// or strict policy.)
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest && e.target.closest('.work-card');
+    if (card) { save(); try { sessionStorage.setItem(FLAG, '1'); } catch(e){} }
+  }, true);
+
+  // Decide once (then clear the flag), and apply at several beats so late layout can't drop it.
+  let target = 0, want = false;
+  try {
+    const flagged = sessionStorage.getItem(FLAG) === '1';
+    const fromCase = /case-study\.html/.test(document.referrer || '');
+    if ((flagged || fromCase) && !location.hash) {
+      want = true;
+      target = parseInt(sessionStorage.getItem(POS) || '0', 10) || 0;
+    }
+    sessionStorage.removeItem(FLAG);   // one-shot: a later manual reload won't auto-restore
+  } catch(e){}
+  function apply(){ if (want && target > 0) window.scrollTo(0, target); }
+  if ('onpagereveal' in window) addEventListener('pagereveal', apply);   // before the VT paints
+  if (document.readyState !== 'loading') apply();
+  else addEventListener('DOMContentLoaded', apply);
+  addEventListener('load', () => requestAnimationFrame(apply));
+})();
+</script>
 
 <script>
 /* ============ DATA ============ */
 const PROJECTS = [
   {
-    span: 7, slug: 'linkedin-premium', name: 'LinkedIn Premium', category: 'Mobile · 2022–Present',
+    slug: 'linkedin-premium', name: 'LinkedIn', category: 'Premium & AI',
     summary: 'Leading mobile design for LinkedIn Premium at hundreds-of-millions scale. AI-native prototyping driving engagement and monetization.',
-    img: 'linkedin-premium-thumb.png'
+    img: 'linkedin-device.png', fit: 'contain', mediaClass: 'li-fill'   // multi-device launch tile, soft spotlight
   },
   {
-    span: 5, slug: 'wing', name: 'Google X', category: 'Moonshot Factory · 2017–2022',
+    slug: 'wing', name: 'Google X', category: 'Moonshot Factory · AI Drones',
     summary: "Consumer mobile design for Alphabet's drone delivery moonshot. First FAA-approved drone delivery experience.",
-    img: 'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
-    video: 'opensky.mp4'
+    img: 'googlex-screen-poster.jpg',
+    video: 'googlex-screen.mp4', frame: true   // OpenSky app, in the 17 Pro frame
   },
   {
-    span: 5, slug: 'january-ai', name: 'January AI', category: 'Mobile · AI Health · 2024–Present',
+    slug: 'january-ai', name: 'January AI', category: 'Mobile · AI Health',
     summary: 'iOS design for clinical-grade AI nutrition. See a food’s impact before you eat it.',
-    img: 'https://cdn.prod.website-files.com/6308dfdad12c3f6da8d1069d/67e4502c1829ba2d1a6c1574_Device4.png'
+    img: 'january-screen-poster.jpg', video: 'january-screen.mp4', frame: true   // live food-scan in the 17 Pro frame
   },
   {
-    span: 7, slug: 'little-monsters', name: 'Lady Gaga', category: 'Co-Founder · Little Monsters · 2011–2012',
+    slug: 'flow-wallet', name: 'Flow Wallet', category: 'Mobile · Web3 Wallet',
+    summary: 'A self-custody crypto wallet built for everyone — hardware-grade security via the Secure Enclave, gas-free, with none of the jargon.',
+    img: 'flow-wallet-tile.jpg',
+    video: 'flowwallet-kb.mp4'        // 4:3 composition, gentle centered Ken Burns (text stays in frame)
+  },
+  {
+    slug: 'folio', name: 'Folio', category: 'Web3 · Social',
+    summary: 'Co-created a community-first social network that gives creative power back to artists and makes collecting simple. Launch House Web3 LA cohort.',
+    img: 'folio-screen-poster.jpg',
+    video: 'folio-screen.mp4', frame: true, nudge: true      // folio feed, nudged up-left in the 17 Pro frame
+  },
+  {
+    slug: 'little-monsters', name: 'Lady Gaga', category: 'Creator · Little Monsters',
     summary: "Co-founded a creative social platform with Lady Gaga before fan platforms were a category. Fan art as fine art.",
-    img: 'https://assets.dunked.com/assets/prod/117833/p1bba63p7i1595m541rbs1k441oht8.png'
+    img: 'ladygaga-screen.png', frame: true     // ARTPOP post, in the 17 Pro frame
+  },
+  // Revealed by the "See more" button. No case-study page yet -> placeholder tiles.
+  {
+    slug: 'studio-xo', name: 'Studio XO', category: 'Wearable Tech · Couture',
+    summary: 'App-connected fashion technology brand. Cannes Gold Lion, Webby winner, and the team behind Lady Gaga\'s flying dress.',
+    img: 'studioxo-poster.jpg', video: 'studioxo.mp4', extra: true   // XO app video, full-bleed
+  },
+  {
+    slug: 'entangled', name: 'Entangled', category: 'Consciousness · Research App',
+    summary: "Co-founded a consciousness-research platform: the world's largest collective-consciousness experiment in a free app.",
+    img: 'entangled-thumb.jpg', extra: true   // global consciousness map, full-bleed
+  },
+  {
+    slug: 'cortex', name: 'Cortex', category: 'Founder · Radial Sharing',
+    summary: 'Founded and designed a Chrome extension with a patented radial menu for one-click social sharing. Later acquired.',
+    img: 'cortex-poster.jpg', video: 'cortex.mp4', extra: true   // animated radial menu
   }
 ];
 
@@ -1718,31 +2134,58 @@ const TESTIMONIALS = [
   }
 ];
 
-/* ============ RENDER BENTO ============ */
+/* ============ RENDER WORK GRID ============ */
 (function renderBento(){
   const root = document.getElementById('bento');
-  root.innerHTML = PROJECTS.map(p => `
-    <a href="case-study.html#${p.slug}" class="bento-card ${p.video ? '' : 'skel'} group relative overflow-hidden rounded-3xl border md:col-span-${p.span} block"
-       style="background:hsl(var(--surface)); border-color:hsl(var(--stroke)); aspect-ratio: ${p.span === 7 ? '16/10' : '5/6'};">
-      ${p.video
-        ? `<video class="img absolute inset-0 w-full h-full object-cover" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
-        : `<img class="img skel-img absolute inset-0 w-full h-full object-cover" src="${p.img}" alt="${p.name}" loading="lazy"/>`}
-      <div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>
-      <div class="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4">
+  root.innerHTML = PROJECTS.map(p => {
+    const media = p.frame
+        ? `<div class="work-media frame-video" style="view-transition-name:vt-${p.slug}"><div class="fv-wrap"><div class="fv-clip">${p.video
+              ? `<video class="fv-screen ${p.nudge ? 'fv-nudge' : ''}" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
+              : `<img class="fv-screen ${p.nudge ? 'fv-nudge' : ''}" src="${p.img}" alt="${p.name}" loading="lazy"/>`}</div><img class="fv-bezel" src="iphone17-frame.png" alt="" aria-hidden="true"/></div></div>`
+        : `<div class="work-media ${p.fit === 'contain' ? 'contain' : ''} ${p.mediaClass || ''} ${(p.video || p.img) ? (p.video ? '' : 'skel') : 'work-wip'}" style="view-transition-name:vt-${p.slug}">
+        ${p.video
+          ? `<video class="img" src="${p.video}" autoplay muted loop playsinline preload="auto" poster="${p.img}"></video>`
+          : p.img
+          ? `<img class="img skel-img" src="${p.img}" alt="${p.name}" loading="lazy"/>`
+          : `<span class="work-wip-inner"><span class="work-wip-name">${p.name}</span><span class="work-wip-tag">Case study coming soon</span></span>`}
+      </div>`;
+    const meta = `<div class="work-meta">
         <div>
-          <div class="text-xs uppercase tracking-[0.2em] mb-1" style="color:hsl(var(--text) / .75)">${p.category}</div>
-          <div class="text-2xl md:text-3xl" style="color:hsl(var(--text))">${p.name}</div>
+          <div class="work-title">${p.name}</div>
+          <div class="work-cat">${p.category}</div>
         </div>
-      </div>
-      <div class="overlay absolute inset-0 backdrop-blur-lg flex items-center justify-center" style="background:hsl(var(--bg) / .7)">
-        <div class="ring-btn rounded-full">
-          <span class="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm"
-                style="background:hsl(var(--text)); color:hsl(var(--bg))">
-            View <span class="font-display italic">${p.name}</span> <span aria-hidden="true">↗</span>
-          </span>
-        </div>
-      </div>
-    </a>`).join('');
+        ${p.wip ? '' : '<span class="work-arrow" aria-hidden="true">↗</span>'}
+      </div>`;
+    const cls = `work-card reveal group ${p.extra ? 'work-extra' : ''}`;
+    return p.wip
+      ? `<div class="${cls}">${media}${meta}</div>`
+      : `<a href="case-study.html#${p.slug}" class="${cls}">${media}${meta}</a>`;
+  }).join('');
+})();
+
+/* ============ "SEE MORE" TOGGLE (reveals extra case studies) ============ */
+(function seeMore(){
+  const btn = document.getElementById('seeMoreBtn');
+  const bento = document.getElementById('bento');
+  if (!btn || !bento) return;
+  const label = btn.querySelector('.sm-label');
+  let open = false;
+  btn.addEventListener('click', () => {
+    open = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    const extras = Array.from(bento.querySelectorAll('.work-extra'));
+    if (open) {
+      bento.classList.add('expanded');
+      // animate them in with a gentle stagger
+      extras.forEach((el, i) => { el.classList.remove('in'); requestAnimationFrame(() => setTimeout(() => el.classList.add('in'), 60 + i * 90)); });
+      label.textContent = 'Show less';
+    } else {
+      bento.classList.remove('expanded');
+      extras.forEach(el => el.classList.remove('in'));
+      label.textContent = 'See more';
+      document.getElementById('work')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 })();
 
 /* ============ SKELETON IMAGE LOADER ============ */
@@ -1834,6 +2277,40 @@ const TESTIMONIALS = [
   }
 })();
 
+/* ============ THEME TOGGLE — Earth (light) / Space (dark) ============ */
+(function themeToggle(){
+  const root  = document.documentElement;
+  const btn   = document.getElementById('themeToggle');
+  const space = [document.getElementById('bgVideo'),   document.getElementById('bgVideo2')];
+  const earth = [document.getElementById('earthVideo'), document.getElementById('earthVideo2')];
+  let earthLoaded = false;
+
+  function loadEarth(){
+    if (earthLoaded) return; earthLoaded = true;
+    // Earth video is only fetched the first time light mode is requested.
+    earth.forEach(v => { if (v && !v.getAttribute('src')) { v.setAttribute('src', 'earth.mp4'); v.load(); } });
+  }
+  const play  = list => list.forEach(v => { if (v && v.play)  v.play().catch(()=>{}); });
+  const pause = list => list.forEach(v => { if (v && v.pause) { try { v.pause(); } catch(e){} } });
+
+  function apply(theme, save){
+    loadEarth();                                    // ensure earth is ready to pan into view
+    play(space); play(earth);                       // both hero layers run during the vertical pan
+    if (theme === 'light') root.setAttribute('data-theme','light');  // CSS dissolves+drifts down to earth
+    else                   root.removeAttribute('data-theme');       // ...or up to space
+    if (save) { try { localStorage.setItem('jp-theme', theme); } catch(e){} }
+    // pause the off-screen layer once the pan settles (saves CPU/battery)
+    setTimeout(() => pause(root.getAttribute('data-theme') === 'light' ? space : earth), 1400);
+  }
+
+  // Honor a theme the early head-script already applied (e.g. on reload in light mode).
+  if (root.getAttribute('data-theme') === 'light') { loadEarth(); play(earth); }
+
+  if (btn) btn.addEventListener('click', () => {
+    apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+  });
+})();
+
 /* ============ LOADING SCREEN ============ */
 (function loader(){
   const counter = document.getElementById('loadCount');
@@ -1851,23 +2328,26 @@ const TESTIMONIALS = [
   }
   sessionStorage.setItem('jp_loader_seen', String(Date.now()));
 
-  const words = ['Design', 'Create', 'Inspire', 'Repeat'];
+  // Signature intro: spell out the thesis (and book title), then hold on the last beat.
+  const words = ['Think.', 'Prompt.', 'Create.'];
   let wIdx = 0;
+  let wordTimer = 0;
   function showWord(){
     word.style.opacity = '0';
-    word.style.transform = 'translateY(20px)';
+    word.style.transform = 'translateY(18px)';
     setTimeout(()=>{
       word.textContent = words[wIdx];
       word.style.opacity = '1';
       word.style.transform = 'translateY(0)';
-      wIdx = (wIdx + 1) % words.length;
+      wIdx++;
+      if (wIdx >= words.length) clearInterval(wordTimer);   // hold on "Create."
     }, 200);
   }
   showWord();
-  const wordTimer = setInterval(showWord, 900);
+  wordTimer = setInterval(showWord, 760);
 
   const start = performance.now();
-  const dur = 2700;
+  const dur = 2500;
   function tick(t){
     const p = Math.min(1, (t - start) / dur);
     const c = Math.round(p * 100);
@@ -1890,6 +2370,10 @@ const TESTIMONIALS = [
 /* ============ HERO ENTRANCE (GSAP) ============ */
 function runEntrance(){
   const reveal = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {   // instant, no entrance animation
+      gsap.set('.name-reveal, .blur-in', { opacity: 1, y: 0, filter: 'blur(0px)' });
+      return;
+    }
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     tl.fromTo('.name-reveal', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.1 })
       .fromTo('.blur-in', { opacity: 0, filter: 'blur(10px)', y: 20 }, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 1, stagger: 0.1 }, '-=0.9');
@@ -1909,11 +2393,13 @@ function runEntrance(){
   const roles = ['Designer','Founder','Builder','Architect'];
   let i = 0;
   const el = document.getElementById('roleWord');
+  const art = document.getElementById('roleArticle');
   setInterval(()=>{
     i = (i + 1) % roles.length;
     el.classList.remove('animate-role-fade-in');
     void el.offsetWidth;
     el.textContent = roles[i];
+    if (art) art.textContent = /^[aeiou]/i.test(roles[i]) ? 'An' : 'A';   // a/an agreement
     el.classList.add('animate-role-fade-in');
   }, 2000);
 })();
@@ -1971,11 +2457,13 @@ function runEntrance(){
 
 /* ============ REVEAL ON SCROLL ============ */
 (function reveal(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('in');
-        gsap.fromTo(e.target,
+        if (reduced) gsap.set(e.target, { opacity: 1, y: 0 });           // no slide-in
+        else gsap.fromTo(e.target,
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 1, ease: 'power2.out' });
         io.unobserve(e.target);
@@ -1986,10 +2474,18 @@ function runEntrance(){
 })();
 
 /* ============ GSAP MARQUEE ============ */
-gsap.to('#marquee', { xPercent: -50, duration: 40, ease: 'none', repeat: -1 });
+/* Continuous motion — skip entirely for reduced-motion users. */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  gsap.to('#marquee', { xPercent: -50, duration: 40, ease: 'none', repeat: -1 });
+}
 
-/* GSAP ScrollTrigger registered (kept for future use) */
-gsap.registerPlugin(ScrollTrigger);
+/* GSAP ScrollTrigger (kept for future use). The plugin script is deferred, so it may not
+   be present yet during parse; register it only once it's actually available. */
+(function registerScrollTrigger(){
+  function reg(){ if (window.gsap && window.ScrollTrigger) { try { gsap.registerPlugin(ScrollTrigger); } catch(e){} } }
+  if (window.ScrollTrigger) reg();
+  else addEventListener('load', reg);
+})();
 
 /* ============ ASK JOEY ============ */
 function bootAskJoey(){
@@ -2005,21 +2501,28 @@ function bootAskJoey(){
   if (bootAskJoey._init) return;
   bootAskJoey._init = true;
 
-  const SUGGESTIONS = [
-    "What's your superpower?",
-    "Tell me about Wing",
-    "Are you open to new roles?",
-    "What's your design philosophy?",
-    "Tell me about the book",
-    "How do you work with Claude?"
-  ];
+  // Suggested questions adapt to the section the visitor is currently looking at.
+  const SUGGESTION_SETS = {
+    work:    ["Tell me about Wing", "What did you do at LinkedIn?", "Tell me about January AI", "How do you work with Claude?"],
+    book:    ["Tell me about the book", "What's the thesis?", "Where can I get it?", "What's your superpower?"],
+    contact: ["Are you open to new roles?", "What are you looking for?", "How do you work with Claude?", "What's your superpower?"],
+    default: ["What's your superpower?", "Tell me about Wing", "Are you open to new roles?", "What's your design philosophy?", "Tell me about the book", "How do you work with Claude?"]
+  };
+  function currentContext(){
+    const mid = window.scrollY + window.innerHeight / 2;
+    const inSec = id => { const el = document.getElementById(id); if (!el) return false; const top = el.offsetTop; return mid >= top && mid < top + el.offsetHeight; };
+    if (inSec('contact')) return 'contact';
+    if (inSec('book')) return 'book';
+    if (inSec('work')) return 'work';
+    return 'default';
+  }
 
   const KB = [
     { keys: ['superpower','strength','best at','great at','known for'],
       a: "AI-native prototyping. I turn fuzzy model capabilities into clickable, opinionated product surfaces in hours, not weeks. This portfolio itself was vibe-coded with Claude Code in a single sitting." },
 
     { keys: ['wing','google x','drone','alphabet','faa'],
-      a: "At Google X's Wing I led consumer mobile design for Alphabet's drone delivery moonshot. We designed for a behavior nobody had ever performed before — every assumption I started with was wrong by version three. The work contributed to one of the first FAA-approved drone delivery experiences in the U.S." },
+      a: "At Google X's Wing I led consumer mobile design for Alphabet's drone delivery moonshot. We designed for a behavior nobody had ever performed before, and every assumption I started with was wrong by version three. The work contributed to one of the first FAA-approved drone delivery experiences in the U.S." },
 
     { keys: ['linkedin','premium','current','currently','what do you do','where do you work'],
       a: "I'm a Senior Product Designer at LinkedIn, leading design for premium product experiences shipped to hundreds of millions of professionals. Recent shipped work includes the <b>LinkedIn × Calendly</b> integration that lets Premium subscribers add a 'Book an appointment' button to their profile. I'm also pushing AI-native prototyping across the org." },
@@ -2037,13 +2540,13 @@ function bootAskJoey(){
       a: "Founding-era LinkedIn iOS, 2010–2012. We re-architected LinkedIn for the touch era as a coherent mobile system: feed, profile, search, messaging. Scaled to 200M+ members. That's where I learned to think in systems rather than screens." },
 
     { keys: ['hire','available','open','roles','looking','job','position'],
-      a: "Yes — open to Senior through Principal roles at AI-first companies. The shorter the loop between an idea and a working prototype, the better. Reach out at <a href=\"mailto:jprimiani@gmail.com\" style=\"color:#89AACC\">jprimiani@gmail.com</a>." },
+      a: "Yes, open to Senior through Principal roles at AI-first companies. The shorter the loop between an idea and a working prototype, the better. Reach out at <a href=\"mailto:jprimiani@gmail.com\" style=\"color:#89AACC\">jprimiani@gmail.com</a>." },
 
     { keys: ['philosophy','principle','approach','process','believe','manifesto'],
       a: "The prototype is the artifact. The artifact is the argument. I'd rather ship one opinionated working prototype than ten polished mockups. Specs go stale the moment they're written; working code is honest." },
 
     { keys: ['book','think prompt create','amazon','published','writing','wrote'],
-      a: "<b>Think. Prompt. Create.</b> — out April 2026. The thesis: AI amplifies human creativity rather than replacing it. A playbook for anyone with an idea and the drive to build it, no CS degree required. <a href=\"https://www.amazon.com/dp/B0GWN497PW\" target=\"_blank\" rel=\"noopener\" style=\"color:#89AACC\">Find it on Amazon</a>." },
+      a: "<b>Think. Prompt. Create.</b>, out April 2026. The thesis: AI amplifies human creativity rather than replacing it. A playbook for anyone with an idea and the drive to build it, no CS degree required. <a href=\"https://www.amazon.com/dp/B0GWN497PW\" target=\"_blank\" rel=\"noopener\" style=\"color:#89AACC\">Find it on Amazon</a>." },
 
     { keys: ['claude','vibe','vibe-cod','workflow','prototype','ai tool','tooling'],
       a: "Claude Code is the canvas I design on. I think out loud in plain language, Claude generates the next iteration as real HTML/CSS/JS, and a PM, engineer, or exec can click, criticize, and steer it in the same meeting. This site is the demo." },
@@ -2052,7 +2555,7 @@ function bootAskJoey(){
       a: "Studio XO was the experimental design house where we built work for Lady Gaga and others. Picked up a Cannes Gold Lion, a Webby, and Grammy-adjacent work along the way. Co-creating Little Monsters with Lady Gaga is also what landed me on the Forbes 30 Under 30 list." },
 
     { keys: ['anthropic','deepmind','frontier','interview','company'],
-      a: "I love working where the technology is genuinely transformative and design plays the role of making it useful, intuitive, and human. Frontier AI is the most interesting place to be a designer in 2026 — and I want to be on the team shaping how people actually use these models." },
+      a: "I love working where the technology is genuinely transformative and design plays the role of making it useful, intuitive, and human. Frontier AI is the most interesting place to be a designer in 2026, and I want to be on the team shaping how people actually use these models." },
 
     { keys: ['stanford','school','education','degree'],
       a: "Stanford d.School alum and guest lecturer. Also speak at the AI UX Summit and write about design for AI products." },
@@ -2061,7 +2564,7 @@ function bootAskJoey(){
       a: "Bay Area, with my mini Goldendoodle Toshi. Bay Area native, frontier-tech lifer." },
 
     { keys: ['design system','craft','visual','motion','typography','animation'],
-      a: "Craft compounds. Motion, type, color, hierarchy — every detail is the product. My approach: ship the version that feels right, even when there's a cheaper version that fits in the sprint." },
+      a: "Craft compounds. Motion, type, color, hierarchy: every detail is the product. My approach: ship the version that feels right, even when there's a cheaper version that fits in the sprint." },
 
     { keys: ['mobile','ios','android','phone','app'],
       a: "Fifteen years designing mobile systems at the frontier. LinkedIn iOS, LinkedIn Premium, Wing consumer mobile. I think in flows, gestures, and constraints, and I love the discipline a small screen forces." },
@@ -2070,13 +2573,39 @@ function bootAskJoey(){
       a: "Design is the layer where transformative technology either becomes useful for normal humans or doesn't. That's the work I want to do, and that's the bar I hold the AI products I touch to." },
 
     { keys: ['multi-modal','multimodal','voice','vision','gesture','audio'],
-      a: "Multi-modal product design is the next frontier. Voice, text, vision, and gesture flowing together. The interesting design question is no longer 'where do I put the button' — it's 'what's the right modality for this moment.'" },
+      a: "Multi-modal product design is the next frontier. Voice, text, vision, and gesture flowing together. The interesting design question is no longer 'where do I put the button.' It's 'what's the right modality for this moment.'" },
 
     { keys: ['hi','hello','hey','sup','yo'],
       a: "Hey! I'm Joey, kinda. This is an AI-native version of me running in your browser. Ask me about my work, the book, Claude, hiring, or anything design-adjacent." }
   ];
 
   const DEFAULT_REPLY = "I can answer questions about my work at LinkedIn Premium, Wing @ Google X, Studio XO with Lady Gaga, my book <em class=\"font-display italic\">Think. Prompt. Create.</em>, AI-native design with Claude, or my background. Try one of the suggestions above, or ask me something specific.";
+
+  /* ---- Claude wiring ----------------------------------------------------------
+     Set AGENT_ENDPOINT to your deployed Cloudflare Worker URL (see joey-agent-worker.js)
+     to make Joey genuinely Claude-powered. While it's empty (or if the call fails),
+     the agent gracefully falls back to the fast local keyword KB below, so it always
+     works. The Worker holds the ANTHROPIC_API_KEY secret and the Joey persona prompt. */
+  const AGENT_ENDPOINT = '';
+  const history = [];
+
+  // Markdown-lite -> safe HTML for the typewriter (which treats '<' as a tag boundary).
+  function fmt(text){
+    let s = String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    s = s.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#89AACC">$1</a>');
+    s = s.replace(/\n/g, '<br/>');
+    return s;
+  }
+  // A "thinking" bubble — visible latency handling is part of the AI-design story.
+  function addThinking(){
+    const el = document.createElement('div');
+    el.className = 'ask-msg bot ask-thinking';
+    el.innerHTML = '<span class="ask-dots"><i></i><i></i><i></i></span>';
+    stream.appendChild(el);
+    stream.scrollTop = stream.scrollHeight;
+    return el;
+  }
 
   function match(q) {
     const lower = q.toLowerCase();
@@ -2133,24 +2662,49 @@ function bootAskJoey(){
   }
 
   function renderSuggestions() {
-    suggests.innerHTML = SUGGESTIONS.map(s => `<button class="ask-pill" type="button">${s}</button>`).join('');
+    const set = SUGGESTION_SETS[currentContext()] || SUGGESTION_SETS.default;
+    suggests.innerHTML = set.map(s => `<button class="ask-pill" type="button">${s}</button>`).join('');
     suggests.querySelectorAll('.ask-pill').forEach(btn => {
       btn.addEventListener('click', () => {
         ask(btn.textContent);
       });
     });
   }
+  // Let the panel-open handler refresh suggestions to the current section context.
+  window.joeyRefreshSuggests = () => { if (suggests && !suggests.classList.contains('hidden')) renderSuggestions(); };
 
-  function ask(q) {
+  async function ask(q) {
     if (!q || !q.trim()) return;
-    addUser(q.trim());
+    q = q.trim();
+    addUser(q);
     input.value = '';
     // Hide the suggestion strip after the first user message
     if (suggests && !suggests.classList.contains('hidden')) {
       suggests.classList.add('hidden');
     }
-    setTimeout(() => addBotTyped(match(q)), 350);
+    // Local keyword KB (no endpoint configured): fast canned reply.
+    if (!AGENT_ENDPOINT) { setTimeout(() => addBotTyped(match(q)), 350); return; }
+    // Claude-powered path with graceful fallback to the KB on any failure.
+    const thinking = addThinking();
+    send.disabled = true;
+    try {
+      const res = await fetch(AGENT_ENDPOINT, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: q, history: history.slice(-8) })
+      });
+      if (!res.ok) throw new Error('agent ' + res.status);
+      const data = await res.json();
+      const reply = (data && data.reply) ? String(data.reply) : match(q);
+      history.push({ role: 'user', content: q }, { role: 'assistant', content: reply });
+      thinking.remove();
+      addBotTyped(fmt(reply));
+    } catch (e) {
+      thinking.remove();
+      addBotTyped(match(q));
+    }
   }
+  window.joeyAsk = ask;
+  window.joeySay = (html) => addBotTyped(html);
 
   // Initial greeting
   setTimeout(() => {
@@ -2337,28 +2891,194 @@ if (typeof bootAskJoey === 'function') { try { bootAskJoey(); } catch(e) { conso
   const close = document.getElementById('joeyClose');
   if (!agent || !pill) return;
 
-  let animatedOnce = false;
+  let animatedOnce = false, everOpened = false, lastFocus = null;
+
+  // One-time gentle nudge if the visitor never opens the agent.
+  const nudge = document.createElement('div');
+  nudge.className = 'joey-nudge';
+  nudge.textContent = 'Questions? Ask me anything. 👋';
+  agent.appendChild(nudge);
+
   function openPanel() {
+    everOpened = true;
+    nudge.classList.remove('show');
+    lastFocus = document.activeElement;                 // remember focus to restore on close
     agent.classList.add('open');
+    window.joeyRefreshSuggests?.();                      // suggestions tuned to the section in view
     setTimeout(() => { document.getElementById('askInput')?.focus(); }, 380);
     if (!animatedOnce) {
       const sg = document.getElementById('askSuggests');
       if (sg) {
-        // Re-trigger animation: remove then add on next frame
         sg.classList.remove('animate');
         requestAnimationFrame(() => requestAnimationFrame(() => sg.classList.add('animate')));
       }
       animatedOnce = true;
     }
   }
+  function closePanel() {
+    agent.classList.remove('open');
+    if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch(e){} }
+  }
 
+  window.joeyOpenAgent = openPanel;
   pill.addEventListener('click', () => {
-    if (agent.classList.contains('open')) agent.classList.remove('open');
+    if (agent.classList.contains('open')) closePanel();
     else openPanel();
   });
-  close.addEventListener('click', (e) => { e.stopPropagation(); agent.classList.remove('open'); });
+  close.addEventListener('click', (e) => { e.stopPropagation(); closePanel(); });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && agent.classList.contains('open')) agent.classList.remove('open');
+    if (e.key === 'Escape' && agent.classList.contains('open')) closePanel();
+  });
+
+  // Focus trap while the panel is open (keyboard users can't tab out behind it).
+  agent.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !agent.classList.contains('open')) return;
+    const f = agent.querySelectorAll('button, input, a[href], [tabindex]:not([tabindex="-1"])');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  // Show the nudge once, ~28s in, only if untouched and not over the footer.
+  setTimeout(() => {
+    if (everOpened || agent.classList.contains('agent-hide')) return;
+    nudge.classList.add('show');
+    setTimeout(() => nudge.classList.remove('show'), 6500);
+  }, 28000);
+})();
+</script>
+
+<script>
+/* ============ DEVICE TILT (work grid) ============ */
+(function workTilt(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(hover: none)').matches) return;
+  document.querySelectorAll('.work-card').forEach(card => {
+    const media = card.querySelector('.work-media');
+    if (!media) return;
+    let raf = 0;
+    card.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        media.style.transition = 'transform .12s ease-out, border-color .4s ease, box-shadow .4s ease';
+        media.style.transform = `rotateX(${(-py * 4.5).toFixed(2)}deg) rotateY(${(px * 5.5).toFixed(2)}deg) translateY(-4px)`;
+      });
+    });
+    card.addEventListener('pointerleave', () => {
+      cancelAnimationFrame(raf);
+      media.style.transition = '';     // hand transform back to the CSS hover/lift transition
+      media.style.transform = '';
+    });
+  });
+})();
+
+/* ============ EASTER EGG: type "claude" ============ */
+(function claudeEgg(){
+  let buf = '';
+  const target = 'claude';
+  let fired = false;
+  addEventListener('keydown', (e) => {
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-target.length);
+    if (buf === target) {
+      const pill = document.getElementById('joeyPill');
+      if (pill) { pill.classList.add('winking'); setTimeout(() => pill.classList.remove('winking'), 900); }
+      if (window.joeyOpenAgent) window.joeyOpenAgent();
+      if (window.joeySay && !fired) {
+        fired = true;
+        setTimeout(() => window.joeySay("You found it. 👋 This whole site was vibe-coded with <b>Claude Code</b> in one sitting, and I'm Claude under the hood too. Ask me anything."), 500);
+      }
+    }
+  });
+})();
+
+/* ============ COMMAND PALETTE (⌘K) ============ */
+(function commandPalette(){
+  const COMMANDS = [
+    { ico: '↑', label: 'Home',                sub: 'Section', run: () => goSection('#top') },
+    { ico: '▢', label: 'Selected work',        sub: 'Section', run: () => goSection('#work') },
+    { ico: '◷', label: 'About',                sub: 'Section', run: () => goSection('#about') },
+    { ico: '★', label: 'Recognition',          sub: 'Section', run: () => goSection('#accolades') },
+    { ico: '✦', label: 'Think. Prompt. Create.', sub: 'Book', run: () => goSection('#book') },
+    { ico: '❝', label: 'Testimonials',         sub: 'Section', run: () => goSection('#testimonials') },
+    { ico: '✉', label: 'Contact',              sub: 'Section', run: () => goSection('#contact') },
+    { ico: '◆', label: 'LinkedIn Premium',     sub: 'Case study', run: () => go('case-study.html#linkedin-premium') },
+    { ico: '◆', label: 'Wing @ Google X',      sub: 'Case study', run: () => go('case-study.html#wing') },
+    { ico: '◆', label: 'January AI',           sub: 'Case study', run: () => go('case-study.html#january-ai') },
+    { ico: '◆', label: 'Flow Wallet',          sub: 'Case study', run: () => go('case-study.html#flow-wallet') },
+    { ico: '◆', label: 'Folio',                sub: 'Case study', run: () => go('case-study.html#folio') },
+    { ico: '◆', label: 'Lady Gaga',            sub: 'Case study', run: () => go('case-study.html#little-monsters') },
+    { ico: '📄', label: 'Résumé',              sub: 'Page', run: () => go('resume.html') },
+    { ico: '◐', label: 'Toggle Earth / Space', sub: 'Theme', run: () => document.getElementById('themeToggle')?.click() },
+    { ico: '💬', label: 'Talk to Joey',         sub: 'Agent', run: () => window.joeyOpenAgent && window.joeyOpenAgent() },
+    { ico: '✉', label: 'Copy email',           sub: 'jprimiani@gmail.com', run: () => navigator.clipboard && navigator.clipboard.writeText('jprimiani@gmail.com') },
+    { ico: '📕', label: 'Get the book on Amazon', sub: 'Link', run: () => window.open('https://www.amazon.com/dp/B0GWN497PW', '_blank') },
+  ];
+
+  function go(url){ if (document.startViewTransition) location.href = url; else location.href = url; }
+  function goSection(hash){
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    else location.hash = hash;
+  }
+
+  // Build DOM
+  const overlay = document.createElement('div');
+  overlay.className = 'cmdk-overlay';
+  overlay.innerHTML = `
+    <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+      <input class="cmdk-input" type="text" placeholder="Jump to a section, case study, or action..." aria-label="Command palette search" autocomplete="off"/>
+      <div class="cmdk-list" role="listbox"></div>
+      <div class="cmdk-hint"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const input = overlay.querySelector('.cmdk-input');
+  const list = overlay.querySelector('.cmdk-list');
+  let filtered = COMMANDS, sel = 0;
+
+  function fuzzy(q, s){
+    q = q.toLowerCase(); s = s.toLowerCase();
+    if (!q) return true;
+    let i = 0; for (const c of s) { if (c === q[i]) i++; if (i === q.length) return true; } return false;
+  }
+  function render(){
+    if (!filtered.length){ list.innerHTML = '<div class="cmdk-empty">No matches.</div>'; return; }
+    list.innerHTML = filtered.map((c, i) => `
+      <div class="cmdk-item" role="option" data-i="${i}" aria-selected="${i === sel}">
+        <span class="cmdk-ico">${c.ico}</span><span>${c.label}</span><span class="cmdk-sub">${c.sub}</span>
+      </div>`).join('');
+    const cur = list.querySelector('[aria-selected="true"]');
+    if (cur) cur.scrollIntoView({ block: 'nearest' });
+  }
+  function filter(){
+    const q = input.value.trim();
+    filtered = COMMANDS.filter(c => fuzzy(q, c.label) || fuzzy(q, c.sub));
+    sel = 0; render();
+  }
+  let lastFocus = null;
+  const trigger = () => document.getElementById('cmdkBtn');
+  function open(){ lastFocus = document.activeElement; overlay.classList.add('open'); trigger()?.setAttribute('aria-expanded', 'true'); input.value = ''; filtered = COMMANDS; sel = 0; render(); setTimeout(() => input.focus(), 30); }
+  function close(){ overlay.classList.remove('open'); trigger()?.setAttribute('aria-expanded', 'false'); if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch(e){} } }
+  function run(i){ const c = filtered[i]; if (!c) return; close(); setTimeout(() => c.run(), 120); }
+
+  input.addEventListener('input', filter);
+  list.addEventListener('click', (e) => { const it = e.target.closest('.cmdk-item'); if (it) run(+it.dataset.i); });
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  document.getElementById('cmdkBtn')?.addEventListener('click', open);
+  addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); overlay.classList.contains('open') ? close() : open(); return; }
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape'){ e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown'){ e.preventDefault(); sel = Math.min(sel + 1, filtered.length - 1); render(); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); sel = Math.max(sel - 1, 0); render(); }
+    else if (e.key === 'Enter'){ e.preventDefault(); run(sel); }
+    else if (e.key === 'Tab'){ e.preventDefault(); input.focus(); }   // trap focus (list is arrow-navigated)
   });
 })();
 </script>
