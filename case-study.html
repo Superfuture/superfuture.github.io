@@ -220,6 +220,7 @@
   .cs-section-media.flightplan { aspect-ratio: 1999/1158; }   /* lane-by-lane altitude-coded flight plan */
   .cs-section-media.calendly { aspect-ratio: 1/1; max-width: 460px; margin-inline: auto; background: #ffffff; }   /* LinkedIn × Calendly demo, clean white, no texture */
   .cs-section-media.triptych { aspect-ratio: 4 / 3; }   /* Entangled 3-screen still (800x600), show full, no crop */
+  .cs-section-media.coverphotos { aspect-ratio: 824 / 640; }   /* LinkedIn cover-photo slideshow recording */
   /* iPhone 17 Pro frame (screen clipped by CSS, bezel PNG on top), same geometry as the home tiles */
   .cs-frame { position: relative; aspect-ratio: 1752/3616; }
   .cs-frame .cs-frame-clip { position: absolute; left: 4.17%; top: 1.74%; width: 91.6%; height: 96.5%; border-radius: 9% / 4.4%; overflow: hidden; z-index: 1; }
@@ -725,6 +726,8 @@ const CASES = {
       },
       {
         h: 'Cover photos, in motion',
+        media: `<video src="linkedin-coverphotos.mp4" autoplay muted loop playsinline preload="auto" poster="linkedin-coverphotos-poster.jpg"></video>`,
+        mediaClass: 'coverphotos',
         body: `<strong class="text-text-primary">A profile that moves.</strong> Premium members can add up to five cover photos in a dynamic slideshow, showcasing their work, personality, and brand instead of a single static banner. I designed the motion and the editing flow so a profile expresses a vibe, not just a headline, and still feels calm and unmistakably LinkedIn.`
       },
       {
