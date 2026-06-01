@@ -520,6 +520,8 @@
     transition: transform .35s ease, color .35s ease;
   }
   .work-card:hover .work-arrow { color: #89AACC; transform: translate(3px, -3px); }
+  /* On mobile the ↗ renders as an iOS emoji and adds little; hide it there. */
+  @media (max-width: 640px) { .work-arrow, .joey-pill-sub .pill-arrow { display: none; } }
   /* Placeholder tile for case studies whose art isn't in yet */
   .work-media.work-wip {
     display: flex; align-items: center; justify-content: center;
@@ -1529,7 +1531,7 @@
 
 <!-- ============ NAV ============ -->
 <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
-  <div id="navPill" class="liquid-glass inline-flex items-center rounded-full px-2 py-2 transition-shadow duration-300">
+  <div id="navPill" class="liquid-glass inline-flex items-center gap-0.5 sm:gap-0 rounded-full px-2 py-2 transition-shadow duration-300">
     <a href="#top" class="logo-wrap relative w-9 h-9 shrink-0 rounded-full flex items-center justify-center" aria-label="Home">
       <span class="logo-ring absolute inset-0 rounded-full"></span>
       <span class="relative w-[calc(100%-3px)] h-[calc(100%-3px)] rounded-full flex items-center justify-center"
@@ -2851,7 +2853,7 @@ bootAskJoey();
   <button class="joey-pill" id="joeyPill" type="button" aria-label="Open Joey Agent">
     <span class="joey-avatar"></span>
     <span class="joey-pill-label">Joey Agent</span>
-    <span class="joey-pill-sub">Ask me ↗</span>
+    <span class="joey-pill-sub">Ask me <span class="pill-arrow" aria-hidden="true">↗</span></span>
   </button>
   <div class="joey-panel" role="dialog" aria-label="Joey Agent">
     <div class="ask-titlebar">
