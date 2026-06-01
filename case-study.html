@@ -290,6 +290,11 @@
   .cs-section-gallery .cs-tile:hover img { transform: scale(1.06); }
   .cs-section-gallery.tall .cs-tile { aspect-ratio: 9/16; }
   .cs-section-gallery.square .cs-tile { aspect-ratio: 1/1; }
+  /* full-width stacked screenshots (no crop) */
+  .cs-section-gallery.fullwidth { grid-template-columns: 1fr; gap: 18px; }
+  .cs-section-gallery.fullwidth .cs-tile { aspect-ratio: auto; background: #ffffff; }
+  .cs-section-gallery.fullwidth .cs-tile img { height: auto; object-fit: contain; }
+  @media (max-width: 640px) { .cs-section-gallery.fullwidth { grid-template-columns: 1fr; } }
 
   /* iPhone gallery: let source images keep their own frames; just normalize spacing/shadow. */
   .cs-section-gallery.iphone {
@@ -1005,18 +1010,18 @@ const CASES = {
     category: 'Co-Founder · Lady Gaga · 2011–2012',
     role: 'Co-Founder · Product Designer',
     team: 'Co-founded with Lady Gaga (Backplane)',
-    location: 'Los Angeles · New York',
+    location: 'Palo Alto · Los Angeles',
     headline: 'Co-founded a creative social platform with Lady Gaga before fan platforms were a category.',
     hero: 'https://assets.dunked.com/assets/prod/117833/p1bba63p7i1595m541rbs1k441oht8.png',
     stats: [
+      { k: 'Little Monsters', v: '0 → 1M' },
       { k: 'Concert merch lift', v: '+30%' },
       { k: 'Built before fan platforms existed', v: '2011' },
-      { k: 'A creative home for', v: 'Millions' },
     ],
     sections: [
       {
         h: 'The brief',
-        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bbc96apj1addi2313ii1hpnu4u3.jpeg" alt="Little Monsters · original whiteboard sketch, April 2011" style="object-fit:contain; background:#0a0a0a;"/>`,
+        media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/p1bbc96apj1addi2313ii1hpnu4u3.jpeg" alt="Little Monsters · original whiteboard sketch, April 2011" style="object-fit:contain; background:#ffffff;"/>`,
         mediaClass: 'wide',
         mediaCaption: 'Little Monsters · original whiteboard · April 2011',
         body: `In 2011 I co-founded Little Monsters with Lady Gaga, a purpose-built creative community for her global superfan base. Inspired by what DeviantArt did for my own creative development, I designed a platform that treated fans as artists, not audience. Fan art was fine art. Belonging was the product.`
@@ -1024,6 +1029,15 @@ const CASES = {
       {
         h: 'The problem',
         body: `<strong class="text-text-primary">Fans had no real home.</strong> In 2011, fan communities lived in comment sections, Facebook groups, and scattered forums. No dedicated creative infrastructure, no tools, no identity, no permanence. Little Monsters was built as a creative platform purpose-built for one of the world's most passionate fan communities, with tools, culture, and philosophy to match their energy.`
+      },
+      {
+        h: 'A creative home',
+        gallery: [
+          'https://assets.dunked.com/assets/prod/117833/p1bba63p7jvqu10au1ag31r4s1kf0h.png',
+          'https://assets.dunked.com/assets/prod/117833/p1bba63p7k1nij1ql01irs1c514d7o.png'
+        ],
+        galleryClass: 'fullwidth',
+        body: `A feed that treated every fan post as a creative work, and a one-tap way to share yours. Posting felt like adding to a gallery, not shouting into a feed.`
       },
       {
         h: 'Fan art = fine art',
@@ -1034,8 +1048,6 @@ const CASES = {
           'https://assets.dunked.com/assets/prod/117833/p1bba6lujeipu1ii31vqv1unq1ghf9.jpg',
           'https://assets.dunked.com/assets/prod/117833/p1bba6ns7c6hh167at5un6np79f.jpg',
           'https://assets.dunked.com/assets/prod/117833/1000x0_p1bbq7mb9616tatged3712rt52g3.jpg',
-          'https://assets.dunked.com/assets/prod/117833/p1bba63p7jvqu10au1ag31r4s1kf0h.png',
-          'https://assets.dunked.com/assets/prod/117833/p1bba63p7k1nij1ql01irs1c514d7o.png',
           'https://assets.dunked.com/assets/prod/117833/p1bbdqr8b8dbontm1o1j1cii6h83.jpg'
         ],
         body: `Artwork by Helen Green, Iggy Proof, DendaReloaded, N.Gwinner, and community artists worldwide. We treated their work with the same reverence as fine art. DeviantArt shaped who I am as a designer. I wanted to build for the next generation of young creatives what DeviantArt did for mine.`
