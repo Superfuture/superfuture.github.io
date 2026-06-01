@@ -2586,7 +2586,7 @@ function bootAskJoey(){
      to make Joey genuinely Claude-powered. While it's empty (or if the call fails),
      the agent gracefully falls back to the fast local keyword KB below, so it always
      works. The Worker holds the ANTHROPIC_API_KEY secret and the Joey persona prompt. */
-  const AGENT_ENDPOINT = '';
+  const AGENT_ENDPOINT = 'https://joey-agent.jprimiani.workers.dev';
   const history = [];
 
   // Markdown-lite -> safe HTML for the typewriter (which treats '<' as a tag boundary).
