@@ -673,7 +673,7 @@ const CASES = {
     hero: 'linkedin-calendly-demo-poster.jpg',
     heroVideo: 'linkedin-calendly-demo.mp4',
     heroFit: 'contain',
-    heroBg: '#ffffff',
+    heroBg: 'hsl(var(--surface))',
     noHalftone: true,
     hideStats: true,
     stats: [
@@ -1261,8 +1261,8 @@ function render(slug) {
         <!-- Hero image -->
         <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9; view-transition-name: vt-${slug};${c.heroBg ? ` background:${c.heroBg};` : ''}">
           ${c.heroVideo
-            ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain' : 'object-cover'}"></video>`
-            : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain' : 'object-cover'}" loading="eager"/>`}
+            ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}"></video>`
+            : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}" loading="eager"/>`}
           ${c.noHalftone ? '' : `<div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>`}
         </div>
 

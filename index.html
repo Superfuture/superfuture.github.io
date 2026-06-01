@@ -538,6 +538,8 @@
 
   /* Hero portrait gentle breathing on idle */
   .hero-name { animation: breath 10s ease-in-out infinite; }
+  /* Earth mode: soft light halo lifts the dark wordmark off darker green patches of the meadow (invisible over bright sky) */
+  html[data-theme="light"] .name-reveal { text-shadow: 0 1px 3px rgba(255,255,255,0.78), 0 2px 30px rgba(255,255,255,0.55); }
 
   /* Section landing flash - fired by nav click */
   @keyframes sectionLand {
