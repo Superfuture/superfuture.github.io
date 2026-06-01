@@ -219,6 +219,15 @@
   .cs-section-media.poly { aspect-ratio: 1280/826; }   /* polygon flight-planning recording */
   .cs-section-media.flightplan { aspect-ratio: 1999/1158; }   /* lane-by-lane altitude-coded flight plan */
   .cs-section-media.calendly { aspect-ratio: 1/1; max-width: 460px; margin-inline: auto; background: #ffffff; }   /* LinkedIn × Calendly demo, clean white, no texture */
+  /* iPhone 17 Pro frame (screen clipped by CSS, bezel PNG on top), same geometry as the home tiles */
+  .cs-frame { position: relative; aspect-ratio: 1752/3616; }
+  .cs-frame .cs-frame-clip { position: absolute; left: 4.17%; top: 1.74%; width: 91.6%; height: 96.5%; border-radius: 9% / 4.4%; overflow: hidden; z-index: 1; }
+  .cs-frame .cs-frame-clip > video, .cs-frame .cs-frame-clip > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cs-frame .cs-frame-bezel { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+  .cs-section-media.phone-frame { aspect-ratio: auto; height: auto; background: transparent; overflow: visible; display: flex; justify-content: center; padding: 64px 0; }
+  .cs-section-media.phone-frame .cs-frame { height: min(74vh, 680px); }
+  .cs-hero-media.is-frame { display: flex; align-items: center; justify-content: center; }
+  .cs-hero-media.is-frame .cs-frame { height: 84%; }
   .cs-section-media.kenburns > img { animation: kenburns 22s ease-in-out infinite alternate; }
 
   /* YouTube cinemagraph: oversize the iframe so all YT chrome falls outside the visible area */
@@ -670,9 +679,9 @@ const CASES = {
     team: 'LinkedIn Premium × Calendly · PM, eng, partnerships',
     location: 'Mountain View, CA',
     headline: 'The profile, reimagined as a conversion surface for the professional world.',
-    hero: 'linkedin-calendly-framed-v2-poster.jpg',
-    heroVideo: 'linkedin-calendly-framed-v2.mp4',
-    heroFit: 'contain',
+    hero: 'linkedin-calendly-scr-poster.jpg',
+    heroVideo: 'linkedin-calendly-scr.mp4',
+    heroFrame: true,
     heroBg: 'hsl(var(--surface))',
     noHalftone: true,
     hideStats: true,
@@ -748,8 +757,8 @@ const CASES = {
       },
       {
         h: 'Precise paths, simple UI',
-        media: `<video src="wing-polygon.mp4" autoplay muted loop playsinline preload="auto" poster="wing-polygon-poster.jpg"></video>`,
-        mediaClass: 'poly',
+        media: `<div class="cs-frame"><div class="cs-frame-clip"><video src="wing-polygon-scr.mp4" autoplay muted loop playsinline preload="auto" poster="wing-polygon-scr-poster.jpg"></video></div><img class="cs-frame-bezel" src="iphone17-frame.png" alt="" aria-hidden="true"/></div>`,
+        mediaClass: 'phone-frame',
         body: `Drones don't fly in tidy rectangles. A delivery zone is a complex polygon shaped by no-fly areas, terrain, and altitude. I designed the planner so the complexity stays under the hood: sketch the boundary, and it generates the optimized, lane-by-lane path, color-coded by altitude. The hard math happens automatically; the interface stays a simple map anyone can read at a glance.`
       },
       {
@@ -1259,10 +1268,12 @@ function render(slug) {
         </header>
 
         <!-- Hero image -->
-        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border" style="border-color:hsl(var(--stroke)); aspect-ratio: 16/9; view-transition-name: vt-${slug};${c.heroBg ? ` background:${c.heroBg};` : ''}">
-          ${c.heroVideo
-            ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}"></video>`
-            : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}" loading="eager"/>`}
+        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border${c.heroFrame ? ' is-frame' : ''}" style="border-color:hsl(var(--stroke)); aspect-ratio: ${c.heroFrame ? '16/11' : '16/9'}; view-transition-name: vt-${slug};${c.heroBg ? ` background:${c.heroBg};` : ''}">
+          ${c.heroFrame
+            ? `<div class="cs-frame"><div class="cs-frame-clip"><video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}"></video></div><img class="cs-frame-bezel" src="iphone17-frame.png" alt="" aria-hidden="true"/></div>`
+            : c.heroVideo
+              ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}"></video>`
+              : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}" loading="eager"/>`}
           ${c.noHalftone ? '' : `<div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>`}
         </div>
 
