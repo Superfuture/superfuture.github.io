@@ -191,8 +191,8 @@
 
   /* Section-level media (new: leads each section) */
   .cs-section { display: grid; gap: 32px; }
-  .cs-section p a { color: #89AACC; text-decoration: underline; text-underline-offset: 2px; transition: color .2s ease; }
-  .cs-section p a:hover { color: #a9c2de; }
+  .cs-section p a { color: hsl(var(--text)); font-weight: 700; text-decoration: none; transition: opacity .2s ease; }
+  .cs-section p a:hover { text-decoration: underline; text-underline-offset: 2px; }
   @media (min-width: 768px) { .cs-section { gap: 48px; } }
   .cs-section-media {
     position: relative;
@@ -219,6 +219,7 @@
   .cs-section-media.poly { aspect-ratio: 1280/826; }   /* polygon flight-planning recording */
   .cs-section-media.flightplan { aspect-ratio: 1999/1158; }   /* lane-by-lane altitude-coded flight plan */
   .cs-section-media.calendly { aspect-ratio: 1/1; max-width: 460px; margin-inline: auto; background: #ffffff; }   /* LinkedIn × Calendly demo, clean white, no texture */
+  .cs-section-media.triptych { aspect-ratio: 4 / 3; }   /* Entangled 3-screen still (800x600), show full, no crop */
   /* iPhone 17 Pro frame (screen clipped by CSS, bezel PNG on top), same geometry as the home tiles */
   .cs-frame { position: relative; aspect-ratio: 1752/3616; }
   .cs-frame .cs-frame-clip { position: absolute; left: 4.17%; top: 1.74%; width: 91.6%; height: 96.5%; border-radius: 9% / 4.4%; overflow: hidden; z-index: 1; }
@@ -806,7 +807,7 @@ const CASES = {
 
   'january-ai': {
     name: 'January AI',
-    category: 'Mobile · AI Health · 2024–Present',
+    category: 'Mobile · AI Health · 2024',
     role: 'Senior Product Designer, iOS',
     team: 'Mobile pod: PM, iOS engineering, AI/ML, clinical',
     location: 'Remote · SF Bay Area',
@@ -919,7 +920,7 @@ const CASES = {
       {
         h: 'The vision',
         media: `<img loading="lazy" src="entangled-screens.png" alt="Entangled app screens: read your consciousness levels"/>`,
-        mediaClass: 'wide device-pad',
+        mediaClass: 'triptych device-pad',
         mediaCaption: 'Entangled · touch and hold to read your consciousness',
         body: `A radical new technology to explore the power of consciousness and the nature of reality. I co-founded Entangled to put the world's largest collective-consciousness research project into a free app, so anyone could take part in the science, not just the lab.`
       },
@@ -949,6 +950,8 @@ const CASES = {
       }
     ],
     quote: 'A radical new technology to explore the nature of reality.',
+    appUrl: 'https://apps.apple.com/us/app/entangled-org/id6467852455',
+    appLabel: 'Download Entangled',
     next: 'studio-xo',
   },
 
@@ -1047,7 +1050,7 @@ const CASES = {
       },
       {
         h: 'Press',
-        body: `WIRED, TechCrunch, Rolling Stone, Fast Company, CNN, ABC News, NME, and TIME. Named one of the first true fan platforms and a model for artist–community relationships that the rest of the industry would later try to copy.`
+        body: `<a href="https://www.wired.com/story/troy-carter/" target="_blank" rel="noopener">WIRED</a>, <a href="https://techcrunch.com/2012/02/16/lady-gaga-backed-backplane-raises-over-4m-from-sequoia-more-acquires-sharing-platform-cortex/" target="_blank" rel="noopener">TechCrunch</a>, <a href="https://www.rollingstone.com/culture/culture-news/lady-gaga-launches-social-network-for-little-monsters-backplane-ceo-talks-online-fan-identity-191943/" target="_blank" rel="noopener">Rolling Stone</a>, <a href="https://www.google.com/search?q=site%3Afastcompany.com+Backplane+Lady+Gaga+Little+Monsters" target="_blank" rel="noopener">Fast Company</a>, <a href="https://www.cnn.com/2012/02/08/tech/social-media/lady-gaga-social-little-monsters" target="_blank" rel="noopener">CNN</a>, <a href="https://abcnews.go.com/blogs/technology/2012/07/lady-gagas-little-monsters-social-network-launches" target="_blank" rel="noopener">ABC News</a>, <a href="https://www.nme.com/news/music/lady-gaga-276-1268750" target="_blank" rel="noopener">NME</a>, and <a href="https://www.google.com/search?q=site%3Atime.com+Backplane+Lady+Gaga+Little+Monsters" target="_blank" rel="noopener">TIME</a>. Named one of the first true fan platforms and a model for artist–community relationships that the rest of the industry would later try to copy.`
       }
     ],
     quote: "This isn't a social network. It's a place of love and acceptance where every fan is also a creator, and every creation matters.",
@@ -1058,7 +1061,7 @@ const CASES = {
 
   'flow-wallet': {
     name: 'Flow Wallet',
-    category: 'Mobile · Web3 Wallet · Self-Custody',
+    category: 'Mobile · Web3 Wallet · Self-Custody · 2024',
     role: 'Product Designer · Mobile',
     team: 'Cross-functional: design, mobile eng, blockchain, security',
     location: 'Remote',
