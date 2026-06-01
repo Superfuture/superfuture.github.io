@@ -222,6 +222,7 @@
   .cs-section-media.flightplan { aspect-ratio: 1999/1158; }   /* lane-by-lane altitude-coded flight plan */
   .cs-section-media.calendly { aspect-ratio: 1/1; max-width: 460px; margin-inline: auto; background: #ffffff; }   /* LinkedIn × Calendly demo, clean white, no texture */
   .cs-section-media.triptych { aspect-ratio: 933 / 504; }   /* Entangled 3 screens, cut sharp (no device shadows) */
+  .cs-section-media.entmap { aspect-ratio: 2000 / 1318; }   /* Entangled spike map: personal / local / global */
   .cs-section-media.coverphotos { aspect-ratio: 824 / 640; }   /* LinkedIn cover-photo slideshow recording */
   /* iPhone 17 Pro frame (screen clipped by CSS, bezel PNG on top), same geometry as the home tiles */
   .cs-frame { position: relative; aspect-ratio: 1752/3616; }
@@ -958,11 +959,21 @@ const CASES = {
         body: `I designed the experience around a single, almost meditative gesture: <strong class="text-text-primary">touch and hold</strong> to read your consciousness levels. Color, motion and gradient did the heavy lifting, turning abstract data from a random-number generator into something you could feel, not just read.`
       },
       {
+        h: 'The consciousness map',
+        media: `<img loading="lazy" src="entangled-map.png" alt="Entangled spike map across personal, local and global scales"/>`,
+        mediaClass: 'entmap',
+        mediaCaption: 'Entangled · spikes across personal, local and global scales',
+        body: `Beyond your own reading, Entangled mapped the field in real time. As deviations built in the random data, the app surfaced <strong class="text-text-primary">spikes</strong> as a living heatmap, zooming from your <em>personal</em> area out to your <em>local</em> area and the <em>global</em> network. A push alert told you the moment one was developing, turning an invisible signal into a place you could watch.`
+      },
+      {
         h: 'Entangled Pods',
         media: `<img loading="lazy" src="https://assets.dunked.com/assets/prod/117833/1000x0_p1bavj425h151690s8gvg54edqf.png" alt="Entangled Pods · color experiment"/>`,
         mediaClass: 'wide',
         mediaCaption: 'Entangled Pods · a public color experiment',
-        body: `Entangled Pods was a public social experiment built on random-number generators (RNGs). It explored the relationship between a group of people and the color shown, and whether we might unconsciously influence the colored-light outcomes together. A playful, tangible way to feel an invisible question.`
+        mediaBelow: `<img loading="lazy" src="entangled-pods-installation.jpg" alt="Entangled Pods street installation concept, San Francisco"/>`,
+        mediaBelowClass: 'wide',
+        mediaBelowCaption: 'Entangled Pods · imagined on Market Street, San Francisco',
+        body: `Entangled Pods was a public social experiment built on random-number generators (RNGs). It explored the relationship between a group of people and the color shown, and whether we might unconsciously influence the colored-light outcomes together. We imagined it on the street as glowing pods you could step into, a playful, tangible way to feel an invisible question.`
       },
       {
         h: 'Built with the science',
@@ -970,7 +981,7 @@ const CASES = {
       },
       {
         h: 'Press & recognition',
-        body: `Covered by <strong class="text-text-primary">PC Magazine</strong>, <strong class="text-text-primary">The Huffington Post</strong>, Collective Evolution, Reality Sandwich and more, and nominated for an <strong class="text-text-primary">FWA</strong>. A crowdfunded launch on Indiegogo invited the world to explore the nature of reality together.`
+        body: `Covered by <a href="https://medium.com/pcmag-access/are-you-ready-to-hack-consciousness-6a157e829b4" target="_blank" rel="noopener">PC Magazine</a>, <a href="https://www.huffingtonpost.com/gregory-weinkauf/no-longer-science-fiction_1_b_4688935.html" target="_blank" rel="noopener">The Huffington Post</a>, Collective Evolution and <a href="https://realitysandwich.com/could-a-consciousness-app-change-the-world/" target="_blank" rel="noopener">Reality Sandwich</a>, featured by the <a href="https://noetic.org/blog/entangled-the-consciousness-app/" target="_blank" rel="noopener">Institute of Noetic Sciences</a>, and nominated for an <strong class="text-text-primary">FWA</strong>. A crowdfunded launch on <a href="https://www.indiegogo.com/projects/collective-consciousness-consciousness-technology-in-a-radical-new-app" target="_blank" rel="noopener">Indiegogo</a> invited the world to explore the nature of reality together.`
       }
     ],
     quote: 'A radical new technology to explore the nature of reality.',
@@ -1363,6 +1374,12 @@ function render(slug) {
                     ${s.extra || ''}
                   </div>
                 </div>
+                ${s.mediaBelow ? `
+                  <div class="cs-section-media ${s.mediaBelowClass || 'wide'}">
+                    ${s.mediaBelow}
+                    ${s.mediaBelowCaption ? `<div class="cs-media-gradient"></div><div class="cs-media-caption"><span>${s.mediaBelowCaption}</span><span class="ui-arrow" aria-hidden="true">↗</span></div>` : ''}
+                  </div>
+                ` : ''}
               </section>
             `).join('')}
 
