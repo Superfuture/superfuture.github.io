@@ -299,6 +299,12 @@
   .cs-section-gallery.fullwidth .cs-tile img { height: auto; object-fit: contain; }
   @media (max-width: 640px) { .cs-section-gallery.fullwidth { grid-template-columns: 1fr; } }
 
+  /* app-screen mockups: 2-up, keep their own device framing */
+  .cs-section-gallery.appshots { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .cs-section-gallery.appshots .cs-tile { aspect-ratio: 4/3; background: hsl(var(--surface)); }
+  .cs-section-gallery.appshots .cs-tile img { object-fit: cover; }
+  @media (max-width: 640px) { .cs-section-gallery.appshots { grid-template-columns: 1fr; } }
+
   /* iPhone gallery: let source images keep their own frames; just normalize spacing/shadow. */
   .cs-section-gallery.iphone {
     grid-template-columns: repeat(3, 1fr);
@@ -996,7 +1002,9 @@ const CASES = {
         media: `<video src="studioxo-brand.mp4" autoplay muted loop playsinline preload="auto" poster="studioxo-poster.jpg"></video>`,
         mediaClass: 'wide',
         mediaCaption: 'XO · the connected app',
-        body: `I created and led the XO app: the control surface for app-connected garments and the social home of the brand. It paired with the wearables over Bluetooth LE, let people customize what their clothing displayed, and turned getting dressed into an act of self-expression and play.`
+        body: `I created and led the XO app: the control surface for app-connected garments and the social home of the brand. It paired with the wearables over Bluetooth LE, let people customize what their clothing displayed, and turned getting dressed into an act of self-expression and play. You could watch a piece come alive and buy it in the same view, straight from the runway.`,
+        gallery: ['studioxo-app-dress.jpg', 'studioxo-app-backpack.jpg'],
+        galleryClass: 'appshots',
       },
       {
         h: 'Couture, engineered',
@@ -1007,7 +1015,11 @@ const CASES = {
       },
       {
         h: '2415, the connected collection',
-        body: `<strong class="text-text-primary">Twentyfour15</strong> took the lab work to the street: the world's first <strong class="text-text-primary">app-connected, fibre-optic colour-changing apparel</strong>. Garments paired to an iOS app over Bluetooth and animated in any colour, in sync with your music, a framework we called a <em>Platform for the Body</em>. It launched as a sold-out pop-up on Floral Street during London Fashion Week 2017.`
+        media: `<img loading="lazy" src="studioxo-2415-cap.jpg" alt="2415 fibre-optic cap animating in sync with the XO app"/>`,
+        mediaClass: 'wide',
+        mediaCaption: '2415 · fibre-optic, app-connected',
+        body: `<strong class="text-text-primary">Twentyfour15</strong> took the lab work to the street: the world's first <strong class="text-text-primary">app-connected, fibre-optic colour-changing apparel</strong>. Garments paired to an iOS app over Bluetooth and animated in any colour, in sync with your music, a framework we called a <em>Platform for the Body</em>. It launched as a sold-out pop-up on Floral Street during London Fashion Week 2017.`,
+        gallery: ['studioxo-look-1.png', 'studioxo-look-2.png', 'studioxo-look-3.png', 'studioxo-look-4.png', 'studioxo-look-5.png', 'studioxo-look-6.jpg'],
       },
       {
         h: 'Recognition',
