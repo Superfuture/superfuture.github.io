@@ -39,6 +39,7 @@
     "sameAs": ["https://www.linkedin.com/in/jprim", "https://x.com/jp", "https://instagram.com/officialjp"]
   },
   "hasPart": [
+    { "@type": "CreativeWork", "name": "Loop · human-in-the-loop control for coding agents", "creator": "Joey Primiani" },
     { "@type": "CreativeWork", "name": "LinkedIn Premium · AI & the Calendly integration", "creator": "Joey Primiani" },
     { "@type": "CreativeWork", "name": "Wing @ Google X · OpenSky drone delivery", "creator": "Joey Primiani" },
     { "@type": "CreativeWork", "name": "January AI · clinical-grade AI nutrition", "creator": "Joey Primiani" },
@@ -692,6 +693,72 @@
 
 <script>
 const CASES = {
+  'loop': {
+    name: 'Loop',
+    category: 'Concept · Agentic Coding · 2026',
+    role: 'Product Design & Front-end Prototype · Self-initiated',
+    team: 'Solo concept, designed and prototyped with Claude Code',
+    location: 'San Francisco',
+    headline: 'Keep a human in the loop on your coding agents.',
+    hero: 'loop-hero.png',
+    heroEmbed: 'https://loop-5qv.pages.dev/?embed=1',
+    heroBg: 'hsl(var(--surface))',
+    noHalftone: true,
+    stats: [
+      { k: 'Designed for', v: 'Claude Code' },
+      { k: 'Core principle', v: 'Human-in-the-loop' },
+      { k: 'Prototyped in', v: 'HTML/CSS/JS' },
+    ],
+    sections: [
+      {
+        h: 'The shift',
+        body: `Coding agents now write, run, and ship code on their own. The hard part is no longer capability, it is <strong class="text-text-primary">trust</strong>: knowing what an agent is about to do, and being able to say no before it does it. Today that control lives in the terminal, tethered to your desk. The moment you step away, you are out of the loop.`
+      },
+      {
+        h: 'The idea',
+        body: `<strong class="text-text-primary">Loop is the control surface for your coding agents, in your pocket.</strong> Your agents do the work in the cloud. When one reaches a decision only a human should make, it reaches you: a push notification, a quick read of what it is doing, and a clear choice. You stay in the loop without staying at your desk. <em>(Try it above: tap the lock-screen notification.)</em>`
+      },
+      {
+        h: 'Designing for trust',
+        body: `Every consequential action, a command, a push, a file write, surfaces as an <strong class="text-text-primary">approval</strong>, not a log line you find later. The agent shows what it wants to do and why, in plain language. Approval is the product, not a speed bump.`,
+        extra: `
+          <div style="margin-top:32px;">
+            <div style="font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:hsl(var(--muted)); margin-bottom:16px;">The trust model</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:12px;">
+              <div style="border:1px solid hsl(var(--stroke)); border-radius:14px; padding:16px 16px 18px;">
+                <div style="font-size:17px; color:hsl(var(--text)); margin-bottom:6px;">Intent first</div>
+                <div style="font-size:13px; line-height:1.55; color:hsl(var(--text) / .65);">Show what the agent wants to do and the reason, before it acts.</div>
+              </div>
+              <div style="border:1px solid hsl(var(--stroke)); border-radius:14px; padding:16px 16px 18px;">
+                <div style="font-size:17px; color:hsl(var(--text)); margin-bottom:6px;">Graduated trust</div>
+                <div style="font-size:13px; line-height:1.55; color:hsl(var(--text) / .65);">Allow once for now, or Allow to let it run free for this kind of task.</div>
+              </div>
+              <div style="border:1px solid hsl(var(--stroke)); border-radius:14px; padding:16px 16px 18px;">
+                <div style="font-size:17px; color:hsl(var(--text)); margin-bottom:6px;">A clear no</div>
+                <div style="font-size:13px; line-height:1.55; color:hsl(var(--text) / .65);">Deny pauses the agent and hands control back, calmly, every time.</div>
+              </div>
+            </div>
+          </div>`
+      },
+      {
+        h: 'Review, not rubber-stamp',
+        body: `Approving blind is not trust. Loop renders the agent's changes as a real, syntax-highlighted diff you can read on a small screen, then <strong class="text-text-primary">approve and merge</strong> or send a note back to steer. The hard design problem was legibility: making code review feel calm and confident at phone size.`
+      },
+      {
+        h: 'Calm in a stream of activity',
+        body: `The aesthetic is terminal legibility meeting soft, trustworthy iOS: monospace where it earns its place, generous space everywhere else, and a warm, restrained palette. The agent's work streams in as a quiet timeline rather than a wall of logs, so the one thing that needs you stands out instantly.<br/><br/>I designed it the way the role demands: <strong class="text-text-primary">prototype in code, ship fast, elevate craft.</strong> The whole thing is a live HTML/CSS/JS prototype, opinionated and clickable, not a static mockup.`
+      },
+      {
+        h: 'Why it matters',
+        body: `As agents take on more of the work, the human's job shifts from writing every line to exercising <strong class="text-text-primary">judgment</strong>: deciding what is safe, what is right, what ships. Good design is what keeps that judgment fast, informed, and trusted. That is the whole bet behind Loop, and it is the design problem I most want to work on next.`
+      }
+    ],
+    quote: 'A coding agent is only as useful as the human who can trust it.',
+    appUrl: 'https://loop-5qv.pages.dev',
+    appLabel: 'Open the live prototype',
+    next: 'linkedin-premium',
+  },
+
   'linkedin-premium': {
     name: 'LinkedIn',
     category: 'Mobile · Premium · 2024–Present',
@@ -1323,13 +1390,16 @@ function render(slug) {
         </header>
 
         <!-- Hero image -->
-        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border${c.heroFrame ? ' is-frame' : ''}" style="border-color:hsl(var(--stroke)); aspect-ratio: ${c.heroFrame ? '16/11' : '16/9'}; view-transition-name: vt-${slug};${c.heroBg ? ` background:${c.heroBg};` : ''}">
-          ${c.heroFrame
+        ${c.heroEmbed ? `<div class="reveal text-center text-xs uppercase tracking-[0.25em] mb-4 md:mb-5" style="color:hsl(var(--muted))">Live prototype · tap the notification to begin</div>` : ''}
+        <div class="cs-hero-media reveal relative overflow-hidden rounded-3xl mb-16 md:mb-24 border${c.heroFrame ? ' is-frame' : ''}" style="border-color:hsl(var(--stroke)); aspect-ratio: ${c.heroEmbed ? '4/3' : c.heroFrame ? '16/11' : '16/9'}; view-transition-name: vt-${slug};${c.heroBg ? ` background:${c.heroBg};` : ''}">
+          ${c.heroEmbed
+            ? `<iframe src="${c.heroEmbed}" title="${c.name} interactive prototype" loading="lazy" class="absolute inset-0 w-full h-full" style="border:0; background:transparent;" allowtransparency="true"></iframe>`
+            : c.heroFrame
             ? `<div class="cs-frame"><div class="cs-frame-clip"><video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}"></video></div><img class="cs-frame-bezel" src="iphone17-frame.png" alt="" aria-hidden="true"/></div>`
             : c.heroVideo
               ? `<video src="${c.heroVideo}" autoplay muted loop playsinline preload="auto" poster="${c.hero}" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}"></video>`
               : `<img src="${c.hero}" alt="" class="absolute inset-0 w-full h-full ${c.heroFit === 'contain' ? 'object-contain p-[3%]' : 'object-cover'}" loading="eager"/>`}
-          ${c.noHalftone ? '' : `<div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>`}
+          ${c.noHalftone || c.heroEmbed ? '' : `<div class="halftone absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"></div>`}
         </div>
 
         <!-- Stats strip -->
@@ -1579,7 +1649,7 @@ route();
 /* ============ COMMAND PALETTE (⌘K) ============ */
 (function commandPalette(){
   const CASES = [
-    ['LinkedIn Premium','linkedin-premium'], ['Wing @ Google X','wing'], ['January AI','january-ai'],
+    ['Loop','loop'], ['LinkedIn Premium','linkedin-premium'], ['Wing @ Google X','wing'], ['January AI','january-ai'],
     ['Flow Wallet','flow-wallet'], ['Folio','folio'], ['Lady Gaga','little-monsters'],
   ];
   const COMMANDS = [
