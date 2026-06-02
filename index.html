@@ -684,7 +684,7 @@
   .joey-avatar {
     width: 26px; height: 26px;
     border-radius: 9999px;
-    background-image: url('joey-headshot.png');
+    background-image: url('joey-headshot-dark.png');
     background-size: cover;
     background-position: center;
     border: 1px solid hsl(var(--stroke));
@@ -700,6 +700,12 @@
     border-radius: 9999px;
     box-shadow: 0 0 6px #10b981;
   }
+  /* Headshot swaps with the theme: dark photo for Space, warm photo for Earth */
+  html[data-theme="light"] .joey-avatar { background-image: url('joey-headshot-light.png'); }
+  .headshot-swap .hs-light { display: none; }
+  .headshot-swap .hs-dark  { display: block; }
+  html[data-theme="light"] .headshot-swap .hs-dark  { display: none; }
+  html[data-theme="light"] .headshot-swap .hs-light { display: block; }
   .joey-pill-label { font-weight: 500; letter-spacing: 0.02em; }
   .joey-pill-sub { color: hsl(var(--muted)); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-left: 4px; }
 
@@ -1874,12 +1880,17 @@
     <div class="reveal grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-start">
       <!-- Headshot -->
       <div class="md:col-span-5 order-1 md:sticky md:top-28">
-        <div class="skel rounded-3xl relative max-w-[420px] mx-auto md:mx-0">
+        <div class="skel headshot-swap rounded-3xl relative max-w-[420px] mx-auto md:mx-0">
           <div class="absolute inset-0 -m-3 rounded-3xl opacity-40"
                style="background: radial-gradient(circle at 30% 40%, rgba(137,170,204,0.5), transparent 60%), radial-gradient(circle at 70% 60%, rgba(78,133,191,0.4), transparent 60%); filter: blur(40px); z-index:0;"></div>
-          <img src="joey-headshot.png"
+          <img src="joey-headshot-dark.png"
                alt="Joey Primiani"
-               class="skel-img relative w-full h-auto rounded-3xl border"
+               class="hs-dark skel-img relative w-full h-auto rounded-3xl border"
+               style="border-color:hsl(var(--stroke));"
+               loading="lazy"/>
+          <img src="joey-headshot-light.png"
+               alt="Joey Primiani"
+               class="hs-light skel-img relative w-full h-auto rounded-3xl border"
                style="border-color:hsl(var(--stroke));"
                loading="lazy"/>
         </div>
