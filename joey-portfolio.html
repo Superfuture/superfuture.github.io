@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <script>
-  /* Theme before first paint: an explicit saved choice wins; otherwise follow the
-     OS setting (light -> earth, dark -> space). */
+  /* Theme before first paint: touch/mobile devices always follow the OS; on
+     desktop an explicit saved choice wins, otherwise follow the OS.
+     (light -> earth, dark -> space) */
   try {
+    var jpMM = window.matchMedia;
+    var jpMobile = !!(jpMM && jpMM('(hover: none) and (pointer: coarse)').matches);
+    var jpOSLight = !!(jpMM && jpMM('(prefers-color-scheme: light)').matches);
     var jpSaved = localStorage.getItem('jp-theme');
-    var jpLight = jpSaved === 'light' ||
-      (jpSaved !== 'dark' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+    var jpLight = jpMobile ? jpOSLight
+      : (jpSaved === 'light' || (jpSaved !== 'dark' && jpOSLight));
     if (jpLight) document.documentElement.setAttribute('data-theme','light');
   } catch(e){}
 </script>
@@ -2342,20 +2346,23 @@ const TESTIMONIALS = [
   syncMeta();
   if (root.getAttribute('data-theme') === 'light') { loadEarth(); play(earth); }
 
-  // Follow the OS light/dark setting live, unless the visitor has picked a theme themselves.
+  // Follow the OS light/dark setting live. On touch/mobile devices the OS always
+  // wins; on desktop a theme the visitor picked themselves overrides it.
+  const isMobile = !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
   const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   if (mq) {
     const onOSChange = e => {
       let saved = null; try { saved = localStorage.getItem('jp-theme'); } catch(_){}
-      if (saved === 'light' || saved === 'dark') return;   // explicit choice overrides the OS
+      if (!isMobile && (saved === 'light' || saved === 'dark')) return;  // desktop choice overrides
       apply(e.matches ? 'dark' : 'light', false);          // dark OS -> space, light OS -> earth
     };
     if (mq.addEventListener) mq.addEventListener('change', onOSChange);
     else if (mq.addListener) mq.addListener(onOSChange);   // older Safari
   }
 
+  // The toggle persists only on desktop; on mobile the OS setting always wins on reload.
   if (btn) btn.addEventListener('click', () => {
-    apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+    apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', !isMobile);
   });
 })();
 

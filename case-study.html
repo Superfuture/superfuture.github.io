@@ -3,8 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <script>
-  /* Shared theme (key: jp-theme): saved choice wins; default is dark. */
-  try { if (localStorage.getItem('jp-theme') === 'light') document.documentElement.setAttribute('data-theme','light'); } catch(e){}
+  /* Shared theme (key: jp-theme): touch/mobile devices always follow the OS;
+     on desktop a saved choice wins, otherwise follow the OS. */
+  try {
+    var jpMM = window.matchMedia;
+    var jpMobile = !!(jpMM && jpMM('(hover: none) and (pointer: coarse)').matches);
+    var jpOSLight = !!(jpMM && jpMM('(prefers-color-scheme: light)').matches);
+    var jpSaved = localStorage.getItem('jp-theme');
+    var jpLight = jpMobile ? jpOSLight
+      : (jpSaved === 'light' || (jpSaved !== 'dark' && jpOSLight));
+    if (jpLight) document.documentElement.setAttribute('data-theme','light');
+  } catch(e){}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Case Studies, Joey Primiani</title>
@@ -1636,11 +1645,30 @@ route();
 (function themeToggle(){
   const root = document.documentElement;
   const btn  = document.getElementById('themeToggle');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
+  const mm = window.matchMedia;
+  const isMobile = !!(mm && mm('(hover: none) and (pointer: coarse)').matches);
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  function syncMeta(){ if (themeMeta) themeMeta.setAttribute('content', root.getAttribute('data-theme') === 'light' ? '#faf8f4' : '#0a0a0a'); }
+  function setLight(on){ if (on) root.setAttribute('data-theme','light'); else root.removeAttribute('data-theme'); syncMeta(); }
+  syncMeta();
+
+  // Follow the OS light/dark setting live: mobile always, desktop unless the visitor picked a theme.
+  const mq = mm ? mm('(prefers-color-scheme: dark)') : null;
+  if (mq) {
+    const onOSChange = e => {
+      let saved = null; try { saved = localStorage.getItem('jp-theme'); } catch(_){}
+      if (!isMobile && (saved === 'light' || saved === 'dark')) return;
+      setLight(!e.matches);
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onOSChange);
+    else if (mq.addListener) mq.addListener(onOSChange);
+  }
+
+  // Toggle persists on desktop only; on mobile the OS setting wins on reload.
+  if (btn) btn.addEventListener('click', () => {
     const light = root.getAttribute('data-theme') === 'light';
-    if (light) root.removeAttribute('data-theme'); else root.setAttribute('data-theme','light');
-    try { localStorage.setItem('jp-theme', light ? 'dark' : 'light'); } catch(e){}
+    setLight(!light);
+    if (!isMobile) { try { localStorage.setItem('jp-theme', light ? 'dark' : 'light'); } catch(e){} }
   });
 })();
 </script>
