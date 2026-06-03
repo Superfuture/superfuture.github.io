@@ -1453,6 +1453,13 @@
   html[data-theme="light"] .work-card:hover .work-media { box-shadow: 0 20px 44px rgba(90,75,55,0.16), 0 0 0 1px rgba(137,170,204,0.12); }
   html[data-theme="light"] .play-tile { box-shadow: 0 14px 36px rgba(90,75,55,0.10); }
   html[data-theme="light"] .play-tile:hover { box-shadow: 0 26px 56px rgba(90,75,55,0.16), 0 0 0 1px rgba(137,170,204,0.22); }
+  /* Card name labels keep white text on a warm scrim in earth mode -
+     otherwise --text flips near-black and the label is dark-on-dark. */
+  html[data-theme="light"] .play-tile-label {
+    color: #fff;
+    background: linear-gradient(transparent, rgba(28,22,16,0.74));
+    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  }
 
   /* Liquid glass: dark-on-light treatment in earth mode */
   html[data-theme="light"] .liquid-glass {
