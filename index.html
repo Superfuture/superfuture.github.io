@@ -3,8 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <script>
-  /* Theme before first paint: saved choice wins; default is dark/space. */
-  try { if (localStorage.getItem('jp-theme') === 'light') document.documentElement.setAttribute('data-theme','light'); } catch(e){}
+  /* Theme before first paint: an explicit saved choice wins; otherwise follow the
+     OS setting (light -> earth, dark -> space). */
+  try {
+    var jpSaved = localStorage.getItem('jp-theme');
+    var jpLight = jpSaved === 'light' ||
+      (jpSaved !== 'dark' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+    if (jpLight) document.documentElement.setAttribute('data-theme','light');
+  } catch(e){}
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Joey Primiani • Design Leader and AI creator</title>
@@ -2308,18 +2314,38 @@ const TESTIMONIALS = [
   const play  = list => list.forEach(v => { if (v && v.play)  v.play().catch(()=>{}); });
   const pause = list => list.forEach(v => { if (v && v.pause) { try { v.pause(); } catch(e){} } });
 
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  function syncMeta(){
+    if (themeMeta) themeMeta.setAttribute('content',
+      root.getAttribute('data-theme') === 'light' ? '#faf8f4' : '#0a0a0a');
+  }
+
   function apply(theme, save){
     loadEarth();                                    // ensure earth is ready to pan into view
     play(space); play(earth);                       // both hero layers run during the vertical pan
     if (theme === 'light') root.setAttribute('data-theme','light');  // CSS dissolves+drifts down to earth
     else                   root.removeAttribute('data-theme');       // ...or up to space
+    syncMeta();
     if (save) { try { localStorage.setItem('jp-theme', theme); } catch(e){} }
     // pause the off-screen layer once the pan settles (saves CPU/battery)
     setTimeout(() => pause(root.getAttribute('data-theme') === 'light' ? space : earth), 1400);
   }
 
-  // Honor a theme the early head-script already applied (e.g. on reload in light mode).
+  // Honor a theme the early head-script already applied (e.g. on reload, or matching the OS).
+  syncMeta();
   if (root.getAttribute('data-theme') === 'light') { loadEarth(); play(earth); }
+
+  // Follow the OS light/dark setting live, unless the visitor has picked a theme themselves.
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  if (mq) {
+    const onOSChange = e => {
+      let saved = null; try { saved = localStorage.getItem('jp-theme'); } catch(_){}
+      if (saved === 'light' || saved === 'dark') return;   // explicit choice overrides the OS
+      apply(e.matches ? 'dark' : 'light', false);          // dark OS -> space, light OS -> earth
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onOSChange);
+    else if (mq.addListener) mq.addListener(onOSChange);   // older Safari
+  }
 
   if (btn) btn.addEventListener('click', () => {
     apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
