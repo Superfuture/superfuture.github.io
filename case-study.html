@@ -513,21 +513,22 @@
   .yt-lite iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   /* Poster card: a frame from the clip, scrimmed so the title/meta stay legible */
   .yt-lite.yt-poster { background: radial-gradient(135% 120% at 50% -15%, #1b2737 0%, #0b1018 68%); }
-  .yt-lite.yt-poster img.poster { filter: saturate(1.05) contrast(1.02); }
+  .yt-lite.yt-poster img.poster { filter: saturate(1.04) contrast(1.02) brightness(0.78); }
   .yt-lite.yt-poster .yt-overlay {
-    background: linear-gradient(180deg, rgba(8,10,14,0.62) 0%, rgba(8,10,14,0.18) 34%, rgba(8,10,14,0.20) 60%, rgba(8,10,14,0.66) 100%);
+    background: linear-gradient(180deg, rgba(6,8,12,0.82) 0%, rgba(6,8,12,0.5) 28%, rgba(6,8,12,0.28) 50%, rgba(6,8,12,0.4) 72%, rgba(6,8,12,0.72) 100%);
   }
   .yt-poster-title {
     position: absolute; top: 26px; left: 0; right: 0;
     text-align: center; padding: 0 24px;
-    color: rgba(255,255,255,0.96);
+    color: #fff;
     font-size: clamp(22px, 3.4vw, 38px); line-height: 1.08; letter-spacing: -0.01em;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+    text-shadow: 0 2px 22px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.7);
   }
   .yt-poster-sub {
     display: block; margin-top: 10px;
     font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
-    color: rgba(255,255,255,0.5); font-style: normal;
+    color: rgba(255,255,255,0.82); font-style: normal;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.85);
   }
   html[data-theme="light"] .yt-lite.yt-poster { background: radial-gradient(135% 120% at 50% -15%, #2a3850 0%, #141a24 70%); }
   /* "bare" section media: no frame of its own, so a self-framed embed (.yt-lite) sits flush */
@@ -1202,7 +1203,7 @@ const CASES = {
       {
         h: 'A call to create',
         mediaClass: 'bare',
-        media: `<a class="yt-lite yt-poster" href="https://www.youtube.com/watch?v=KdPwpRP6ljU&t=46s" target="_blank" rel="noopener" data-ytid="KdPwpRP6ljU" data-ytstart="46" aria-label="Play: Monstervision No. 1, the Film Project">
+        media: `<a class="yt-lite yt-poster" href="https://www.youtube.com/watch?v=KdPwpRP6ljU" target="_blank" rel="noopener" data-ytid="KdPwpRP6ljU" data-ytstart="0" aria-label="Play: Monstervision No. 1, the Film Project">
           <img class="poster" loading="lazy" src="littlemonsters-monstervision.jpg" alt="Lady Gaga in a Monstervision webcam broadcast to Little Monsters"/>
           <span class="yt-poster-title">Monstervision <span class="font-display italic">No.&nbsp;1</span><span class="yt-poster-sub">The Film Project</span></span>
           <span class="yt-overlay"><span class="yt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
