@@ -510,6 +510,10 @@
     display: flex; justify-content: space-between; align-items: center;
     font-style: normal;
   }
+  .yt-lite iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* "bare" section media: no frame of its own, so a self-framed embed (.yt-lite) sits flush */
+  .cs-section-media.bare { border: 0; background: none; box-shadow: none; border-radius: 0; aspect-ratio: auto; overflow: visible; }
+  .cs-section-media.bare .yt-lite { margin-top: 0; }
 
   /* ============ SKELETON LOADER, rainbow shine sweep ============ */
   /* A soft rainbow band sweeps across a dark placeholder while the image
@@ -1177,6 +1181,16 @@ const CASES = {
         body: `<strong class="text-text-primary">An inclusive safe space.</strong> A lifeline for LGBTQ+ youth, bullied teenagers, and young people battling anxiety and depression.<br/><br/><strong class="text-text-primary">Launching careers.</strong> Helen Green gained global recognition through the platform, and her fan art opened doors to Haus of Gaga collaboration.<br/><br/><strong class="text-text-primary">Artist–fan, reinvented.</strong> Gaga participated in chatrooms, shared Monstervisions, and responded directly to fan art. Present with a community, not broadcasting to an audience.`
       },
       {
+        h: 'A call to create',
+        mediaClass: 'bare',
+        media: `<a class="yt-lite" href="https://www.youtube.com/watch?v=KdPwpRP6ljU&t=46s" target="_blank" rel="noopener" data-ytid="KdPwpRP6ljU" data-ytstart="46" aria-label="Play: Lady Gaga inviting Little Monsters to direct films for her next album">
+          <img class="poster" loading="lazy" src="https://i.ytimg.com/vi/KdPwpRP6ljU/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/KdPwpRP6ljU/hqdefault.jpg'" alt="Lady Gaga on Little Monsters"/>
+          <span class="yt-overlay"><span class="yt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+          <span class="yt-meta"><span>Lady Gaga · Little Monsters</span><span>Watch ↗</span></span>
+        </a>`,
+        body: `Little Monsters was never a broadcast channel. Gaga used it to commission the community directly, inviting fans to submit films they had directed and promising to shoot the winning filmmaker in the music video for her next album. A one-way fanbase became a working creative collaborator, which is exactly what the platform was built to make possible.`
+      },
+      {
         h: 'Press',
         body: `<a href="https://www.wired.com/story/troy-carter/" target="_blank" rel="noopener">WIRED</a>, <a href="https://techcrunch.com/2012/02/16/lady-gaga-backed-backplane-raises-over-4m-from-sequoia-more-acquires-sharing-platform-cortex/" target="_blank" rel="noopener">TechCrunch</a>, <a href="https://www.rollingstone.com/culture/culture-news/lady-gaga-launches-social-network-for-little-monsters-backplane-ceo-talks-online-fan-identity-191943/" target="_blank" rel="noopener">Rolling Stone</a>, <a href="https://www.google.com/search?q=site%3Afastcompany.com+Backplane+Lady+Gaga+Little+Monsters" target="_blank" rel="noopener">Fast Company</a>, <a href="https://www.cnn.com/2012/02/08/tech/social-media/lady-gaga-social-little-monsters" target="_blank" rel="noopener">CNN</a>, <a href="https://abcnews.go.com/blogs/technology/2012/07/lady-gagas-little-monsters-social-network-launches" target="_blank" rel="noopener">ABC News</a>, <a href="https://www.nme.com/news/music/lady-gaga-276-1268750" target="_blank" rel="noopener">NME</a>, and <a href="https://www.google.com/search?q=site%3Atime.com+Backplane+Lady+Gaga+Little+Monsters" target="_blank" rel="noopener">TIME</a>. Named one of the first true fan platforms and a model for artist–community relationships that the rest of the industry would later try to copy.`
       }
@@ -1639,6 +1653,18 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 route();
+
+/* Lite YouTube facade: tap swaps the poster for an autoplaying nocookie embed.
+   The user gesture is what lets it autoplay; if JS fails the anchor still opens YouTube. */
+document.addEventListener('click', e => {
+  const lite = e.target.closest('.yt-lite');
+  if (!lite || lite.dataset.ytLoaded) return;
+  e.preventDefault();
+  lite.dataset.ytLoaded = '1';
+  const id = lite.dataset.ytid;
+  const start = lite.dataset.ytstart || 0;
+  lite.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&start=${start}&rel=0&modestbranding=1&playsinline=1" title="Lady Gaga on Little Monsters" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen frameborder="0"></iframe>`;
+});
 </script>
 <script>
 /* ============ THEME TOGGLE, shares jp-theme with the home page ============ */
