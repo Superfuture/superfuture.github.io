@@ -511,6 +511,20 @@
     font-style: normal;
   }
   .yt-lite iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* Typographic poster — used when the source has no usable thumbnail */
+  .yt-lite.yt-poster { background: radial-gradient(135% 120% at 50% -15%, #1b2737 0%, #0b1018 68%); }
+  .yt-poster-title {
+    position: absolute; top: 26px; left: 0; right: 0;
+    text-align: center; padding: 0 24px;
+    color: rgba(255,255,255,0.96);
+    font-size: clamp(22px, 3.4vw, 38px); line-height: 1.08; letter-spacing: -0.01em;
+  }
+  .yt-poster-sub {
+    display: block; margin-top: 10px;
+    font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); font-style: normal;
+  }
+  html[data-theme="light"] .yt-lite.yt-poster { background: radial-gradient(135% 120% at 50% -15%, #2a3850 0%, #141a24 70%); }
   /* "bare" section media: no frame of its own, so a self-framed embed (.yt-lite) sits flush */
   .cs-section-media.bare { border: 0; background: none; box-shadow: none; border-radius: 0; aspect-ratio: auto; overflow: visible; }
   .cs-section-media.bare .yt-lite { margin-top: 0; }
@@ -1183,8 +1197,8 @@ const CASES = {
       {
         h: 'A call to create',
         mediaClass: 'bare',
-        media: `<a class="yt-lite" href="https://www.youtube.com/watch?v=KdPwpRP6ljU&t=46s" target="_blank" rel="noopener" data-ytid="KdPwpRP6ljU" data-ytstart="46" aria-label="Play: Lady Gaga inviting Little Monsters to direct films for her next album">
-          <img class="poster" loading="lazy" src="https://i.ytimg.com/vi/KdPwpRP6ljU/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/KdPwpRP6ljU/hqdefault.jpg'" alt="Lady Gaga on Little Monsters"/>
+        media: `<a class="yt-lite yt-poster" href="https://www.youtube.com/watch?v=KdPwpRP6ljU&t=46s" target="_blank" rel="noopener" data-ytid="KdPwpRP6ljU" data-ytstart="46" aria-label="Play: Monstervision No. 1, the Film Project">
+          <span class="yt-poster-title">Monstervision <span class="font-display italic">No.&nbsp;1</span><span class="yt-poster-sub">The Film Project</span></span>
           <span class="yt-overlay"><span class="yt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
           <span class="yt-meta"><span>Lady Gaga · Little Monsters</span><span>Watch ↗</span></span>
         </a>`,
