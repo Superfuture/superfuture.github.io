@@ -318,6 +318,9 @@
   .cs-section-gallery.appshots { grid-template-columns: repeat(2, 1fr); gap: 18px; }
   .cs-section-gallery.appshots .cs-tile { aspect-ratio: 4/3; background: hsl(var(--surface)); }
   .cs-section-gallery.appshots .cs-tile img { object-fit: cover; }
+  /* third app shot (folded tee + colour picker) spans full width at its natural proportion */
+  .cs-section-gallery.appshots .cs-tile:nth-child(3) { grid-column: 1 / -1; aspect-ratio: auto; }
+  .cs-section-gallery.appshots .cs-tile:nth-child(3) img { width: 100%; height: auto; object-fit: contain; display: block; }
   @media (max-width: 640px) { .cs-section-gallery.appshots { grid-template-columns: 1fr; } }
 
   /* iPhone gallery: let source images keep their own frames; just normalize spacing/shadow. */
