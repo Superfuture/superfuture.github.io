@@ -28,4 +28,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://www.officialjp.com/sitemap.xml
+Sitemap: https://officialjp.com/work/sitemap.xml

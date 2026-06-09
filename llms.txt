@@ -7,7 +7,7 @@ Joey designs human-centered AI and mobile experiences with exceptional craft, pr
 ## Current role
 - Senior Product Designer at LinkedIn, leading design for Premium product experiences shipped to hundreds of millions of professionals. Recent shipped work: the LinkedIn x Calendly integration (a "Book an appointment" button on Premium profiles, plus a browser extension for Messaging, Sales Navigator, and Recruiter). Pushing AI-native prototyping across the org.
 
-## Case studies (officialjp.com/case-study.html)
+## Case studies (officialjp.com/work/case-study.html)
 - LinkedIn Premium: leading mobile design for Premium and AI at hundreds-of-millions scale; the LinkedIn x Calendly integration.
 - Wing @ Google X (OpenSky): Lead Product Designer for the consumer mobile experience of Alphabet's drone-delivery moonshot; contributed to one of the first FAA-approved drone delivery experiences in the US.
 - January AI: designed iOS for clinical-grade AI nutrition, including photo-based food scanning that predicts glucose response before you eat, and "Jan", the in-app AI coach. 54M+ foods, 4.5 stars.
@@ -35,8 +35,8 @@ Joey designs human-centered AI and mobile experiences with exceptional craft, pr
 
 ## Contact and links
 - Email: jprimiani@gmail.com
-- Website: https://www.officialjp.com
-- Resume: https://www.officialjp.com/resume.html
+- Website: https://officialjp.com
+- Resume: https://officialjp.com/work/resume.html
 - LinkedIn: https://www.linkedin.com/in/jprim
 - X (Twitter): https://x.com/jp
 - Instagram: https://instagram.com/officialjp
