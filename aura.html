@@ -253,7 +253,7 @@
 
 <nav class="top">
   <div class="navpill">
-    <a href="joey-portfolio.html"><span aria-hidden="true">←</span> All work</a>
+    <a href="/work/"><span aria-hidden="true">←</span> All work</a>
     <span class="div"></span>
     <span class="chip">Aura</span>
     <span class="div"></span>
@@ -624,7 +624,7 @@
       <h2>The agent should feel<br>like <em>a calm presence.</em></h2>
       <div class="cbtns">
         <a class="cbtn solid" href="mailto:jprimiani@gmail.com">Say hi ↗</a>
-        <a class="cbtn" href="joey-portfolio.html">← All work</a>
+        <a class="cbtn" href="/work/">← All work</a>
       </div>
     </div>
   </section>
@@ -662,7 +662,7 @@
     items.push({label,sub:k?k.textContent.trim().replace(/\s+/g,' '):'Section',
       run:()=>document.getElementById(s.id).scrollIntoView({behavior:'smooth',block:'start'})});
   });
-  items.push({label:'All work',sub:'Page',run:()=>location.href='joey-portfolio.html'});
+  items.push({label:'All work',sub:'Page',run:()=>location.href='/work/'});
   items.push({label:'Say hi',sub:'Email',run:()=>location.href='mailto:jprimiani@gmail.com'});
   function render(q){
     q=(q||'').toLowerCase();

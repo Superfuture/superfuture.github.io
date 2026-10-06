@@ -666,7 +666,7 @@
 <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
   <div class="inline-flex items-center rounded-full backdrop-blur-md border border-white/10 px-2 py-2"
        style="background:hsl(var(--surface) / 0.85)">
-    <a href="joey-portfolio.html" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 inline-flex items-center gap-2"
+    <a href="/work/" class="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 inline-flex items-center gap-2"
        style="color:hsl(var(--muted))" onmouseover="this.style.color='hsl(var(--text))'" onmouseout="this.style.color='hsl(var(--muted))'">
       <span aria-hidden="true">←</span> All work
     </a>
@@ -1732,10 +1732,10 @@ document.addEventListener('click', e => {
   ];
   const COMMANDS = [
     ...CASES.map(([label, slug]) => ({ ico: '◆', label, sub: 'Case study', run: () => { location.hash = '#' + slug; window.scrollTo({ top: 0, behavior: 'smooth' }); } })),
-    { ico: '↩', label: 'Back to home',  sub: 'Page',  run: () => go('joey-portfolio.html') },
-    { ico: '▢', label: 'Selected work', sub: 'Home',  run: () => go('joey-portfolio.html#work') },
-    { ico: '✦', label: 'Think. Prompt. Create.', sub: 'Book', run: () => go('joey-portfolio.html#book') },
-    { ico: '✉', label: 'Contact',       sub: 'Home',  run: () => go('joey-portfolio.html#contact') },
+    { ico: '↩', label: 'Back to home',  sub: 'Page',  run: () => go('/work/') },
+    { ico: '▢', label: 'Selected work', sub: 'Home',  run: () => go('/work/#work') },
+    { ico: '✦', label: 'Think. Prompt. Create.', sub: 'Book', run: () => go('/work/#book') },
+    { ico: '✉', label: 'Contact',       sub: 'Home',  run: () => go('/work/#contact') },
     { ico: '📄', label: 'Résumé',        sub: 'Page',  run: () => go('resume.html') },
     { ico: '◐', label: 'Toggle Earth / Space', sub: 'Theme', run: () => document.getElementById('themeToggle')?.click() },
     { ico: '✉', label: 'Copy email',    sub: 'jprimiani@gmail.com', run: () => navigator.clipboard && navigator.clipboard.writeText('jprimiani@gmail.com') },
