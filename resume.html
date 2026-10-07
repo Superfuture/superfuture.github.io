@@ -10,8 +10,7 @@
     var jpMobile = !!(jpMM && jpMM('(hover: none) and (pointer: coarse)').matches);
     var jpOSLight = !!(jpMM && jpMM('(prefers-color-scheme: light)').matches);
     var jpSaved = localStorage.getItem('jp-theme');
-    var jpLight = jpMobile ? jpOSLight
-      : (jpSaved === 'light' || (jpSaved !== 'dark' && jpOSLight));
+    var jpLight = (jpSaved === 'light' || (jpSaved !== 'dark' && jpOSLight));
     if (jpLight) document.documentElement.setAttribute('data-theme','light');
   } catch(e){}
 </script>
@@ -307,7 +306,7 @@
   if (mq) {
     const onOSChange = e => {
       let saved = null; try { saved = localStorage.getItem('jp-theme'); } catch(_){}
-      if (!isMobile && (saved === 'light' || saved === 'dark')) return;
+      if (saved === 'light' || saved === 'dark') return;
       setLight(!e.matches);
     };
     if (mq.addEventListener) mq.addEventListener('change', onOSChange);
@@ -318,7 +317,7 @@
   if (btn) btn.addEventListener('click', () => {
     const light = root.getAttribute('data-theme') === 'light';
     setLight(!light);
-    if (!isMobile) { try { localStorage.setItem('jp-theme', light ? 'dark' : 'light'); } catch(e){} }
+    try { localStorage.setItem('jp-theme', light ? 'dark' : 'light'); } catch(e){}
   });
 })();
 </script>

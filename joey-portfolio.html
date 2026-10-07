@@ -11,8 +11,7 @@
     var jpMobile = !!(jpMM && jpMM('(hover: none) and (pointer: coarse)').matches);
     var jpOSLight = !!(jpMM && jpMM('(prefers-color-scheme: light)').matches);
     var jpSaved = localStorage.getItem('jp-theme');
-    var jpLight = jpMobile ? jpOSLight
-      : (jpSaved === 'light' || (jpSaved !== 'dark' && jpOSLight));
+    var jpLight = (jpSaved === 'light' || (jpSaved !== 'dark' && jpOSLight));
     if (jpLight) document.documentElement.setAttribute('data-theme','light');
   } catch(e){}
 </script>
@@ -2384,7 +2383,7 @@ const TESTIMONIALS = [
   if (mq) {
     const onOSChange = e => {
       let saved = null; try { saved = localStorage.getItem('jp-theme'); } catch(_){}
-      if (!isMobile && (saved === 'light' || saved === 'dark')) return;  // desktop choice overrides
+      if (saved === 'light' || saved === 'dark') return;  // desktop choice overrides
       apply(e.matches ? 'dark' : 'light', false);          // dark OS -> space, light OS -> earth
     };
     if (mq.addEventListener) mq.addEventListener('change', onOSChange);
@@ -2393,7 +2392,7 @@ const TESTIMONIALS = [
 
   // The toggle persists only on desktop; on mobile the OS setting always wins on reload.
   if (btn) btn.addEventListener('click', () => {
-    apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', !isMobile);
+    apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
   });
 })();
 

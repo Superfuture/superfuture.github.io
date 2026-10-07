@@ -13,7 +13,7 @@
     var mm=window.matchMedia, s=localStorage.getItem('jp-theme');
     var mob=!!(mm&&mm('(hover:none) and (pointer:coarse)').matches);
     var osLight=!!(mm&&mm('(prefers-color-scheme: light)').matches);
-    var light=mob?osLight:(s==='light'||(s!=='dark'&&osLight));
+    var light=(s==='light'||(s!=='dark'&&osLight));
     if(light)document.documentElement.setAttribute('data-theme','light');
   }catch(e){}
 </script>
