@@ -592,6 +592,7 @@
   html[data-theme="light"] nav > div { border-color: rgba(120,100,80,0.14) !important; }
   html[data-theme="light"] .cs-section-media,
   html[data-theme="light"] .cs-hero-media { box-shadow: 0 18px 44px rgba(90,75,55,0.12); }
+  .cs-section-media.reel, html[data-theme="light"] .cs-section-media.reel { box-shadow: none; border: 0; background: none; }
   html[data-theme="light"] .cs-media,
   html[data-theme="light"] .cs-media-row img,
   html[data-theme="light"] .cs-section-gallery .cs-tile { box-shadow: 0 12px 28px rgba(90,75,55,0.10); }
@@ -1223,8 +1224,8 @@ const CASES = {
       },
       {
         h: 'Still felt',
-        mediaClass: 'bare',
-        media: `<video autoplay muted loop playsinline controls preload="auto" poster="littlemonsters-reel.jpg" style="display:block; width:100%; max-width:440px; margin:0 auto; border-radius:16px; box-shadow:0 12px 44px rgba(0,0,0,.4);">
+        mediaClass: 'bare reel',
+        media: `<video autoplay muted loop playsinline controls preload="auto" poster="littlemonsters-reel.jpg" style="display:block; width:100%; max-width:440px; margin:0 auto; border-radius:16px;">
           <source src="littlemonsters-reel.mp4" type="video/mp4">
         </video>`,
         body: `Creators make retrospectives about an era you "simply had to be there for."<br/><br/><span style="opacity:.55;">A creator's "Lady Gaga Lore" retrospective · <a href="https://www.instagram.com/p/DeZNEiyx7Wd/" target="_blank" rel="noopener">@jewessmonster</a></span>`
