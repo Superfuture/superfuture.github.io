@@ -1533,24 +1533,7 @@
 <div class="grain-layer" aria-hidden="true"></div>
 
 <!-- ============ LOADING SCREEN ============ -->
-<div id="loader" class="fixed inset-0 z-[9999]" aria-hidden="true" style="background:hsl(var(--bg))">
-  <div class="absolute top-6 left-6 md:top-10 md:left-10 text-xs uppercase tracking-[0.3em]" style="color:hsl(var(--muted))" id="loadLabel">Portfolio</div>
-
-  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-    <div class="loader-glow" aria-hidden="true"></div>
-    <div id="loadWord" class="text-4xl md:text-6xl lg:text-7xl font-display italic"
-         style="color:hsl(var(--text) / 0.85); opacity:0; transform: translateY(20px); transition: opacity .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1);">
-      Think.
-    </div>
-  </div>
-
-  <div class="absolute bottom-12 right-6 md:bottom-16 md:right-10 text-6xl md:text-8xl lg:text-9xl font-display tabular-nums" id="loadCount" style="color:hsl(var(--text))">000</div>
-
-  <div class="absolute bottom-0 left-0 right-0 h-[3px]" style="background:hsl(var(--stroke) / 0.5)">
-    <div id="loadBar" class="h-full accent-gradient origin-left"
-         style="transform: scaleX(0); box-shadow: 0 0 8px rgba(137,170,204,.35);"></div>
-  </div>
-</div>
+<!-- splash loader removed — land straight on the work -->
 
 <!-- ============ NAV ============ -->
 <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
@@ -2398,60 +2381,8 @@ const TESTIMONIALS = [
 })();
 
 /* ============ LOADING SCREEN ============ */
-(function loader(){
-  const counter = document.getElementById('loadCount');
-  const bar = document.getElementById('loadBar');
-  const word = document.getElementById('loadWord');
-  const loader = document.getElementById('loader');
-
-  // Skip loader entirely on repeat visits within 8 hours
-  const last = parseInt(sessionStorage.getItem('jp_loader_seen') || '0', 10);
-  const skipLoader = Date.now() - last < 8 * 60 * 60 * 1000;
-  if (skipLoader && loader) {
-    loader.remove();
-    setTimeout(runEntrance, 50);
-    return;
-  }
-  sessionStorage.setItem('jp_loader_seen', String(Date.now()));
-
-  // Signature intro: spell out the thesis (and book title), then hold on the last beat.
-  const words = ['Think.', 'Prompt.', 'Create.'];
-  let wIdx = 0;
-  let wordTimer = 0;
-  function showWord(){
-    word.style.opacity = '0';
-    word.style.transform = 'translateY(18px)';
-    setTimeout(()=>{
-      word.textContent = words[wIdx];
-      word.style.opacity = '1';
-      word.style.transform = 'translateY(0)';
-      wIdx++;
-      if (wIdx >= words.length) clearInterval(wordTimer);   // hold on "Create."
-    }, 200);
-  }
-  showWord();
-  wordTimer = setInterval(showWord, 760);
-
-  const start = performance.now();
-  const dur = 2500;
-  function tick(t){
-    const p = Math.min(1, (t - start) / dur);
-    const c = Math.round(p * 100);
-    counter.textContent = String(c).padStart(3,'0');
-    bar.style.transform = `scaleX(${p})`;
-    if (p < 1) requestAnimationFrame(tick);
-    else {
-      clearInterval(wordTimer);
-      setTimeout(()=>{
-        loader.style.transition = 'opacity .5s ease';
-        loader.style.opacity = '0';
-        setTimeout(()=> loader.remove(), 550);
-        runEntrance();
-      }, 400);
-    }
-  }
-  requestAnimationFrame(tick);
-})();
+/* Splash loader removed — go straight to the work, just run the hero entrance. */
+(function(){ setTimeout(runEntrance, 30); })();
 
 /* ============ HERO ENTRANCE (GSAP) ============ */
 function runEntrance(){
