@@ -1,4 +1,4 @@
-# Joey Primiani — officialjp.com
+# Joey Primiani · officialjp.com
 # All crawlers welcome, including AI / LLM answer engines.
 
 User-agent: *
